@@ -1,0 +1,12 @@
+.rightSide{
+  display: flex;
+  width: 200px;
+  justify-content: end;
+  font-size: 25px
+}
+
+@media screen and (max-width: 992px) {
+  .rightSide{
+    display: none;
+  }
+}
