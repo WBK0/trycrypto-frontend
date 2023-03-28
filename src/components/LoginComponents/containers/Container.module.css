@@ -1,0 +1,6 @@
+.loginLayout{
+  min-height: 100vh;
+  background-color: #0F1319;
+  color: white;
+  overflow-y: auto;
+}

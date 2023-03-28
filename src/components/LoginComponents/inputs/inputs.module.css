@@ -1,0 +1,30 @@
+.loginInput{
+  background-color: #1F2329 !important;
+  border-color: #1B1F25 !important;
+  color: white !important;
+}
+
+.loginInput:focus{
+  box-shadow: 0 0 0 0.15rem rgb(166, 166, 166) !important;
+}
+
+.loginLabel{
+  color: #606469 !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.loginButton{
+  background-color: #ecbe04 !important;
+  color: white !important;
+  width: 100%;
+  margin-top: 35px;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.loginButton:hover{
+  background-color: #ecbe04c5 !important ;
+}
+
+.welcome{
+  font-family: 'Poppins', sans-serif;
+}
