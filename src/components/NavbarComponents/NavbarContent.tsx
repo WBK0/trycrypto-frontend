@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const NavbarContent = () => {
   return(
@@ -16,7 +16,6 @@ const NavbarContent = () => {
             <Link className="nav-link mx-2 text-light" aria-current="page" to="/das">Portfel</Link>
           </li>
         </ul>
-        
       </div>
     </>
   )

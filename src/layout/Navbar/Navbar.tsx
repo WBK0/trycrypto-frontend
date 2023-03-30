@@ -1,6 +1,3 @@
-import logo from "../../assets/logo.png";
-import styles from "./Navbar.module.css";
-import {Link} from "react-router-dom";
 import NavbarLayout from "../../components/NavbarComponents/NavbarLayout";
 import NavbarLogo from "../../components/NavbarComponents/NavbarLogo";
 import NavbarContent from './../../components/NavbarComponents/NavbarContent';

@@ -1,6 +1,7 @@
 import styles from './inputs.module.css';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import LoginService from './services/LoginService';
 
 // Defining the interface for the EmailInput component
 interface EmailInputProps {
@@ -14,6 +15,14 @@ const emailSchema = Yup.object().shape({
   .email('You have entered an incorrect email')
   .required('This field is required')
   .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'You have entered an incorrect email')
+  .test('email-not-found', 'No account found with the given email address', async function(value) {
+    try {
+      const response = await LoginService.checkEmail(value);
+      return response === true ? true : false;
+    } catch (error) {
+      return false;
+    }
+  })
 });
 
 const EmailInput: React.FC<EmailInputProps> = ({onNext, setEmail}) => {
@@ -24,7 +33,9 @@ const EmailInput: React.FC<EmailInputProps> = ({onNext, setEmail}) => {
           email: ''
         }}
         validationSchema={emailSchema}
-        onSubmit={values => {
+        validateOnChange={false}
+        validateOnBlur={false}
+        onSubmit={async (values) => {
           setEmail(values.email);
           onNext();
         }}
@@ -32,7 +43,7 @@ const EmailInput: React.FC<EmailInputProps> = ({onNext, setEmail}) => {
 
         {/* Form fields and error messages */}
         {({ errors, touched }) =>(
-          <Form>
+          <Form noValidate>
             <label 
               htmlFor="email" 
               className={`form-label mt-1 ${styles.loginLabel}`}
