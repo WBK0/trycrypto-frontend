@@ -1,0 +1,38 @@
+.rightSide{
+  display: flex;
+  width: 200px;
+  justify-content: end;
+  font-size: 25px;
+}
+
+@media screen and (max-width: 992px) {
+  .rightSide{
+    width: 100%;
+    justify-content: left;
+  }
+}
+
+.loginButton{
+  font-size: 15px;
+  border-radius: 20px;
+  font-weight: 500;
+  height: 30px;
+  background-color: #141921;
+  color: white;
+  border: none;
+  margin: auto 0;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.loginButton:hover{
+  background-color: rgb(226, 226, 226);
+  color: black;
+}
+
+.loginLink{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
