@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styles from './hyperlinks.module.css';
+import styles from './links.module.css';
 
 const ResetPasswordButton = () => {
   return(

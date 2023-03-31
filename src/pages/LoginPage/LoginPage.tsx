@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import EmailInput from '../../components/LoginComponents/inputs/EmailInput';
-import PasswordInput from '../../components/LoginComponents/inputs/PasswordInput';
-import LoginContainer from '../../components/LoginComponents/containers/LoginContainer';
-import ResetPasswordButton from '../../components/LoginComponents/hyperlinks/ResetPasswordButton';
-import SignUpButton from '../../components/LoginComponents/hyperlinks/SignUpButton';
+import EmailForm from '../../components/LoginComponents/forms/EmailForm';
+import PasswordForm from '../../components/LoginComponents/forms/PasswordForm';
+import LoginLayout from '../../components/LoginComponents/layout/LoginLayout';
+import ResetPasswordButton from '../../components/LoginComponents/links/ResetPasswordButton';
+import SignUpButton from '../../components/LoginComponents/links/SignUpButton';
 
 // This component renders the login page with multiple steps.
 const LoginPage = () => {
@@ -17,14 +17,14 @@ const LoginPage = () => {
   }
 
   return(
-    <LoginContainer>
+    <LoginLayout>
       {/* Function that renders a given step in the login process */}
       <div className='mt-4'>
         {(() => {
           switch (step) {
             case 1:
               return(
-                <EmailInput 
+                <EmailForm 
                   onNext={nextStep} 
                   setEmail={setEmail} 
                   key="email-input"
@@ -32,7 +32,7 @@ const LoginPage = () => {
               )
             case 2:
               return(
-                <PasswordInput 
+                <PasswordForm 
                   email={email}
                   key="password-input"
                 />
@@ -45,7 +45,7 @@ const LoginPage = () => {
       </div>
       <ResetPasswordButton />
       <SignUpButton />
-    </LoginContainer>
+    </LoginLayout>
   )
 }
 

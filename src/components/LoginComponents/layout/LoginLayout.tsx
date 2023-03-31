@@ -1,4 +1,4 @@
-import styles from './Container.module.css';
+import styles from './layout.module.css';
 import logo from '../../../assets/logo.png'
 
 // Defining the interface for the component props
@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const LoginContainer: React.FC<Props> = ({children}) => {
+const LoginLayout: React.FC<Props> = ({children}) => {
   return(
     <div className={styles.loginLayout}>
       <div className='container'>
@@ -26,4 +26,4 @@ const LoginContainer: React.FC<Props> = ({children}) => {
   )
 }
 
-export default LoginContainer;
+export default LoginLayout;

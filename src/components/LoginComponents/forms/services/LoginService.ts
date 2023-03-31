@@ -10,7 +10,7 @@ const LoginService: ILoginService = {
     try {
       const response = await axios({
         method: 'post',
-        url: 'http://127.0.0.1:3000/user/check/email',
+        url: 'https://api.trycrypto.pl/user/check/email',
         data: {
           email: email
         },
@@ -36,12 +36,10 @@ const LoginService: ILoginService = {
           'Content-Type': 'application/json'
         }
       });
-      console.log(response)
       return response.status === 200 ? true : false
     } catch (error) {
       console.log(error)
       return false;
-      
     }
   }
 
