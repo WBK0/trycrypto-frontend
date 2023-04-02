@@ -1,7 +1,17 @@
+import { useEffect, useRef } from "react";
 import { Field, Form } from "formik";
 import styles from './inputs.module.css';
 
 const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
+
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (passwordRef.current) {
+      passwordRef.current.focus();
+    }
+  }, []);
+  
   return(
     <Form>
       <label 
@@ -16,6 +26,7 @@ const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         id="password"
         className={`form-control form-control-lg mx-auto ${styles.loginInput} ${errors.password && touched.password ? "is-invalid" : ""} `}  
         aria-describedby="validationPassword"
+        innerRef={passwordRef}
       />
 
       {/* Error message */}

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import handleSubmit from './services/handleLogin';
 import { passwordSchema } from './schemas/passwordSchema';
 import PasswordInput from './inputComponents/PasswordInput';
+import { useContext } from 'react';
+import AuthContext from '../../../contexts/AuthContext';
 
 // Defining the interface for the PasswordInput component
 interface IPasswordFormProps{
@@ -13,6 +15,7 @@ interface IPasswordFormProps{
 const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
 
   const navigate = useNavigate()
+  const {setLoggedIn} = useContext(AuthContext);
 
   return(
     <div>
@@ -28,7 +31,7 @@ const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
         validateOnBlur={false}
         validationSchema={passwordSchema}
         onSubmit={(values, formikHelpers) => 
-          handleSubmit(values, {...formikHelpers, navigate})
+          handleSubmit(values, {...formikHelpers, navigate, setLoggedIn})
         }
         >
           {PasswordInput}

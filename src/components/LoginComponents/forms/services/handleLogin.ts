@@ -2,6 +2,8 @@ import { FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import LoginService from "./LoginService";
 import { To } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../../../contexts/AuthContext";
 
 // Defining the interface for the handleSubmit login function
 interface IHandleSubmit{
@@ -11,10 +13,12 @@ interface IHandleSubmit{
 
 interface ExtendedFormikHelpers<T> extends FormikHelpers<T> {
   navigate: (to: To) => void;
+  setLoggedIn: (value: boolean) => void;
 }
 
 // defining the form sending function
-const handleSubmit = async(formValues: IHandleSubmit, {setFieldError, setSubmitting, navigate}: ExtendedFormikHelpers<IHandleSubmit>): Promise<void> => {
+const handleSubmit = async(formValues: IHandleSubmit, {setFieldError, setSubmitting, navigate, setLoggedIn}: ExtendedFormikHelpers<IHandleSubmit>): Promise<void> => {
+  
   try {
     // sending a query to the login server using the LoginService
     const loginResponse = await LoginService.loginUser(formValues.email, formValues.password);
@@ -31,6 +35,7 @@ const handleSubmit = async(formValues: IHandleSubmit, {setFieldError, setSubmitt
         });
       // redirecting the user to the main page of the application
       navigate('/');
+      setLoggedIn(true)
       setSubmitting(false);
     }else{
       // display an error when the password is incorrect

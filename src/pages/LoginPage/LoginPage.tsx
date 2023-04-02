@@ -1,12 +1,25 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import EmailForm from '../../components/LoginComponents/forms/EmailForm';
 import PasswordForm from '../../components/LoginComponents/forms/PasswordForm';
 import LoginLayout from '../../components/LoginComponents/layout/LoginLayout';
 import ResetPasswordButton from '../../components/LoginComponents/links/ResetPasswordButton';
 import SignUpButton from '../../components/LoginComponents/links/SignUpButton';
+import AuthContext from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 // This component renders the login page with multiple steps.
 const LoginPage = () => {
+
+  const { isLoggedIn } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    console.log(isLoggedIn)
+    if(isLoggedIn == true){
+      navigate("/")
+    }
+  }, [])
+  
   // Initialize state variables for the login page
   const [step, setStep] = useState<number>(1);
   const [email, setEmail] = useState<string>("");
