@@ -12,11 +12,11 @@ const NavbarUserActions = () => {
   return(
     <div className={`${styles.rightSide} collapse navbar-collapse`} id="navbarNavDropdown">
       {isLoggedIn 
-      ? <button aria-current="page" className={styles.loginLink} onClick={() => handleLogout(navigate, setLoggedIn)}>
+      ? <button aria-current="page" className={styles.logoutButton} onClick={() => handleLogout(navigate, setLoggedIn)}>
           <i className={`bi bi-box-arrow-right ${styles.logoutLink}`}></i>
         </button>
       : <Link aria-current="page" className={styles.loginLink} to="/login">
-          <button className={styles.loginButton}>Zaloguj się</button>
+          <button className={styles.loginButton}>Login</button>
         </Link>
       }
      

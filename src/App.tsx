@@ -8,6 +8,7 @@ import { useContext } from "react";
 import AuthContext from "./contexts/AuthContext";
 import Loading from "./components/Loading/Loading";
 import ProtectedRoute from "./layout/Navbar/ProtectedRoute";
+import MarketsPage from "./pages/MarketsPage/MarketsPage";
 
 function App() {
   const { loading } = useContext(AuthContext);
@@ -22,6 +23,7 @@ function App() {
             <LoginPage />
           </LoginGuard>
           } />
+          <Route path="/markets" element={<MarketsPage />} />
         </Routes>
         :
         <Loading />    

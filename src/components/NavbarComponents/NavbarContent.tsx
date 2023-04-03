@@ -10,7 +10,7 @@ const NavbarContent = () => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav mx-auto">
           <li className="nav-item">
-            <Link className="nav-link mx-2 text-light" aria-current="page" to="/sa">Rynki</Link>
+            <Link className="nav-link mx-2 text-light" aria-current="page" to="/markets">Markets</Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link mx-2 text-light" aria-current="page" to="/das">Portfel</Link>

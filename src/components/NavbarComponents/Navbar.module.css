@@ -44,3 +44,8 @@
 .logoutLink:hover{
   color: rgb(219, 187, 6)
 }
+
+.logoutButton{
+  background-color: transparent;
+  border: none;
+}
