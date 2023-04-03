@@ -9,6 +9,7 @@ interface IAuthProvider{
 
 const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const setLoggedIn = (value: boolean) => {
     setIsLoggedIn(value);
@@ -20,15 +21,18 @@ const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
     .then((response) => {
       if(response.status == 200){
         setIsLoggedIn(true);
-        console.log(isLoggedIn)
       }else{
         setIsLoggedIn(false);
       }
+      setLoading(false)
+    })
+    .catch((error) => {
+      setLoading(false)
     })
   }, [])
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn, loading }}>
       <AuthApi />
       {children}
     </AuthContext.Provider>

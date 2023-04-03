@@ -36,3 +36,11 @@
   align-items: center;
   text-decoration: none;
 }
+
+.logoutLink{
+  color: white;
+}
+
+.logoutLink:hover{
+  color: rgb(219, 187, 6)
+}
