@@ -1,0 +1,13 @@
+.input:focus{
+  box-shadow: none !important;
+  border: solid 2px #ecbe04 !important;
+}
+
+.input{
+  border: solid 2px rgb(166, 166, 166) !important;
+  height: 48px;
+}
+
+.input:hover{
+  border: solid 2px #ecbe04 !important;
+}
