@@ -1,5 +1,5 @@
 .layout{
-  height: 100vh;
+  min-height: 100vh;
   background-color: #0F1319;
   color: white;
   padding-top: 80px;

@@ -19,6 +19,9 @@ import { columns } from '../../components/Markets/Table/columns/columns';
 import getData from "../../components/Markets/Table/services/getData";
 import Searchbar from "../../components/Markets/Table/Searchbar/Searchbar";
 import { fuzzyFilter } from './../../components/Markets/Table/filters/fuzzyFilter';
+import styles from '../../components/Markets/Table/Table/table.module.css';import Loading from "../../components/Loading/Loading";
+import MarketSelect from "../../components/Markets/Table/MarketSelect/MarketSelect";
+import LoadingTable from "../../components/Loading/LoadingTable";
 
 // Extending the filterFns interface of react-table to include a fuzzy filter function
 declare module '@tanstack/table-core' {
@@ -30,30 +33,43 @@ declare module '@tanstack/table-core' {
   }
 }
 
-const MarketsPage = () => {
+interface MarketData {
+  pair: string;
+  volume: string;
+  openPrice: string;
+  lastPrice: string;
+  highPrice: string;
+  lowPrice: string;
+  percentChange: string;
+  priceChange: string;
+}
+
+const MarketsPage: React.FC = () => {
   // Initializing state variables
-  const [data, setData] = useState(() => [])
+  const [data, setData] = useState<MarketData[] | []>([]);
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState('')
+  const [market, setMarket] = useState('spot');
 
   useEffect(() => {
+    setData([])
     // Setting initial page size and fetching data using the getData function
     table.setPageSize(5);
   
-    const fetchData = async () => {
-      const data = await getData();
+    const fetchData = async (market : string) => {
+      const data = await getData(market);
       setData(data);
     };
   
-    fetchData();
+    fetchData(market);
   
     // Setting up an interval to fetch data
     const interval = setInterval(fetchData, 6000);
 
     // Clearing the interval when the component unmounts
     return () => clearInterval(interval);
-  }, []);
- 
+  }, [market]);
+  console.log(data)
    // Creating the react-table instance with specified configurations
   const table = useReactTable({
     data,
@@ -74,18 +90,43 @@ const MarketsPage = () => {
     globalFilterFn: fuzzyFilter,
     getPaginationRowModel: getPaginationRowModel(),
   })
-
+  
   // Rendering the MarketsPage
   return(
     <Layout>
+      <h1 className="mt-2 mb-4">Market Overview</h1>
+      <MarketSelect market={market} setMarket={setMarket} />
+      <div className="row mt-2">
+        <div className="col-3">
+          <div className={styles.highlitedContainer}>
+            <p className={styles.header}>Our propositions</p>
+            {data.length > 0 ?
+              <div className={styles.container}>
+                
+                  <img src={"https://api.trycrypto.pl/icon/" + data[0].pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" className="me-1"></img> 
+                  {data[0].pair.replace(/usdt/gi, "")}
+                  <p style={{textAlign: "center", display: 'inline'}}> {Number(data[0].lastPrice).toFixed(2)}</p>
+                
+              </div>
+              : null
+            }
+            
+          </div>
+        </div>
+      </div>
       <Searchbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
       <div className="row">
-        <div className="table-responsive">
-          <table className='table text-light'>
-          <Thead table={table} />
-          <Tbody table={table} />
-        </table>
-        </div>
+        {data.length > 0 ?
+          <div className='table-responsive'>
+            <table className={`table text-light ${styles.table}`}>
+              <Thead table={table} />
+              <Tbody table={table} />
+            </table>   
+          </div>
+          :
+          <LoadingTable />  
+        }
+
       </div>
       
       <Pagination table={table} />

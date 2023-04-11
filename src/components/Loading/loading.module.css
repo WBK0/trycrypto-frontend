@@ -5,3 +5,10 @@
   justify-content: center;
   height: 100vh;
 }
+
+.loadingTable{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}

@@ -31,7 +31,6 @@ const Thead : React.FC<IThead> = ({ table }) => {
         // Render a row for each header group
         <tr key={headerGroup.id} className={styles.tableRow}>
           {headerGroup.headers.map(header => {
-            console.log(header.getSize())
             // Render a cell for each header in the group
             return (
               <th key={header.id} colSpan={header.colSpan} style={{minWidth: header.getSize() + "px"}}> 

@@ -1,4 +1,32 @@
 .tableRow{
   background-color: #0a0e15;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.row:hover{
+  background-color: #0a0e15;
+}
+
+.row{
+  line-height: 40px;
+}
+
+.table{
+  border-color: rgb(122, 122, 122) !important;
+}
+
+.highlitedContainer{
+  background-color: #0a0e15;
+  border-radius: 15px;
+  padding-left: 10px;
+  padding-top: 15px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+}
+
+.header{
+  color: rgb(122, 122, 122);
+  font-weight: 500;
+  font-size: 14px
 }

@@ -27,7 +27,7 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
     sortingFn: 'alphanumeric',
     header: () => <span>Price</span>,
     enableGlobalFilter: false,
-    size: 200
+    size: 100
   },
   {
     accessorKey: 'percentChange',
@@ -35,7 +35,7 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
     id: 'percentChange',
     cell: (info: any) => {
       const value = parseFloat(info.getValue());
-      return <span>{value.toFixed(2) + '%'}</span>;
+      return <span style={value > 0 ? {color: "#14ab03"} : {color: "red"}}>{value.toFixed(2) + '%'}</span>;
     },
     sortingFn: (a: any, b: any, desc: any) => {
       const numA = parseFloat(a.getValue('percentChange'));
@@ -49,7 +49,7 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
       return 0;
     },
     enableGlobalFilter: false,
-    size: 120
+    size: 100
   },
   {
     accessorKey: 'highPrice',
