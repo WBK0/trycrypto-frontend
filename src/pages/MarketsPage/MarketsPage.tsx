@@ -16,12 +16,14 @@ import {
 import Thead from "../../components/Markets/Table/Table/Thead";
 import Tbody from "../../components/Markets/Table/Table/Tbody";
 import { columns } from '../../components/Markets/Table/columns/columns';
-import getData from "../../components/Markets/Table/services/getData";
+import getData from "../../components/Markets/services/getData";
 import Searchbar from "../../components/Markets/Table/Searchbar/Searchbar";
 import { fuzzyFilter } from './../../components/Markets/Table/filters/fuzzyFilter';
-import styles from '../../components/Markets/Table/Table/table.module.css';import Loading from "../../components/Loading/Loading";
-import MarketSelect from "../../components/Markets/Table/MarketSelect/MarketSelect";
+import styles from '../../components/Markets/Table/Table/table.module.css';
+import MarketSelect from "../../components/Markets/MarketSelect/MarketSelect";
 import LoadingTable from "../../components/Loading/LoadingTable";
+import HighlightedTokens from "../../components/Markets/Highlited/HighlightedTokens";
+import { MarketData } from "../../components/Markets/interfaces/interfaces";
 
 // Extending the filterFns interface of react-table to include a fuzzy filter function
 declare module '@tanstack/table-core' {
@@ -31,17 +33,6 @@ declare module '@tanstack/table-core' {
   interface FilterMeta {
     itemRank: RankingInfo
   }
-}
-
-interface MarketData {
-  pair: string;
-  volume: string;
-  openPrice: string;
-  lastPrice: string;
-  highPrice: string;
-  lowPrice: string;
-  percentChange: string;
-  priceChange: string;
 }
 
 const MarketsPage: React.FC = () => {
@@ -62,13 +53,13 @@ const MarketsPage: React.FC = () => {
     };
   
     fetchData(market);
-  
     // Setting up an interval to fetch data
-    const interval = setInterval(fetchData, 6000);
+    const interval = setInterval(() => fetchData(market), 6000);
 
     // Clearing the interval when the component unmounts
     return () => clearInterval(interval);
   }, [market]);
+  
   console.log(data)
    // Creating the react-table instance with specified configurations
   const table = useReactTable({
@@ -90,98 +81,13 @@ const MarketsPage: React.FC = () => {
     globalFilterFn: fuzzyFilter,
     getPaginationRowModel: getPaginationRowModel(),
   })
-  
-  const randomIndex = Math.floor(Math.random() * data.length);
-  const shiftedData = data.slice(randomIndex).concat(data.slice(0, randomIndex));  
-  const selectedData = shiftedData.slice(0, 3);
+
   // Rendering the MarketsPage
   return(
     <Layout>
       <h1 className="mt-2 mb-4">Market Overview</h1>
       <MarketSelect market={market} setMarket={setMarket} />
-      <div className="row mt-3">
-      {data.length > 0 ?
-        <>
-          <div className="col-3">
-            <div className={styles.highlitedContainer}>
-              <p className={styles.header}>Highest volume</p>
-              {data.sort((a: any, b: any) => b.volume - a.volume).slice(0,3).map((item) => (
-                <div key={item.pair} className={styles.container}>
-                  <div className={styles.left}>
-                    <img src={"https://api.trycrypto.pl/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" className="me-1"/> 
-                      {item.pair.replace(/usdt/gi, "")}
-                  </div>
-                  <div className={styles.center}>
-                    {Number(item.lastPrice).toFixed(2)}
-                  </div>
-                  <div className={styles.right}>
-                    {Number(item.percentChange).toFixed(2) + "%"}
-                  </div>
-                </div>
-              ))} 
-            </div>
-          </div>
-          <div className="col-3">
-            <div className={styles.highlitedContainer}>
-              <p className={styles.header}>Highest prices</p>
-              {data.sort((a: any, b: any) => a.lastPrice - b.lastPrice).slice(0, 3).map((item) => (
-                <div key={item.pair} className={styles.container}>
-                <div className={styles.left}>
-                  <img src={"https://api.trycrypto.pl/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" className="me-1"/> 
-                    {item.pair.replace(/usdt/gi, "")}
-                </div>
-                <div className={styles.center}>
-                  {Number(item.lastPrice).toFixed(2)}
-                </div>
-                <div className={styles.right}>
-                  {Number(item.percentChange).toFixed(2) + "%"}
-                </div>
-              </div>
-              ))}
-            </div>
-          </div>
-          <div className="col-3">
-            <div className={styles.highlitedContainer}>
-              <p className={styles.header}>Highest changes</p>
-              {data.sort((a: any, b: any) => b.percentChange - a.percentChange).slice(0, 3).map((item) => (
-                <div key={item.pair} className={styles.container}>
-                <div className={styles.left}>
-                  <img src={"https://api.trycrypto.pl/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" className="me-1"/> 
-                    {item.pair.replace(/usdt/gi, "")}
-                </div>
-                <div className={styles.center}>
-                  {Number(item.lastPrice).toFixed(2)}
-                </div>
-                <div className={styles.right}>
-                  {Number(item.percentChange).toFixed(2) + "%"}
-                </div>
-              </div>
-              ))}
-            </div>
-          </div>
-          <div className="col-3">
-            <div className={styles.highlitedContainer}>
-              <p className={styles.header}>Random cryptocurrencies</p>
-              {selectedData.map((item) => (
-                <div key={item.pair} className={styles.container}>
-                <div className={styles.left}>
-                  <img src={"https://api.trycrypto.pl/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" className="me-1"/> 
-                    {item.pair.replace(/usdt/gi, "")}
-                </div>
-                <div className={styles.center}>
-                  {Number(item.lastPrice).toFixed(2)}
-                </div>
-                <div className={styles.right}>
-                  {Number(item.percentChange).toFixed(2) + "%"}
-                </div>
-              </div>
-              ))}
-            </div>
-          </div>
-        </>
-        : null
-      }
-      </div>
+      <HighlightedTokens data={data} />
       <Searchbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
       <div className="row">
         {data.length > 0 ?

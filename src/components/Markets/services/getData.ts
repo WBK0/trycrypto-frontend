@@ -1,4 +1,4 @@
-import api from "../../../../services/api";
+import api from "../../../services/api";
 
 // That function retrieves data from an API endpoint and returns it as an array
 const getData = async (market : string): Promise<never[]> => {
@@ -6,6 +6,7 @@ const getData = async (market : string): Promise<never[]> => {
   
   await api.get("/data").then((response) => {
     let res: any;
+    console.log(market)
     if(market === 'spot'){
       res = response.data.spot;
     }else if(market === 'futures'){
