@@ -1,5 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+// Define the type of data that the columns will display
 type Cryptocurrencies = {
   pair: string;
   lastPrice: number;
@@ -9,6 +10,7 @@ type Cryptocurrencies = {
   volume: string;
 }
 
+// Define the columns and their properties
 export const columns: ColumnDef<Cryptocurrencies>[] = [
   {
     accessorKey: "pair",

@@ -1,12 +1,15 @@
+import { RowData, Table } from '@tanstack/react-table';
 import styles from './pagination.module.css';
 
+// Define interface
 interface IButton{
-  table: any;
+  table: Table<RowData>;
   isActive: boolean;
-  value: any;
-  action: any;
+  value: number;
+  action: () => void;
 }
 
+// The component responsible for displaying the pagination button
 const Button: React.FC<IButton> = ({table, isActive, value, action}) => {
   return(
     <li className='page-item'>

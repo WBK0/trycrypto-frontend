@@ -91,19 +91,20 @@ const MarketsPage: React.FC = () => {
       <Searchbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
       <div className="row">
         {data.length > 0 ?
-          <div className='table-responsive'>
-            <table className={`table text-light ${styles.table}`}>
-              <Thead table={table} />
-              <Tbody table={table} />
-            </table>   
-          </div>
+          <>
+            <div className='table-responsive'>
+              <table className={`table text-light ${styles.table}`}>
+                <Thead table={table} />
+                <Tbody table={table} />
+              </table>
+              
+            </div>
+            <Pagination table={table} />  
+          </>
           :
           <LoadingTable />  
         }
-
       </div>
-      
-      <Pagination table={table} />
       <div className="h-4" />
     </Layout>
   )

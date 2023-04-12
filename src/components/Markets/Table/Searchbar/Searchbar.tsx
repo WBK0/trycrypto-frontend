@@ -1,10 +1,12 @@
 import styles from './searchbar.module.css';
 
+// Define interface
 interface ISearchbar{
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
 }
 
+// The component responsible for displaying the table search
 const Searchbar : React.FC<ISearchbar> = ({globalFilter, setGlobalFilter}) => {
   return(
     <div className='row d-flex justify-content-end mt-4'>
