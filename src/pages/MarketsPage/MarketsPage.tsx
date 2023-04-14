@@ -43,7 +43,6 @@ const MarketsPage: React.FC = () => {
   const [market, setMarket] = useState('spot');
 
   useEffect(() => {
-    setData([])
     // Setting initial page size and fetching data using the getData function
     table.setPageSize(5);
   

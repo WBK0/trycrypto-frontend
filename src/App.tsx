@@ -9,6 +9,7 @@ import AuthContext from "./contexts/AuthContext";
 import Loading from "./components/Loading/Loading";
 import ProtectedRoute from "./layout/Navbar/ProtectedRoute";
 import MarketsPage from "./pages/MarketsPage/MarketsPage";
+import SpotPage from "./pages/TradingPages/SpotPage/SpotPage";
 
 function App() {
   const { loading } = useContext(AuthContext);
@@ -19,11 +20,12 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={
-          <LoginGuard>
-            <LoginPage />
-          </LoginGuard>
+            <LoginGuard>
+              <LoginPage />
+            </LoginGuard>
           } />
           <Route path="/markets" element={<MarketsPage />} />
+          <Route path="/market/spot/:symbol" element={<SpotPage />} />
         </Routes>
         :
         <Loading />    
