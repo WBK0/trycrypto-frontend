@@ -1,6 +1,6 @@
 import styles from '../HighlightedTokens.module.css';
 import HighlitedItem from './HighlightedItem';
-import { MarketData } from '../../../interfaces/interfaces';
+import { MarketData } from '../../interfaces/interfaces';
 
 // Define the interface
 interface IHighlitedContainer{

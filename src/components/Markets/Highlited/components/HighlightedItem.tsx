@@ -1,5 +1,5 @@
 import styles from '../HighlightedTokens.module.css';
-import { MarketData } from '../../../interfaces/interfaces';
+import { MarketData } from '../../interfaces/interfaces';
 
 // Define the interface
 interface IHighlightedToken{
