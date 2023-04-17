@@ -44,11 +44,13 @@ useEffect(() => {
         enable_publishing: false,
         hide_side_toolbar: false,
         allow_symbol_change: false,
+        show_popup_button: true,
+        popup_width: "1000",
+        popup_height: "650",
         container_id: 'tradingview_33c1c',
         
       };
       const widget = new (window as any).TradingView.widget(widgetOptions);
-      // dodanie atrybutu SameSite do cookies, które przesyłane są przez TradingView
     }
   
   }

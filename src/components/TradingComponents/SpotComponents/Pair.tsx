@@ -6,11 +6,12 @@ interface IPair{
 
 const Pair: React.FC<IPair> = ({ symbol }) => {
   return(
-    <div className='col-lg-2 col-12 ps-0 pe-0 h-100'>
+    <div className='row' style={{margin: 0}}>
       <div className={`${styles.symbol} d-flex align-items-center justify-content-center`}>
         {symbol?.toUpperCase().replace("USDT", "/USDT")}
       </div>
     </div>
+    
   )
 }
 

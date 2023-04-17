@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './spot.module.css';
 
 interface IPairInfo{
-  symbol: string | undefined;
+  data: IData;
 }
 
 interface IData{
@@ -15,36 +15,12 @@ interface IData{
   q: number;
 }
 
-const PairInfo: React.FC<IPairInfo> = ({ symbol }) => {
-  const [socket, setSocket] = useState<any>(null);
-  const [data, setData] = useState<IData>({
-    c: 0,
-    p: 0,
-    P: 0,
-    h: 0,
-    l: 0,
-    o: 0,
-    q: 0
-  });
+const PairInfo: React.FC<IPairInfo> = ({ data }) => {
   
-  useEffect(() => {
-    const newSocket = new WebSocket('wss://stream.binance.com/ws/' + symbol + '@ticker');
-
-    newSocket.addEventListener('message', (event) => {
-      setData(JSON.parse(event.data));
-      console.log("xd")
-    });
-
-    return () => {
-      if (socket) {
-        newSocket.close();
-      }
-    };
-  }, []);
 
   return(
     <div className={styles.symbolInfo}>
-      <div className="row align-items-center h-100">
+      <div className="row align-items-center h-100" style={{margin: 0}}>
         <div className="d-flex flex-column align-items-start col-4 col-lg-2">
           <p className={`mb-0 ${styles.header}`}>PRICE</p>
           <p className={`mb-0 ${styles.info}`}>{Number(data.c).toFixed(2)}$</p>
