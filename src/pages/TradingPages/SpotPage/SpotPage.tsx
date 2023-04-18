@@ -84,7 +84,7 @@ const maxAmountBid = Math.max(...orderBook.bids.map((bid) => bid[1]));
               <div className="row" style={{margin: 0}}>
                 <div className={styles.orderBook}>
                   <div className={styles.orderBookType}>
-                    <i className={`bi bi-book ${styles.book}`} style={{color: 'white'}}></i>
+                    <i className={`bi bi-book ${styles.book} cursor-pointer`} style={{color: 'white'}}></i>
                     <i className={`bi bi-book-half ${styles.book}`} style={{color: '#077703'}}></i>
                     <i className={`bi bi-book-half ${styles.book}`} style={{color: '#770303'}}></i>
                   </div>
@@ -122,6 +122,52 @@ const maxAmountBid = Math.max(...orderBook.bids.map((bid) => bid[1]));
               <div className="row">
                 <PairInfo data={data} />
                 <Chart symbol={symbol}/>
+                <div className={`row ${styles.buyCrypto}`}>
+                  <div className="col-6" style={{padding: 12}}>
+                    <p className={styles.money}>
+                      Dostępne: 9434.32USDT
+                    </p>
+                    <div className="input-group mb-3">
+                      <span className={`input-group-text ${styles.inputGroup}`}>Cena</span>
+                      <input type="text" className={`form-control ${styles.input}`} aria-label="Amount (to the nearest dollar)" value="Market" disabled />
+                      <span className={`input-group-text ${styles.inputGroup}`}>USDT</span>
+                    </div>
+                    <div className="input-group mb-3">
+                      <span className={`input-group-text ${styles.inputGroup}`}>Ilość</span>
+                      <input type="text" className={`form-control ${styles.input}`} aria-label="Amount (to the nearest dollar)" />
+                      <span className={`input-group-text ${styles.inputGroup}`}>USDT</span>
+                    </div>
+                    <div className="input-group mb-3">
+                      <span className={`input-group-text ${styles.inputGroup}`}>Suma</span>
+                      <input type="text" className={`form-control ${styles.input}`} aria-label="Amount (to the nearest dollar)" />
+                      <span className={`input-group-text ${styles.inputGroup}`}>{symbol?.toUpperCase()}</span>
+                    </div>
+                    <input type="range" className="form-range mb-3" min="0" max="100" id="customRange2"></input>
+                    <button type="button" className="btn btn-success mb-4 w-100">Kup {symbol?.toUpperCase()}</button>
+                  </div>
+                  <div className="col-6" style={{padding: 12}}>
+                    <p className={styles.money}>
+                      Dostępne: 9434.32USDT
+                    </p>
+                    <div className="input-group mb-3">
+                      <span className={`input-group-text ${styles.inputGroup}`}>Cena</span>
+                      <input type="text" className={`form-control ${styles.input}`} aria-label="Amount (to the nearest dollar)" value="Market" disabled />
+                      <span className={`input-group-text ${styles.inputGroup}`}>USDT</span>
+                    </div>
+                    <div className="input-group mb-3">
+                      <span className={`input-group-text ${styles.inputGroup}`}>Ilość</span>
+                      <input type="text" className={`form-control ${styles.input}`} aria-label="Amount (to the nearest dollar)" />
+                      <span className={`input-group-text ${styles.inputGroup}`}>USDT</span>
+                    </div>
+                    <div className="input-group mb-3">
+                      <span className={`input-group-text ${styles.inputGroup}`}>Suma</span>
+                      <input type="text" className={`form-control ${styles.input}`} aria-label="Amount (to the nearest dollar)" />
+                      <span className={`input-group-text ${styles.inputGroup}`}>{symbol?.toUpperCase()}</span>
+                    </div>
+                    <input type="range" className="form-range mb-3" min="0" max="100" id="customRange2"></input>
+                    <button type="button" className="btn btn-success mb-4 w-100">Kup {symbol?.toUpperCase()}</button>
+                  </div>
+                </div>
               </div>
               
             </div>
