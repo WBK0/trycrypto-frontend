@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
-import styles from './links.module.css';
+import { Row } from '../../../shared/row';
+import { ResetPasswordLink } from './styles/resetButton.style';
 
 const ResetPasswordButton = () => {
   return(
-    <div className='mt-3 d-flex justify-content-center'>
-      <Link to="/reset-password" className={styles.resetPassword}>Forgot your password?</Link>
-    </div>
+    <Row justifyContent='center' mt='20px'>
+      <ResetPasswordLink to="/reset-password">Forgot your password?</ResetPasswordLink>
+    </Row>
   )
 }
 

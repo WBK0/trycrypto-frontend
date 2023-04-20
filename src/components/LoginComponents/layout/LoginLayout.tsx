@@ -1,5 +1,8 @@
-import styles from './layout.module.css';
 import logo from '../../../assets/logo.png'
+import { Container } from '../../../shared/container';
+import { Wrapper, Image } from './Login.style';
+import { Row } from '../../../shared/row';
+import { Col } from '../../../shared/col';
 
 // Defining the interface for the component props
 interface Props {
@@ -8,21 +11,19 @@ interface Props {
 
 const LoginLayout: React.FC<Props> = ({children}) => {
   return(
-    <div className={styles.loginLayout}>
-      <div className='container'>
-        <div className='row d-flex justify-content-center align-items-center vh-100'>
-          <div className='col-xl-4 col-lg-5 col-md-7 col-sm-10 col-11'>
-            <div className='d-flex justify-content-center'>
-              <img src={logo} width="85%"/>
-            </div>
-            <div>
-              {/* Displaying child components */}
-              {children}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Wrapper>
+      <Container>
+        <Row justifyContent='center' alignItems='center' height='100vh'>
+          <Col xs={100} sm={80} md={60} lg={45} xl={35}>
+            <Row justifyContent='center'>
+              <Image src={logo}/>
+            </Row>
+            {/* Displaying child components */}
+            {children}
+          </Col>
+        </Row>
+      </Container>
+    </Wrapper>
   )
 }
 

@@ -24,12 +24,14 @@
     "react-ts-tradingview-widgets": "^1.0.14",
     "react-use-websocket": "^3.0.0",
     "socket.io-client": "^4.6.1",
+    "styled-components": "^5.3.9",
     "websocket": "^1.0.34",
     "yup": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/styled-components": "^5.1.26",
     "@types/websocket": "^1.0.5",
     "@vitejs/plugin-react": "^3.1.0",
     "typescript": "^4.9.3",

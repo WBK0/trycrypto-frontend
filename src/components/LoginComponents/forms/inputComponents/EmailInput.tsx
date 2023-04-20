@@ -10,18 +10,18 @@ const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         >
           Email address  
       </label>
-      <Field 
-        name="email" 
-        type="email" 
-        id="email" 
+      <Field
+        name="email"
+        type="email"
+        id="email"
         className={`form-control form-control-lg mx-auto ${styles.loginInput} ${errors.email && touched.email ? "is-invalid" : null}`} 
         aria-describedby="validationEmail"
       />
 
       {/* Error message */}
-      {errors.email && touched.email 
+      {errors.email && touched.email
         ?
-          <div id="validationEmail" className="invalid-feedback mt-2">{errors.email}</div>   
+          <div id="validationEmail" className="invalid-feedback mt-2">{errors.email}</div>
         :
           null
       }

@@ -1,34 +1,6 @@
-.resetPassword{
-  color: #606469;
-  text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-}
-
-.resetPassword:hover{
-  color: rgb(166, 166, 166);
-}
-
-.registerArrow{
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  font-size: 50px;
-}
-
 .signupText{
   font-size: 20px;
   margin-right: 10px;
-}
-
-.signupLink{
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  color: rgb(166, 166, 166);
-}
-
-.signupLink:hover{
-  color: rgb(212, 212, 212);
 }
 
 @media (max-width: 576px) { 

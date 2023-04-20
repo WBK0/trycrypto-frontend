@@ -1,13 +1,11 @@
-import styles from './loading.module.css'
+import { Loader, Wrapper } from './styles/Loading.styles';
 
 const Loading = () => {
   return(
-    <div className={styles.container}>
-      <div className="spinner-border text-light" role="status">
-        <span className="sr-only"></span>
-      </div>
-    </div>
-  )
+    <Wrapper>
+      <Loader />
+    </Wrapper>
+  ) 
 }
 
 export default Loading;

@@ -1,12 +1,11 @@
-import styles from './loading.module.css'
+import { Loader } from './styles/Loading.styles';
+import { Wrapper } from './styles/LoadingTable.styles'
 
 const LoadingTable = () => {
   return(
-    <div className={styles.loadingTable}>
-      <div className="spinner-border text-light" role="status">
-        <span className="sr-only"></span>
-      </div>
-    </div>
+    <Wrapper>
+      <Loader />
+    </Wrapper>
   )
 }
 
