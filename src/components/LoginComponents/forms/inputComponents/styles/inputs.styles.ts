@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 
 export const Label = styled.label`
   margin-bottom: 6px;
-  color: #606469 !important;
-  font-family: 'Poppins', sans-serif !important;
+  color: #606469;
+  font-family: 'Poppins', sans-serif;
 `
 
 export const InvalidMessage = styled.div`
@@ -23,6 +23,7 @@ export const Input = styled(Field)`
   border-radius: 8px;
   font-size: 20px;
   padding-left: 10px;
+  outline: none;
   color: white;
   &:focus{
     box-shadow: 0 0 0 0.15rem rgb(166, 166, 166);
@@ -36,6 +37,32 @@ export const Input = styled(Field)`
       background-position: right calc(0.375em + 0.1875rem) center;
       background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
     `}
-    
-  
+`
+
+export const LoginButton = styled.button`
+  background-color: #ecbe04;
+  color: white;
+  width: 100%;
+  margin-top: 30px;
+  outline: none;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 8px;
+  height: 45px;
+`
+
+export const InputSpinner = styled.span`
+  border: 4px solid white;
+  border-right-color: transparent;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  border-radius: 50%;
+  animation: 0.75s linear infinite spinner-border;
+`
+
+export const ButtonText = styled.span`
+  font-size: 20px;
+  font-weight: 500;
 `

@@ -1,6 +1,5 @@
 import { Form, Field } from "formik";
-import styles from './inputs.module.css';
-import { Input, InvalidMessage, Label } from "./styles/inputs.styles";
+import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "./styles/inputs.styles";
 
 const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
   return(
@@ -24,15 +23,15 @@ const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         :
           null
       }
-      <button 
+      <LoginButton 
         type="submit" 
-        className={`btn btn-lg ${styles.loginButton}`}
+       
       >
         {isSubmitting 
-          ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-          : <span>LOGIN</span>
+          ? <InputSpinner />
+          : <ButtonText>LOGIN</ButtonText>
         }
-      </button> 
+      </LoginButton> 
     </Form>
   )
 }

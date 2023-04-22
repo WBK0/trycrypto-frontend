@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { Field, Form } from "formik";
-import styles from './inputs.module.css';
+import { Form } from "formik";
+import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "./styles/inputs.styles";
 
 const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
 
@@ -14,41 +14,38 @@ const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
   
   return(
     <Form>
-      <label 
+      <Label 
         htmlFor="password" 
-        className={`form-label mt-1 ${styles.loginLabel}`}
       >
         Password
-      </label>
-      <Field 
+      </Label>
+      <Input 
         name="password" 
         type="password" 
         id="password"
-        className={`form-control form-control-lg mx-auto ${styles.loginInput} ${errors.password && touched.password ? "is-invalid" : ""} `}  
+        error={errors.password && touched.password ? true : false}
         aria-describedby="validationPassword"
         innerRef={passwordRef}
       />
 
       {/* Error message */}
       {errors.password && touched.password 
-      ? <div 
+      ? <InvalidMessage 
           id="validationPassword" 
-          className="invalid-feedback mt-2"
         >
           {errors.password}
-        </div>   
+        </InvalidMessage>   
       : null
       }
-      <button 
+      <LoginButton 
         type="submit" 
-        className={`btn btn-lg ${styles.loginButton}`}
         disabled={isSubmitting}
       >
         {isSubmitting 
-          ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-          : <span>LOGIN</span>
+          ? <InputSpinner />
+          : <ButtonText>LOGIN</ButtonText>
         }
-      </button>
+      </LoginButton>
     </Form>
   )
 }
