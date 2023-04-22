@@ -1,4 +1,3 @@
-import styles from './forms.module.css';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import handleSubmit from './services/handleLogin';
@@ -6,6 +5,7 @@ import { passwordSchema } from './schemas/passwordSchema';
 import PasswordInput from './inputComponents/PasswordInput';
 import { useContext } from 'react';
 import AuthContext from '../../../contexts/AuthContext';
+import { HelloHeader, Wrapper, EmailHeader } from './styles/forms.styles';
 
 // Defining the interface for the PasswordInput component
 interface IPasswordFormProps{
@@ -18,10 +18,10 @@ const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
   const {setLoggedIn} = useContext(AuthContext);
 
   return(
-    <div>
+    <Wrapper>
       {/* Greeting the user */}
-      <h4 className={styles.welcomeHeader}>Hello again!</h4>
-      <h5 className='mb-3'>{email}</h5>
+      <HelloHeader>Hello again!</HelloHeader>
+      <EmailHeader>{email}</EmailHeader>
       <Formik
         initialValues={{
           password: '',
@@ -36,7 +36,7 @@ const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
         >
           {PasswordInput}
       </Formik>
-    </div>
+    </Wrapper>
   )
 }
 

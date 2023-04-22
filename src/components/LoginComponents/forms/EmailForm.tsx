@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import { emailSchema } from './schemas/emailSchema';
 import handleSubmit from './services/handleCheckEmail';
 import EmailInput from './inputComponents/EmailInput';
+import { Wrapper } from './styles/forms.styles';
 
 // Defining the interface for the EmailInput component
 interface IEmailFormProps {
@@ -11,7 +12,7 @@ interface IEmailFormProps {
 
 const EmailForm: React.FC<IEmailFormProps> = ({onNext, setEmail}) => {
   return(
-    <div>
+    <Wrapper>
       <Formik
         initialValues={{
           email: ''
@@ -27,7 +28,7 @@ const EmailForm: React.FC<IEmailFormProps> = ({onNext, setEmail}) => {
         {/* Form fields and error messages */}
         {EmailInput}
       </Formik>
-    </div>
+    </Wrapper>
   )
 }
 

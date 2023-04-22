@@ -32,7 +32,7 @@ const LoginPage = () => {
   return(
     <LoginLayout>
       {/* Function that renders a given step in the login process */}
-      <div className='mt-4'>
+      <>
         {(() => {
           switch (step) {
             case 1:
@@ -55,7 +55,7 @@ const LoginPage = () => {
               return null
           }
         })()}      
-      </div>
+      </>
       <ResetPasswordButton />
       <SignUpButton />
     </LoginLayout>

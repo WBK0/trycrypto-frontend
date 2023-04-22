@@ -1,4 +1,3 @@
-import styles from './links.module.css';
 import { SignupLink, SignupText, Wrapper } from './styles/signupArrow.styles';
 
 const SignUpButton = () => {
