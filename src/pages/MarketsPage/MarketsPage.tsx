@@ -19,11 +19,13 @@ import { columns } from '../../components/Markets/Table/columns/columns';
 import getData from "../../components/Markets/services/getData";
 import Searchbar from "../../components/Markets/Table/Searchbar/Searchbar";
 import { fuzzyFilter } from './../../components/Markets/Table/filters/fuzzyFilter';
-import styles from '../../components/Markets/Table/Table/table.module.css';
 import MarketSelect from "../../components/Markets/MarketSelect/MarketSelect";
 import LoadingTable from "../../components/Loading/LoadingTable";
 import HighlightedTokens from "../../components/Markets/Highlited/HighlightedTokens";
 import { MarketData } from "../../components/Markets/interfaces/interfaces";
+import { Row } from "../../shared/row";
+import { Col } from "../../shared/col";
+import { MarketHeader, ResponsiveTable, Table } from "./styles/marketPage.styles";
 
 // Extending the filterFns interface of react-table to include a fuzzy filter function
 declare module '@tanstack/table-core' {
@@ -59,7 +61,6 @@ const MarketsPage: React.FC = () => {
     return () => clearInterval(interval);
   }, [market]);
   
-  console.log(data)
    // Creating the react-table instance with specified configurations
   const table = useReactTable({
     data,
@@ -84,27 +85,29 @@ const MarketsPage: React.FC = () => {
   // Rendering the MarketsPage
   return(
     <Layout>
-      <h1 className="mt-2 mb-4">Market Overview</h1>
+      <MarketHeader>Market Overview</MarketHeader>
       <MarketSelect market={market} setMarket={setMarket} />
       <HighlightedTokens data={data} />
       <Searchbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
-      <div className="row">
+      <Row>
         {data.length > 0 ?
           <>
-            <div className='table-responsive'>
-              <table className={`table text-light ${styles.table}`}>
+          <Col xs={100}>
+            <ResponsiveTable>
+              <Table>
                 <Thead table={table} />
                 <Tbody table={table} />
-              </table>
-              
-            </div>
-            <Pagination table={table} />  
+              </Table>
+            </ResponsiveTable>
+          </Col>
+          <Col xs={100}>
+            <Pagination table={table} /> 
+          </Col> 
           </>
           :
           <LoadingTable />  
         }
-      </div>
-      <div className="h-4" />
+      </Row>
     </Layout>
   )
 }

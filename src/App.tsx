@@ -3,11 +3,10 @@ import "react-toastify/dist/ReactToastify.css";
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import { ToastContainer } from "react-toastify";
-import LoginGuard from "./layout/Navbar/LoginGuard";
+import LoginGuard from "./routes/LoginGuard";
 import { useContext } from "react";
 import AuthContext from "./contexts/AuthContext";
 import Loading from "./components/Loading/Loading";
-import ProtectedRoute from "./layout/Navbar/ProtectedRoute";
 import MarketsPage from "./pages/MarketsPage/MarketsPage";
 import SpotPage from "./pages/TradingPages/SpotPage/SpotPage";
 

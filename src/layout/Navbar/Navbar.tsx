@@ -6,9 +6,8 @@ import NavbarUserActions from "../../components/NavbarComponents/NavbarUserActio
 const Navbar: React.FC = () => {
   return(
     <NavbarLayout>
-      <NavbarLogo />
-        <NavbarContent />
-        <NavbarUserActions />
+      <NavbarLogo/>
+      <NavbarContent />
     </NavbarLayout>    
   )
 }

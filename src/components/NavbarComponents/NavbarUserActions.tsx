@@ -1,27 +1,30 @@
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './Navbar.module.css';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../../contexts/AuthContext';
 import handleLogout from '../../services/handleLogout';
+import { ActionsContainer, LoginButton, LoginLink, LogoutButton } from './styles/navbarActions.style';
 
-const NavbarUserActions = () => {
+interface INavbarUserActions{
+  extended: boolean
+}
 
+const NavbarUserActions: React.FC<INavbarUserActions> = ({ extended }) => {
   const { isLoggedIn, setLoggedIn } = useContext(AuthContext)
   const navigate = useNavigate()
 
   return(
-    <div className={`${styles.rightSide} collapse navbar-collapse`} id="navbarNavDropdown">
+    <ActionsContainer extended={extended}>
       {isLoggedIn 
-      ? <button aria-current="page" className={styles.logoutButton} onClick={() => handleLogout(navigate, setLoggedIn)}>
-          <i className={`bi bi-box-arrow-right ${styles.logoutLink}`}></i>
-        </button>
-      : <Link aria-current="page" className={styles.loginLink} to="/login">
-          <button className={styles.loginButton}>Login</button>
-        </Link>
+      ? <LogoutButton 
+          onClick={() => handleLogout(navigate, setLoggedIn)}
+        >
+          <i className='bi bi-box-arrow-right'></i>
+        </LogoutButton>
+      : <LoginLink to="/login">
+          <LoginButton>Login</LoginButton>
+        </LoginLink>
       }
-     
-      
-    </div>
+    </ActionsContainer>
   )
 }
 

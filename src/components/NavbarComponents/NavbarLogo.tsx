@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import { Logo, LogoLink } from './styles/navbarLogo.style';
 
 const NavbarLogo = () => {
   return(
-    <Link to="/" className="navbar-brand">
-      <img src={logo} width="200" height="40"></img>
-    </Link>
+    <LogoLink to="/">
+      <Logo src={logo} alt='logo'/>
+    </LogoLink>
   )
 }
 

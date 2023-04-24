@@ -1,5 +1,6 @@
+import { Container } from "../../shared/container";
 import Navbar from "../Navbar/Navbar";
-import styles from "./Layout.module.css"
+import { Wrapper } from "./layout.style";
 
 interface Props {
   children: React.ReactNode;
@@ -7,14 +8,14 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div>
+    <>
       <Navbar />
-      <div className={styles.layout}>
-        <div className="container">
+      <Wrapper>
+        <Container>
           {children}
-        </div>
-      </div>
-    </div>
+        </Container>
+      </Wrapper>
+    </>
   )
 }
 

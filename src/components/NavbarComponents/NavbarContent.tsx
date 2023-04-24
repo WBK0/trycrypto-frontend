@@ -1,22 +1,31 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import NavbarUserActions from './NavbarUserActions';
+import { LinksContainer, NavbarExtendedContainer, NavbarLink, NavbarLinkExtended, ResponsiveButton, ResponsiveContainer } from './styles/navbarContent.style';
 
 const NavbarContent = () => {
+  const [extendNavbar, setExtendedNavbar] = useState(false)
+  console.log(extendNavbar)
   return(
     <>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon">
-        </span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul className="navbar-nav mx-auto">
-          <li className="nav-item">
-            <Link className="nav-link mx-2 text-light" aria-current="page" to="/markets">Markets</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link mx-2 text-light" aria-current="page" to="/das">Portfel</Link>
-          </li>
-        </ul>
-      </div>
+      <LinksContainer>
+        <NavbarLink to="/markets">Markets</NavbarLink>           
+        <NavbarLink to="/das">Portfel</NavbarLink>
+      </LinksContainer>    
+      <NavbarUserActions extended={false}/>
+      <ResponsiveContainer>
+        <ResponsiveButton onClick={() => setExtendedNavbar(!extendNavbar)}>
+          <i className="bi bi-list"></i>
+        </ResponsiveButton>
+        {extendNavbar ?
+          <NavbarExtendedContainer>
+            <NavbarLinkExtended to="/markets">Markets</NavbarLinkExtended>  
+            <NavbarLinkExtended to="/markets">Markets</NavbarLinkExtended>  
+            <NavbarUserActions extended={true}/>
+          </NavbarExtendedContainer>
+        : null
+        }
+        
+      </ResponsiveContainer>
     </>
   )
 }
