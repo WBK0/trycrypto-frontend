@@ -6,9 +6,15 @@ type ColProps = {
   md?: number;
   lg?: number;
   xl?: number;
+  pr?: string;
+  pb?: string;
+  ml?: string;
 };
 
 export const Col = styled.div<ColProps>`
+  padding-right: ${props => props.pr || '12px'};
+  padding-bottom: ${props => props.pb || '12px'};
+  margin-left: ${props => props.ml};
   width: ${props => props.xs + "%"};
   @media (min-width: 600px) {
     width: ${props => props.sm + "%"};

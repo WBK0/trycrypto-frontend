@@ -96,7 +96,7 @@ const MarketsPage: React.FC = () => {
             <ResponsiveTable>
               <Table>
                 <Thead table={table} />
-                <Tbody table={table} />
+                <Tbody table={table} market={market}/>
               </Table>
             </ResponsiveTable>
           </Col>

@@ -1,4 +1,6 @@
+import { Row } from '../../../shared/row';
 import styles from './marketSelect.module.css';
+import { SelectButton } from './styles/marketSelect.styles';
 
 // Define interface
 interface IMarketSelect{
@@ -9,20 +11,20 @@ interface IMarketSelect{
 // Component for selecting the market type
 const MarketSelect : React.FC<IMarketSelect> = ({ market, setMarket }) => {
   return(
-    <div className='mt-2'>
-      <button 
-        className={`btn ${styles.button} ${market === 'spot' ? styles.active : null}`} 
+    <Row mt='25px'>
+      <SelectButton
+        active={market==='spot' ? true : false}
         onClick={() => setMarket('spot')}
       >
         Spot Market
-      </button>
-      <button 
-        className={`btn ${styles.button} ${market === 'futures' ? styles.active : null} ms-2` } 
+      </SelectButton>
+      <SelectButton
+        active={market==='futures' ? true : false}
         onClick={() => setMarket('futures')}
       >
         Futures Market
-      </button>
-    </div>
+      </SelectButton>
+    </Row>
   )
 }
 

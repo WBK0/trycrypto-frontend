@@ -1,25 +1,21 @@
-import { RowData, Table } from '@tanstack/react-table';
-import styles from './pagination.module.css';
+import { PaginationButton } from './styles/pagination.styles';
 
 // Define interface
 interface IButton{
-  table: Table<RowData>;
   isActive: boolean;
   value: number;
   action: () => void;
 }
 
 // The component responsible for displaying the pagination button
-const Button: React.FC<IButton> = ({table, isActive, value, action}) => {
+const Button: React.FC<IButton> = ({ isActive, value, action}) => {
   return(
-    <li className='page-item'>
-      <button 
-        className={`page-link ${styles.item} ${isActive ? styles.active : ''}`}
+      <PaginationButton 
+        isActive={isActive}
         onClick={action}
       >
         {value}
-      </button>
-    </li>
+      </PaginationButton>
   )
 }
 

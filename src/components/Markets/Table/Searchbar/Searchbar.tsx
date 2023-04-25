@@ -1,4 +1,6 @@
-import styles from './searchbar.module.css';
+import { Col } from '../../../../shared/col';
+import { Row } from '../../../../shared/row';
+import { SearchInput } from './styles/searchbar.styles';
 
 // Define interface
 interface ISearchbar{
@@ -9,18 +11,15 @@ interface ISearchbar{
 // The component responsible for displaying the table search
 const Searchbar : React.FC<ISearchbar> = ({globalFilter, setGlobalFilter}) => {
   return(
-    <div className='row d-flex justify-content-end mt-4'>
-      <div className="col-xl-3 col-md-4 col-sm-6 col-8">
-        <div className="mb-3 mt-3">
-          <input 
-            value={globalFilter ?? ''} 
-            onChange={(e) => setGlobalFilter(String(e.target.value))}
-            className={`form-control form-control-lg bg-transparent text-light ${styles.input}`}
-            placeholder='Wpisz nazwę pary'
-          />
-        </div>
-      </div>
-    </div>
+    <Row justifyContent='end'>
+      <Col xl={25} lg={30} md={40} sm={50} xs={80}>
+        <SearchInput 
+          value={globalFilter ?? ''} 
+          onChange={(e) => setGlobalFilter(String(e.target.value))}
+          placeholder='Wpisz nazwę pary'
+        />
+      </Col>
+    </Row>
     
   )
 }

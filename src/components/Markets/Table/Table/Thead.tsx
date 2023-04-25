@@ -1,5 +1,6 @@
 import { flexRender } from "@tanstack/react-table";
 import styles from './table.module.css';
+import { HeaderRow } from "./styles/table.styles";
 
 interface IThead{
   table: any;
@@ -29,7 +30,7 @@ const Thead : React.FC<IThead> = ({ table }) => {
     <thead>
       {table.getHeaderGroups().map((headerGroup : IHeaderGroup) => (
         // Render a row for each header group
-        <tr key={headerGroup.id} className={styles.tableRow}>
+        <HeaderRow key={headerGroup.id}>
           {headerGroup.headers.map(header => {
             // Render a cell for each header in the group
             return (
@@ -54,7 +55,7 @@ const Thead : React.FC<IThead> = ({ table }) => {
               </th>
             )
           })}
-        </tr>
+        </HeaderRow>
       ))}
     </thead>
   )

@@ -1,5 +1,6 @@
 import HighlitedContainer from './components/HighlightedContainer';
-import { MarketData } from '../../interfaces/interfaces';
+import { MarketData } from '../interfaces/interfaces';
+import { Row } from '../../../shared/row';
 
 // Define the interface
 interface IHighlightedTokens{
@@ -8,7 +9,7 @@ interface IHighlightedTokens{
 
 const HighlightedTokens: React.FC<IHighlightedTokens> = ({ data }) => {
   return(
-    <div className="row mt-3">
+    <Row mt='20px'>
       {data.length > 0 ?
         // Render four HighlitedContainer components with different prop values
         <>
@@ -35,7 +36,7 @@ const HighlightedTokens: React.FC<IHighlightedTokens> = ({ data }) => {
         </>
         : null
       }
-    </div>
+    </Row>
   )
 }
 

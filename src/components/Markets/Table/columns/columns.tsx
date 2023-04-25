@@ -17,7 +17,7 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
     cell: (info: any) => info.getValue(),
     header: () => <span>Name</span>,
     filterFn: 'fuzzy',
-    size: 120,
+    size: 120
   },
   {
     accessorKey: 'lastPrice',

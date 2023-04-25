@@ -1,4 +1,5 @@
 import styles from './spot.module.css'
+import { Wrapper } from './styles/pair.styles';
 
 interface IPair{
   symbol: string | undefined;
@@ -6,12 +7,9 @@ interface IPair{
 
 const Pair: React.FC<IPair> = ({ symbol }) => {
   return(
-    <div className='row' style={{margin: 0}}>
-      <div className={`${styles.symbol} d-flex align-items-center justify-content-center`}>
-        {symbol?.toUpperCase().replace("USDT", "/USDT")}
-      </div>
-    </div>
-    
+    <Wrapper>
+      {symbol?.toUpperCase().replace("USDT", "/USDT")}
+    </Wrapper>
   )
 }
 

@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import styles from './spot.module.css';
+import { Row } from "../../../shared/row";
+import { ChartWrapper } from "./styles/chart.styles";
 
 interface IChart {
   symbol: string | undefined;
@@ -57,16 +59,16 @@ useEffect(() => {
 }, []);
 
   return(
-    <div className="row me-0 ms-0 pe-0 ps-0">
-      <div className={styles.chartContainer}>
-        <div className='tradingview-widget-container h-100'>
-          <div id='tradingview_33c1c' className="h-100"/>
+    <Row>
+      <ChartWrapper>
+        <div className='tradingview-widget-container' style={{height: '100%'}}>
+          <div id='tradingview_33c1c' style={{height: '100%'}}/>
           <div className="tradingview-widget-copyright">
-            <a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span className="blue-text">{symbol?.toUpperCase()} chart</span></a> by TradingView
+            <a href={`https://www.tradingview.com/symbols/${symbol}`} rel="noopener" target="_blank">{symbol?.toUpperCase()} chart</a> by TradingView
           </div>
         </div>
-      </div>
-    </div>
+      </ChartWrapper>
+    </Row>
   )
 }
 

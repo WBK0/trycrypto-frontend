@@ -7,7 +7,7 @@ interface ITradingLayout{
 
 const TradingLayout: React.FC<ITradingLayout> = ({ children }) => {
   return(
-    <div>
+    <div style={{position: 'absolute', width: '100%'}}>
       <Navbar />
       <div className={styles.container}>
         {children}
