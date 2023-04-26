@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import styles from './spot.module.css';
 import { Info, Title, Wrapper } from './styles/pairInfo.styles';
 import { Row } from '../../../shared/row';
 import { Col } from '../../../shared/col';
@@ -19,8 +17,6 @@ interface IData{
 }
 
 const PairInfo: React.FC<IPairInfo> = ({ data }) => {
-  
-
   return(
     <Wrapper>
       <Row alignItems='center' height='65px'>
