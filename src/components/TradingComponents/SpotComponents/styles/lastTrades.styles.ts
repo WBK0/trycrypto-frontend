@@ -1,0 +1,45 @@
+import styled from "styled-components";
+
+export const Wrapper = styled.div`
+  color: #c4c4c4;
+  display: flex;  
+  flex-direction: column-reverse;
+  width: 100%;
+  border: 1px solid rgb(90,90,90);
+  height: 333px;
+  border-right: none;
+  padding: 10px;
+  overflow-y: auto;
+  &::-webkit-scrollbar{
+   width: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border-radius: 10px;
+  }
+`
+
+export const TradeWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  height: 20px;
+`
+
+export const Price = styled.span`
+  flex: 1;
+  font-size: 14px;
+  color: ${props => props.color};
+  font-weight: 500;
+`
+
+export const Quantity = styled.span`
+  flex: 1;
+  font-size: 14px;
+  text-align: center;
+`
+
+export const Time = styled.span`
+  flex: 1;
+  font-size: 14px;
+  text-align: right;
+`

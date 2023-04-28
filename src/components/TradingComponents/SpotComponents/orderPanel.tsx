@@ -1,16 +1,16 @@
 import { Col } from "../../../shared/col";
 import { Row } from "../../../shared/row";
-import styles from '../../../pages/TradingPages/SpotPage/spotPage.module.css'
-import { Balance, Input, InputSymbol, InputText, InputWrapper, OrderButton, RangeInput } from "./styles/orderPanel.styles";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, OrderButton, OrderWrapper, RangeInput } from "./styles/orderPanel.styles";
 
 interface IOrderPanel{
-  symbol: string;
+  symbol: string | undefined;
 }
 
 const OrderPanel: React.FC<IOrderPanel> = ({ symbol }) => {
   return(
+    <OrderWrapper>
     <Row>
-      <Col xs={50}>
+      <Col xs={100} md={50} pr="0px" prMd="12px">
         <Balance>
           Dostępne: 9434.32USDT
         </Balance>
@@ -24,16 +24,16 @@ const OrderPanel: React.FC<IOrderPanel> = ({ symbol }) => {
           <Input />
           <InputSymbol>USDT</InputSymbol>
         </InputWrapper>
-        <RangeInput type="range" min="0" max="100"></RangeInput>
+        <RangeInput type="range" min="0" max="100" defaultValue="50"></RangeInput>
         <InputWrapper>
           <InputText>Suma</InputText>
           <Input />
-          <InputSymbol>{symbol?.toUpperCase()}</InputSymbol>
+          <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
         </InputWrapper>
         
-        <OrderButton>Kup {symbol?.toUpperCase()}</OrderButton>
+        <OrderButton orderType="buy">Buy {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
       </Col>
-      <Col xs={50} pl="12px" pr='0px'>
+      <Col xs={100} md={50} pr="0px" plMd="12px">
         <Balance>
           Dostępne: 9434.32USDT
         </Balance>
@@ -45,17 +45,18 @@ const OrderPanel: React.FC<IOrderPanel> = ({ symbol }) => {
         <InputWrapper>
           <InputText>Ilość</InputText>
           <Input />
-          <InputSymbol>USDT</InputSymbol>
+          <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
         </InputWrapper>
+        <RangeInput type="range" min="0" max="100" defaultValue="50"></RangeInput>
         <InputWrapper>
           <InputText>Suma</InputText>
           <Input />
-          <InputSymbol>{symbol?.toUpperCase()}</InputSymbol>
+          <InputSymbol>USDT</InputSymbol>
         </InputWrapper>
-        <input type="range" className="form-range mb-3" min="0" max="100" id="customRange2"></input>
-        <button type="button" className="btn btn-danger mb-4 w-100">Sprzedaj {symbol?.toUpperCase()}</button>
+        <OrderButton orderType="sell">Sell {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
       </Col>
     </Row>
+    </OrderWrapper>
   )
 }
 

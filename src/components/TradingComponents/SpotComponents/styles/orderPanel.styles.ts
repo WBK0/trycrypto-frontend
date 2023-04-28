@@ -1,7 +1,15 @@
 import styled from "styled-components";
 
+export const OrderWrapper = styled.div`
+  width: 100%;
+  height: 333px;
+  border: 1px solid rgb(90, 90, 90);
+  border-top: none;
+  padding: 10px;
+`
+
 export const Balance = styled.p`
-  margin-top: 12px;
+  margin-top: 5px;
   font-size: 14px;
   color: white;
 `
@@ -63,22 +71,45 @@ export const InputSymbol = styled.span`
 `
 
 export const RangeInput = styled.input`
+  -webkit-appearance: none;
   width: 100%;
-  height: 30px;
-  padding: 0px;
+  height: 8px;
+  border-radius: 5px; 
+  margin-bottom: 20px; 
+  background-color: #b3b3b3;  
   outline: none;
-  margin-bottom: 5px;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background-color: #3b3e47;
+    cursor: pointer;
+  }
+  &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background-color: grey;
+    cursor: pointer;
+  }
+
 `
 
-export const OrderButton = styled.button`
+interface IOrderButton {
+  orderType: 'buy' | 'sell';
+}
+
+export const OrderButton = styled.button<IOrderButton>`
   width: 100%;
   height: 40px;
   border-radius: 8px;
-  background-color: #0bb50b;
+  background-color: ${(props) => props.orderType === 'buy' ? '#0bb50b' : '#B62216'};
   border: none;
   color: white;
   font-weight: 500;
   &:hover{
-    background-color: #0b960b;
+    background-color: ${(props) => props.orderType === 'buy' ? '#0b960b' : '#951409'};
   }
 `

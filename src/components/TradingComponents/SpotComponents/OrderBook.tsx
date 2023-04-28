@@ -1,7 +1,17 @@
-import styles from '../../../pages/TradingPages/SpotPage/spotPage.module.css'
+import { AsksWrapper, BidsWrapper, BookWrapper, InfoBar, Item, PriceInfo, SettingsBar, Wrapper } from './styles/orderBook.styles';
 
-const OrderBook = ({orderBook, data}) => {
-  function getBackgroundColor(amount, maxAmount, type) {
+interface IOrderBook{
+  orderBook: {
+    asks: [], 
+    bids: []
+  };
+  data: {
+    c: number,
+  }
+}
+
+const OrderBook: React.FC<IOrderBook> = ({orderBook, data}) => {
+  function getBackgroundColor(amount: number, maxAmount: number, type: string ) {
     const percentage = amount / maxAmount;
     if(type == 'ask'){
       return `linear-gradient(to left, #770303 ${Number(percentage * 115).toFixed(0) + "%"}, transparent ${Number(percentage * 100).toFixed(0) + "%"})`;
@@ -14,41 +24,48 @@ const OrderBook = ({orderBook, data}) => {
   const maxAmountAsk = Math.max(...orderBook.asks.map((ask) => ask[1]));
   const maxAmountBid = Math.max(...orderBook.bids.map((bid) => bid[1]));
   
-  
   return(
-    <div className={styles.orderBook}>
-      <div className={styles.orderBookType}>
-        <i className={`bi bi-book ${styles.book} cursor-pointer`} style={{color: 'white'}}></i>
-        <i className={`bi bi-book-half ${styles.book}`} style={{color: '#077703'}}></i>
-        <i className={`bi bi-book-half ${styles.book}`} style={{color: '#770303'}}></i>
-      </div>
-      <div className={styles.tableInfo}>
+    <Wrapper>
+      <SettingsBar>
+        <BookWrapper color='white'>
+          <i className='bi bi-book' />
+        </BookWrapper>
+        <BookWrapper color='#077703'>
+          <i className='bi bi-book-half' />
+        </BookWrapper>
+        <BookWrapper color='#770303'>
+          <i className='bi bi-book-half' />
+        </BookWrapper>
+      </SettingsBar>
+      <InfoBar>
         <span>CENA USDT</span>
         <span>ILOŚĆ</span>
-      </div>
-      <div className={styles.asks}>
-        {orderBook.asks.map((item: any) => {
+      </InfoBar>
+      <AsksWrapper>
+        {orderBook.asks.sort((a: any, b: any) => b[0] - a[0]).map((item: any) => {
           return(<>
-            <div className={styles.orderBookItem} style={{background: getBackgroundColor(item[1], maxAmountAsk, 'ask')}}>
+            <Item background={getBackgroundColor(item[1], maxAmountAsk, 'ask')}>
               <span>{Number(item[0]).toFixed(2)}</span>
               <span>{Number(item[1]).toFixed(4)}</span>
-            </div>                     
+            </Item>                     
             </>
           )
         })}
-      </div>
-      <div className={styles.priceInfo}>
+      </AsksWrapper>
+      <PriceInfo>
         {Number(data.c).toFixed(2)}$
-      </div>
-      {orderBook.bids.map((item: any) => {
-        return(
-          <div className={styles.orderBookItem} style={{background: getBackgroundColor(item[1], maxAmountBid, 'bid')}}>
-            <span>{Number(item[0]).toFixed(2)}</span>
-            <span>{Number(item[1]).toFixed(4)}</span>
-          </div>
-        )
-      })}
-    </div>
+      </PriceInfo>
+      <BidsWrapper>
+        {orderBook.bids.map((item: any) => {
+          return(
+            <Item background={getBackgroundColor(item[1], maxAmountBid, 'bid')}>
+              <span>{Number(item[0]).toFixed(2)}</span>
+              <span>{Number(item[1]).toFixed(4)}</span>
+            </Item>
+          )
+        })}
+      </BidsWrapper>
+    </Wrapper>
   )
 }
 

@@ -11,6 +11,10 @@ type ColProps = {
   pl?: string;
   pt?: string;
   ml?: string;
+  plMd?: string;
+  prMd?: string;
+  mlMd?: string;
+  mrMd?: string;
 };
 
 export const Col = styled.div<ColProps>`
@@ -25,6 +29,10 @@ export const Col = styled.div<ColProps>`
   }
   @media (min-width: 800px) {
     width: ${props => props.md + "%"};
+    padding-left: ${props => props.plMd};
+    padding-right: ${props => props.prMd};
+    margin-left: ${props => props.mlMd};
+    margin-right: ${props => props.mrMd};
   }
   @media (min-width: 1000px) {
     width: ${props => props.lg + "%"};

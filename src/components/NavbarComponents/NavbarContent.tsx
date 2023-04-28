@@ -4,7 +4,6 @@ import { LinksContainer, NavbarExtendedContainer, NavbarLink, NavbarLinkExtended
 
 const NavbarContent = () => {
   const [extendNavbar, setExtendedNavbar] = useState(false)
-  console.log(extendNavbar)
   return(
     <>
       <LinksContainer>

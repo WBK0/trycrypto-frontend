@@ -18,7 +18,7 @@ export const Row = styled.div<RowProps>`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: ${props => props.height || '100%'};
+  min-height: ${props => props.height || '100%'};
   justify-content: ${props => props.justifyContent || 'start'};
   align-items: ${props => props.alignItems || 'start'};
   margin-top: ${props => props.mt};
