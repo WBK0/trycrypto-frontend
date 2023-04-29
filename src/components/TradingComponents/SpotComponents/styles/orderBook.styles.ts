@@ -62,5 +62,5 @@ export const Item = styled.div<IItem>`
   height: 20px;
   font-size: 15px;
   line-height: 20px;
-  background: ${props => props.background}
+  background: ${props => props.background};
 `

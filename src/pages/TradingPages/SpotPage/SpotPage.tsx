@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TradingLayout from "../../../layout/TradingLayout/TradingLayout";
 import { useEffect, useState } from "react";
 import Chart from "../../../components/TradingComponents/SpotComponents/Chart";
@@ -11,6 +11,7 @@ import { Col } from "../../../shared/col";
 import OrderBook from "../../../components/TradingComponents/SpotComponents/OrderBook";
 import OrderPanel from "../../../components/TradingComponents/SpotComponents/orderPanel";
 import LastTrades from "../../../components/TradingComponents/SpotComponents/lastTrades";
+import Assets from "../../../components/TradingComponents/SpotComponents/Assets";
 
 interface TradingView {
   widget: (options: any) => any;
@@ -29,8 +30,10 @@ interface IOrderBook {
 
 const SpotPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const { symbol } = useParams()
+  const { symbol } = useParams<{ symbol: string }>()
 
+  console.log(symbol)
+  
   const [data, setData] = useState({
     c: 0,
     p: 0,
@@ -55,10 +58,9 @@ const SpotPage: React.FC = () => {
       }else{
         setOrderBook(JSON.parse(event.data));
       }
-      
       setLoading(false)
     });
-
+    addEventListener("error", (event) => {console.log(event)});
     return () => {
       newSocket.close();
     };
@@ -97,6 +99,9 @@ const SpotPage: React.FC = () => {
               </Col>
               <Col xs={100} md={60} pr='0px' pb="0px">
                 <OrderPanel symbol={symbol}/>
+              </Col>
+              <Col md={20}>
+                <Assets />
               </Col>
             </Row>          
         </Container>

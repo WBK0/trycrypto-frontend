@@ -2,14 +2,21 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   color: #c4c4c4;
-  display: flex;  
-  flex-direction: column-reverse;
   width: 100%;
   border: 1px solid rgb(90,90,90);
   height: 333px;
-  border-right: none;
+  border-top: none;
+  border-right: none;  
+`
+
+export const Flex = styled.div`
+  display: flex;  
+  flex-direction: column;
+  width: 100%;
+  max-height: 333px;
   padding: 10px;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-anchor: auto;
   &::-webkit-scrollbar{
    width: 5px;
   }
