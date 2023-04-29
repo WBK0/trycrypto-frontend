@@ -71,6 +71,7 @@ export const InputSymbol = styled.span`
 `
 
 export const RangeInput = styled.input`
+  appearance: none;
   -webkit-appearance: none;
   width: 100%;
   height: 8px;

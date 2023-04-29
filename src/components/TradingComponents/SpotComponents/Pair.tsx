@@ -1,4 +1,3 @@
-import styles from './spot.module.css'
 import { Wrapper } from './styles/pair.styles';
 
 interface IPair{

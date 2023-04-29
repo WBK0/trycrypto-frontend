@@ -12,6 +12,7 @@ import OrderBook from "../../../components/TradingComponents/SpotComponents/Orde
 import OrderPanel from "../../../components/TradingComponents/SpotComponents/orderPanel";
 import LastTrades from "../../../components/TradingComponents/SpotComponents/lastTrades";
 import Assets from "../../../components/TradingComponents/SpotComponents/Assets";
+import Market from "../../../components/TradingComponents/SpotComponents/Market";
 
 interface TradingView {
   widget: (options: any) => any;
@@ -31,8 +32,6 @@ interface IOrderBook {
 const SpotPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { symbol } = useParams<{ symbol: string }>()
-
-  console.log(symbol)
   
   const [data, setData] = useState({
     c: 0,
@@ -54,7 +53,6 @@ const SpotPage: React.FC = () => {
     newSocket.addEventListener('message', (event) => {
       if(JSON.parse(event.data).e == '24hrTicker'){
         setData(JSON.parse(event.data));
-        console.log("chuj")
       }else{
         setOrderBook(JSON.parse(event.data));
       }
@@ -78,11 +76,8 @@ const SpotPage: React.FC = () => {
             <Col xs={100} lg={15} xl={20} pr="0px" pb="0px">
               <Pair symbol={symbol} />
             </Col>
-            <Col xs={100} lg={70} xl={60} pr="0px" pb="0px">
+            <Col xs={100} lg={70} xl={80} pr="0px" pb="0px">
               <PairInfo data={data} />
-            </Col>
-            <Col xl={20}>
-              <div style={{background: 'red', width: '100%'}}></div>
             </Col>
           </Row>
           <Row>
@@ -92,6 +87,9 @@ const SpotPage: React.FC = () => {
             <Col xs={60} pr="0px" pb="0px">
               <Chart symbol={symbol}/>
             </Col>
+            <Col xs={20} pr="0px" pb="0px">
+              <Market />
+            </Col>
           </Row>
             <Row>
               <Col xs={20} pr="0px" pb="0px">
@@ -100,7 +98,7 @@ const SpotPage: React.FC = () => {
               <Col xs={100} md={60} pr='0px' pb="0px">
                 <OrderPanel symbol={symbol}/>
               </Col>
-              <Col md={20}>
+              <Col md={20} pr="0px" pb="0px">
                 <Assets />
               </Col>
             </Row>          

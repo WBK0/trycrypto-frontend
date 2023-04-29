@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   height: 333px;
   border: 1px solid rgb(90, 90, 90);
   border-left: none;
-  
+  border-top: none;
   color: white;
 `
 

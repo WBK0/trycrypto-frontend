@@ -21,16 +21,13 @@ const LastTrades : React.FC<ILastTrades> = ({ symbol }) => {
     newSocket.addEventListener('message', (event) => {
       setData(prevData => {
         const newData = [JSON.parse(event.data), ...prevData,];
-        return newData.slice(0, 100);
+        return newData.slice(0, 150);
       });
-      console.log("XD")
     });
     return () => {
       newSocket.close();
     };
   }, []);
-
-  console.log(data)
 
   return(
     <Wrapper>
