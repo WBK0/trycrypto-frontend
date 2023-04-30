@@ -43,23 +43,22 @@ const OrderBook: React.FC<IOrderBook> = ({orderBook, data}) => {
       </InfoBar>
       <AsksWrapper>
         {orderBook.asks.sort((a: any, b: any) => b[0] - a[0]).map((item: any) => {
-          return(<>
-            <Item background={getBackgroundColor(item[1], maxAmountAsk, 'ask')}>
-              <span>{Number(item[0]).toFixed(item[0] <= 15 ? 4 : 2)}</span>
+          return(
+            <Item background={getBackgroundColor(item[1], maxAmountAsk, 'ask')} key={item}>
+              <span>{Number(item[0]).toFixed(item[0] <= 15 ? 5 : 2)}</span>
               <span>{Number(item[1]).toFixed(4)}</span>
             </Item>                     
-            </>
           )
         })}
       </AsksWrapper>
       <PriceInfo>
-        {Number(data.c).toFixed(2)}$
+        {Number(data.c).toFixed(data.c <= 15 ? 5 : 2)}$
       </PriceInfo>
       <BidsWrapper>
         {orderBook.bids.map((item: any) => {
           return(
-            <Item background={getBackgroundColor(item[1], maxAmountBid, 'bid')}>
-              <span>{Number(item[0]).toFixed(item[0] <= 15 ? 4 : 2)}</span>
+            <Item background={getBackgroundColor(item[1], maxAmountBid, 'bid')} key={item}>
+              <span>{Number(item[0]).toFixed(item[0] <= 15 ? 5 : 2)}</span>
               <span>{Number(item[1]).toFixed(4)}</span>
             </Item>
           )

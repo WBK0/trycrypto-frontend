@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const MarketWrapper = styled.div`
@@ -67,7 +68,8 @@ export const ItemWrapper = styled.div`
 `
 
 export const Pair = styled.span`
-flex: 1 1 0%; 
+  color: rgb(180, 180, 180);
+  flex: 1 1 0%; 
   font-size: 13px;
 `
 
@@ -75,11 +77,17 @@ export const Price = styled.span`
   color: ${props => props.color};
   flex: 1 1 0%; 
   font-size: 13px;
+  font-weight: 500;
   text-align: right;
 `
 
 export const Change = styled.span`
+  color: ${props => Number(props.color) >= 0 ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'};
   flex: 1 1 0%;
   font-size: 13px;
   text-align: right;
+`
+
+export const SpotLink = styled(Link)`
+  text-decoration: none;
 `

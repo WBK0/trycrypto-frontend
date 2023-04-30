@@ -7,4 +7,5 @@ export interface MarketData{
   lowPrice: string;
   percentChange: string;
   priceChange: string;
+  color: string;
 }

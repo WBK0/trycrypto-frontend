@@ -46,8 +46,9 @@ const SpotPage: React.FC = () => {
     asks: [],
     bids: []
   })
-  
+
   useEffect(() => {
+    setLoading(true);
     const newSocket = new WebSocket('wss://stream.binance.com/ws/' + symbol + '@ticker' + '/' + symbol + '@depth10');
 
     newSocket.addEventListener('message', (event) => {
@@ -62,7 +63,7 @@ const SpotPage: React.FC = () => {
     return () => {
       newSocket.close();
     };
-  }, []);
+  }, [symbol]);
 
   return(
     <>
