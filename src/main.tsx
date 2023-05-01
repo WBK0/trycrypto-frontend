@@ -7,12 +7,15 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import AuthProvider from './AuthProvider';
 import { GlobalStyle } from './shared/globalStyles';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <GlobalStyle />
     <AuthProvider>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </AuthProvider>
   </React.StrictMode>,
 )

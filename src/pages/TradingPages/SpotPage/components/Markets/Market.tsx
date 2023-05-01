@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Change, InputWrapper, ItemWrapper, ItemsWrapper, Loupe, MarketWrapper, Pair, Price, SearchBar, SpotLink } from "./styles/market.styles";
-import getData from "../../Markets/services/getData";
-import { MarketData } from "../../Markets/interfaces/interfaces";
+import { Change, InputWrapper, ItemWrapper, ItemsWrapper, Loupe, MarketWrapper, Pair, Price, SearchBar, SpotLink } from "./market.styles";
+import getData from "../../../../../components/Markets/services/getData";
+import { MarketData } from "../../../../../components/Markets/interfaces/interfaces";
 
 const Market = () => {
   const [search, setSearch] = useState('');

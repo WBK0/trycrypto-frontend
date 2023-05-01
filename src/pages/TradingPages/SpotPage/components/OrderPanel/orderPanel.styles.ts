@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const OrderWrapper = styled.div`
@@ -118,5 +119,24 @@ export const OrderButton = styled.button<IOrderButton>`
   font-weight: 500;
   &:hover{
     background-color: ${(props) => props.orderType === 'buy' ? '#0b960b' : '#951409'};
+  }
+`
+
+export const LoginButton = styled.button`
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  background-color: rgb(42, 45, 53);
+  border: none;
+  color: white;
+  font-weight: 500;
+  cursor: default !important; 
+`
+
+export const LoginLink = styled(Link)`
+  text-decoration: none;
+  color: var(--font-yellow);
+  &:hover{
+    color: var(--font-yellow);
   }
 `

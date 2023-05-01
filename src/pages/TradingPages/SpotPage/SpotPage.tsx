@@ -1,19 +1,21 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import TradingLayout from "../../../layout/TradingLayout/TradingLayout";
-import { useEffect, useState } from "react";
-import Chart from "../../../components/TradingComponents/SpotComponents/Chart";
-import Pair from "../../../components/TradingComponents/SpotComponents/Pair";
-import PairInfo from "../../../components/TradingComponents/SpotComponents/PairInfo";
+import { useContext, useEffect, useState } from "react";
+import Chart from "./components/Chart/Chart";
+import Pair from "./components/PairSymbol/Pair";
+import PairInfo from "./components/PairInfo/PairInfo";
 import Loading from './../../../components/Loading/Loading';
 import { Container } from "../../../shared/container";
 import { Row } from "../../../shared/row";
 import { Col } from "../../../shared/col";
-import OrderBook from "../../../components/TradingComponents/SpotComponents/OrderBook";
-import OrderPanel from "../../../components/TradingComponents/SpotComponents/orderPanel";
-import LastTrades from "../../../components/TradingComponents/SpotComponents/lastTrades";
-import Assets from "../../../components/TradingComponents/SpotComponents/Assets";
-import Market from "../../../components/TradingComponents/SpotComponents/Market";
-import ResponsiveSelect from "./components/ResponsiveSelect";
+import OrderBook from "./components/OrderBook/OrderBook";
+import OrderPanel from "./components/OrderPanel/orderPanel";
+import LastTrades from "./components/LastTrades/lastTrades";
+import Assets from "./components/SpotAssets/Assets";
+import Market from "./components/Markets/Market";
+import ResponsiveSelect from "./components/ResponsiveSelect/ResponsiveSelect";
+import useWebSocket from "../../../hooks/useWebSocket";
+import AuthContext from "../../../contexts/AuthContext";
 
 interface TradingView {
   widget: (options: any) => any;
@@ -33,8 +35,8 @@ interface IOrderBook {
 const SpotPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showResponsive, setShowResponsive] = useState('chart');
+
   const { symbol } = useParams<{ symbol: string }>()
-  
   const [data, setData] = useState({
     c: 0,
     p: 0,
@@ -44,35 +46,25 @@ const SpotPage: React.FC = () => {
     o: 0,
     q: 0
   });
-  const [orderBook, setOrderBook] = useState<IOrderBook>({
-    asks: [],
-    bids: []
-  })
+
+  const onMessage = (event: MessageEvent) => {
+    setLoading(false)
+    setData(JSON.parse(event.data))
+  }
+  useWebSocket({
+    url: 'wss://stream.binance.com/ws/' + symbol + '@ticker',
+    onMessage
+  });
 
   useEffect(() => {
     setLoading(true);
-    const newSocket = new WebSocket('wss://stream.binance.com/ws/' + symbol + '@ticker' + '/' + symbol + '@depth10');
-
-    newSocket.addEventListener('message', (event) => {
-      if(JSON.parse(event.data).e == '24hrTicker'){
-        setData(JSON.parse(event.data));
-      }else{
-        setOrderBook(JSON.parse(event.data));
-      }
-      setLoading(false)
-    });
-    addEventListener("error", (event) => {console.log(event)});
-    return () => {
-      newSocket.close();
-    };
-  }, [symbol]);
+  }, [symbol])
 
   return(
     <>
     {
-      loading ?
-      <Loading />
-      :
+      loading ? <Loading /> : null
+    }
       <TradingLayout>
         <Container pr="0px" pl="0px">
           <Row>
@@ -90,7 +82,7 @@ const SpotPage: React.FC = () => {
           </Row>
           <Row>
             <Col xl={20} lg={24} xs={100} dXs={showResponsive == 'orderBook' ? 'block' : 'none'} dLg="block" pr="0px" pb="0px">
-              <OrderBook orderBook={orderBook} data={data} />
+              <OrderBook symbol={symbol} data={data}/>
             </Col>
             <Col xl={60} lg={52} xs={100} dXs={showResponsive == 'chart' ? 'block' : 'none'} dLg="block" pr="0px" pb="0px">
               <Chart symbol={symbol}/>
@@ -112,7 +104,6 @@ const SpotPage: React.FC = () => {
             </Row>          
         </Container>
       </TradingLayout>
-      }
     </>
   )
 }

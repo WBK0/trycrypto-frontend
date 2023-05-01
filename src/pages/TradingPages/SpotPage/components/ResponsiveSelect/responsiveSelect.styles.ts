@@ -16,7 +16,6 @@ export const Wrapper = styled.div`
 interface ISelectButton{
   active?: boolean;
 }
-
 export const SelectButton = styled.button<ISelectButton>`
   background-color: transparent;
   color: var(--font-yellow);

@@ -14,10 +14,11 @@ interface IHandleSubmit{
 interface ExtendedFormikHelpers<T> extends FormikHelpers<T> {
   navigate: (to: To) => void;
   setLoggedIn: (value: boolean) => void;
+  lastLocation: string;
 }
 
 // defining the form sending function
-const handleSubmit = async(formValues: IHandleSubmit, {setFieldError, setSubmitting, navigate, setLoggedIn}: ExtendedFormikHelpers<IHandleSubmit>): Promise<void> => {
+const handleSubmit = async(formValues: IHandleSubmit, {setFieldError, setSubmitting, navigate, setLoggedIn, lastLocation}: ExtendedFormikHelpers<IHandleSubmit>): Promise<void> => {
   
   try {
     // sending a query to the login server using the LoginService
@@ -34,7 +35,7 @@ const handleSubmit = async(formValues: IHandleSubmit, {setFieldError, setSubmitt
         theme: "dark",
         });
       // redirecting the user to the main page of the application
-      navigate('/');
+      navigate(lastLocation);
       setLoggedIn(true)
       setSubmitting(false);
     }else{

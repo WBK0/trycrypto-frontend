@@ -15,7 +15,7 @@ interface IPasswordFormProps{
 const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
 
   const navigate = useNavigate()
-  const {setLoggedIn} = useContext(AuthContext);
+  const {setLoggedIn, lastLocation} = useContext(AuthContext);
 
   return(
     <Wrapper>
@@ -31,7 +31,7 @@ const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
         validateOnBlur={false}
         validationSchema={passwordSchema}
         onSubmit={(values, formikHelpers) => 
-          handleSubmit(values, {...formikHelpers, navigate, setLoggedIn})
+          handleSubmit(values, {...formikHelpers, navigate, setLoggedIn, lastLocation})
         }
         >
           {PasswordInput}

@@ -1,16 +1,33 @@
-import { AsksWrapper, BidsWrapper, BookWrapper, InfoBar, Item, PriceInfo, SettingsBar, Wrapper } from './styles/orderBook.styles';
+import { useState } from 'react';
+import { AsksWrapper, BidsWrapper, BookWrapper, InfoBar, Item, PriceInfo, SettingsBar, Wrapper } from './orderBook.styles';
+import useWebSocket from '../../../../../hooks/useWebSocket';
 
 interface IOrderBook{
-  orderBook: {
-    asks: [], 
-    bids: []
-  };
+  symbol: string | undefined;
   data: {
-    c: number,
+    c: number;
   }
 }
 
-const OrderBook: React.FC<IOrderBook> = ({orderBook, data}) => {
+const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
+  const [orderBook, setOrderBook] = useState({
+    asks: [],
+    bids: []
+  })
+
+  const onMessage = (event: MessageEvent) => {
+    setOrderBook(JSON.parse(event.data)); 
+  }
+  const onOpen = () => {
+    console.log('order open')
+  }
+
+  useWebSocket({
+    url: 'wss://stream.binance.com/ws/' + symbol + '@depth10', 
+    onMessage, 
+    onOpen
+  })
+
   function getBackgroundColor(amount: number, maxAmount: number, type: string ) {
     const percentage = amount / maxAmount;
     if(type == 'ask'){
@@ -21,8 +38,8 @@ const OrderBook: React.FC<IOrderBook> = ({orderBook, data}) => {
    
   }
   
-  const maxAmountAsk = Math.max(...orderBook.asks.map((ask) => ask[1]));
-  const maxAmountBid = Math.max(...orderBook.bids.map((bid) => bid[1]));
+  const maxAmountAsk = Math.max(...orderBook?.asks.map((ask) => ask[1]));
+  const maxAmountBid = Math.max(...orderBook?.bids.map((bid) => bid[1]));
   
   return(
     <Wrapper>
@@ -51,9 +68,9 @@ const OrderBook: React.FC<IOrderBook> = ({orderBook, data}) => {
           )
         })}
       </AsksWrapper>
-      <PriceInfo>
-        {Number(data.c).toFixed(data.c <= 15 ? 5 : 2)}$
-      </PriceInfo>
+        <PriceInfo>
+          {Number(data?.c).toFixed(data?.c <= 15 ? 5 : 2)}$
+        </PriceInfo>
       <BidsWrapper>
         {orderBook.bids.map((item: any) => {
           return(

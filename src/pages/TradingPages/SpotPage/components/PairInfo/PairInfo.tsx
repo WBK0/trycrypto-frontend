@@ -1,19 +1,17 @@
-import { Info, Title, Wrapper } from './styles/pairInfo.styles';
-import { Row } from '../../../shared/row';
-import { Col } from '../../../shared/col';
+import { Info, Title, Wrapper } from './pairInfo.styles';
+import { Row } from '../../../../../shared/row';
+import { Col } from '../../../../../shared/col';
 
 interface IPairInfo{
-  data: IData;
-}
-
-interface IData{
-  c: number;
-  p: number;
-  P: number;
-  h: number;
-  l: number;
-  o: number;
-  q: number;
+  data: {
+    c: number;
+    p: number;
+    P: number;
+    h: number;
+    l: number;
+    o: number;
+    q: number;
+  }
 }
 
 const PairInfo: React.FC<IPairInfo> = ({ data }) => {

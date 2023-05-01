@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Flex, Price, Quantity, Time, TradeWrapper, Wrapper } from "./styles/lastTrades.styles";
+import { Flex, Price, Quantity, Time, TradeWrapper, Wrapper } from "./lastTrades.styles";
+import useWebSocket from "../../../../../hooks/useWebSocket";
 
 interface IData {
   E: number;
@@ -14,20 +15,19 @@ interface ILastTrades {
 
 const LastTrades : React.FC<ILastTrades> = ({ symbol }) => {
   const [data, setData] = useState<IData[]>([])
-    
-  useEffect(() => {
-    const newSocket = new WebSocket('wss://stream.binance.com/ws/' + symbol + '@aggTrade');
-
-    newSocket.addEventListener('message', (event) => {
-      setData(prevData => {
-        const newData = [JSON.parse(event.data), ...prevData,];
-        return newData.slice(0, 150);
-      });
+  
+  const onMessage = (event: MessageEvent) => {
+    setData(prevData => {
+      const newData = [JSON.parse(event.data), ...prevData,];
+      return newData.slice(0, 150);
     });
-    return () => {
-      newSocket.close();
-    };
-  }, []);
+  }
+
+  useWebSocket({url: 'wss://stream.binance.com/ws/' + symbol + '@aggTrade', onMessage})
+
+  useEffect(() => {
+    setData([])
+  }, [symbol])
 
   return(
     <Wrapper>

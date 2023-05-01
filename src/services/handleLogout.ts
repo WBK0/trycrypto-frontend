@@ -7,7 +7,7 @@ interface IHandleLogout {
   setLoggedIn: (value: boolean) => void;
 }
 
-const handleLogout = (navigate : IHandleLogout['navigate'], setLoggedIn : IHandleLogout['setLoggedIn'] ) => {
+const handleLogout = ({navigate, setLoggedIn} : IHandleLogout) => {
   api.get('/api/user/logout', {
     withCredentials: true
   })
@@ -22,7 +22,7 @@ const handleLogout = (navigate : IHandleLogout['navigate'], setLoggedIn : IHandl
       theme: "dark",
       });
     setLoggedIn(false);
-    navigate("/");
+    // navigate('/');
   })
 }
 

@@ -5,7 +5,7 @@ import LoginLayout from '../../components/LoginComponents/layout/LoginLayout';
 import ResetPasswordButton from '../../components/LoginComponents/links/ResetPasswordButton';
 import SignUpButton from '../../components/LoginComponents/links/SignUpButton';
 import AuthContext from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // This component renders the login page with multiple steps.
 const LoginPage = () => {

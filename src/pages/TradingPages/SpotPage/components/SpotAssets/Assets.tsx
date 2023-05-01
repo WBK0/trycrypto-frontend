@@ -1,10 +1,9 @@
-import { Header, Wrapper, Flex, AssetContainer, CryptoSymbol, Quantity } from "./styles/assets.styles";
+import { Header, Wrapper, Flex, AssetContainer, CryptoSymbol, Quantity } from "./assets.styles";
 
 const Assets = () => {
   return(
     <Wrapper><Flex>
       <Header>SPOT Assets</Header>
-      
         <AssetContainer>
           <CryptoSymbol>
             BTC

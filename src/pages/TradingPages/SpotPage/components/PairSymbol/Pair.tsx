@@ -1,4 +1,4 @@
-import { Wrapper } from './styles/pair.styles';
+import { Wrapper } from './pair.styles';
 
 interface IPair{
   symbol: string | undefined;

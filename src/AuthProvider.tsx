@@ -10,7 +10,12 @@ interface IAuthProvider{
 const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const [lastLocation, setLastLocation] = useState('/');
+  
+  if (location.pathname !== '/login' && lastLocation !== location.pathname) {
+    setLastLocation(location.pathname);
+  }
+  
   const setLoggedIn = (value: boolean) => {
     setIsLoggedIn(value);
   };
@@ -32,7 +37,7 @@ const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn, loading }}>
+    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn, loading, lastLocation, setLastLocation }}>
       <AuthApi />
       {children}
     </AuthContext.Provider>

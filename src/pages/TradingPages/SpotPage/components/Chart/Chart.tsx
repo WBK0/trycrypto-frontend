@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
-import styles from './spot.module.css';
-import { Row } from "../../../shared/row";
-import { ChartWrapper } from "./styles/chart.styles";
+import { Row } from "../../../../../shared/row";
+import { ChartWrapper } from "./chart.styles";
 
 interface IChart {
   symbol: string | undefined;

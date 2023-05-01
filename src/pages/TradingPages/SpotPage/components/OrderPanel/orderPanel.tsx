@@ -1,12 +1,16 @@
-import { Col } from "../../../shared/col";
-import { Row } from "../../../shared/row";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, OrderButton, OrderWrapper, RangeInput } from "./styles/orderPanel.styles";
+import { useContext } from "react";
+import { Col } from "../../../../../shared/col";
+import { Row } from "../../../../../shared/row";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, OrderWrapper, RangeInput } from "./orderPanel.styles";
+import AuthContext from "../../../../../contexts/AuthContext";
 
 interface IOrderPanel{
   symbol: string | undefined;
 }
 
 const OrderPanel: React.FC<IOrderPanel> = ({ symbol }) => {
+  const { isLoggedIn } = useContext(AuthContext)
+
   return(
     <OrderWrapper>
     <Row>
@@ -30,8 +34,14 @@ const OrderPanel: React.FC<IOrderPanel> = ({ symbol }) => {
           <Input />
           <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
         </InputWrapper>
+        {isLoggedIn ?
+          <OrderButton orderType="buy">Buy {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
+        :
+          <LoginButton>
+            <LoginLink to='/login'>Login</LoginLink> or <LoginLink to='/register'>Register</LoginLink>
+          </LoginButton>
+        }
         
-        <OrderButton orderType="buy">Buy {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
       </Col>
       <Col xs={100} md={50} pr="0px" plMd="12px">
         <Balance>
@@ -53,7 +63,15 @@ const OrderPanel: React.FC<IOrderPanel> = ({ symbol }) => {
           <Input />
           <InputSymbol>USDT</InputSymbol>
         </InputWrapper>
-        <OrderButton orderType="sell">Sell {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
+        {isLoggedIn ?
+          <OrderButton orderType="sell">Sell {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
+        :
+          <LoginButton>
+            <LoginLink to='/login'>Login</LoginLink> or <LoginLink to='/register'>Register</LoginLink>
+          </LoginButton>
+        }
+        
+        
       </Col>
     </Row>
     </OrderWrapper>

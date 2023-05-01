@@ -16,7 +16,7 @@ const NavbarUserActions: React.FC<INavbarUserActions> = ({ extended }) => {
     <ActionsContainer extended={extended}>
       {isLoggedIn 
       ? <LogoutButton 
-          onClick={() => handleLogout(navigate, setLoggedIn)}
+          onClick={() => handleLogout({navigate, setLoggedIn})}
         >
           <i className='bi bi-box-arrow-right'></i>
         </LogoutButton>
