@@ -5,5 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     --theme-primary: #0F1319;
     --theme-dark: #0a0e15;
     --font-yellow: #ecbe04;
+    --font-grey: #9e9e9e;
+    --border-dark: #373737;
   }
 `

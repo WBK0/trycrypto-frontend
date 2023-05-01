@@ -38,8 +38,8 @@ const OrderBook: React.FC<IOrderBook> = ({orderBook, data}) => {
         </BookWrapper>
       </SettingsBar>
       <InfoBar>
-        <span>CENA USDT</span>
-        <span>ILOŚĆ</span>
+        <span>PRICE</span>
+        <span>QUANTITY</span>
       </InfoBar>
       <AsksWrapper>
         {orderBook.asks.sort((a: any, b: any) => b[0] - a[0]).map((item: any) => {

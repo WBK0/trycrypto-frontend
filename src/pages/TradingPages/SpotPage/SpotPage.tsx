@@ -13,6 +13,7 @@ import OrderPanel from "../../../components/TradingComponents/SpotComponents/ord
 import LastTrades from "../../../components/TradingComponents/SpotComponents/lastTrades";
 import Assets from "../../../components/TradingComponents/SpotComponents/Assets";
 import Market from "../../../components/TradingComponents/SpotComponents/Market";
+import ResponsiveSelect from "./components/ResponsiveSelect";
 
 interface TradingView {
   widget: (options: any) => any;
@@ -31,6 +32,7 @@ interface IOrderBook {
 
 const SpotPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
+  const [showResponsive, setShowResponsive] = useState('chart');
   const { symbol } = useParams<{ symbol: string }>()
   
   const [data, setData] = useState({
@@ -72,34 +74,39 @@ const SpotPage: React.FC = () => {
       <Loading />
       :
       <TradingLayout>
-        <Container>
+        <Container pr="0px" pl="0px">
           <Row>
-            <Col xs={100} lg={15} xl={20} pr="0px" pb="0px">
+            <Col xs={100} lg={24} xl={20} pr="0px" pb="0px">
               <Pair symbol={symbol} />
             </Col>
-            <Col xs={100} lg={70} xl={80} pr="0px" pb="0px">
+            <Col xs={100} lg={76} xl={80} pr="0px" pb="0px">
               <PairInfo data={data} />
             </Col>
           </Row>
           <Row>
-            <Col xs={20} pr="0px" pb="0px">
+            <Col xs={100} dLg="none" pb="0px" pr="0px">
+              <ResponsiveSelect showResponsive={showResponsive} setShowResponsive={setShowResponsive} />
+            </Col>
+          </Row>
+          <Row>
+            <Col xl={20} lg={24} xs={100} dXs={showResponsive == 'orderBook' ? 'block' : 'none'} dLg="block" pr="0px" pb="0px">
               <OrderBook orderBook={orderBook} data={data} />
             </Col>
-            <Col xs={60} pr="0px" pb="0px">
+            <Col xl={60} lg={52} xs={100} dXs={showResponsive == 'chart' ? 'block' : 'none'} dLg="block" pr="0px" pb="0px">
               <Chart symbol={symbol}/>
             </Col>
-            <Col xs={20} pr="0px" pb="0px">
+            <Col xl={20} lg={24} xs={100} dXs={showResponsive == 'market' ? 'block' : 'none'} dLg="block"  pr="0px" pb="0px">
               <Market />
             </Col>
           </Row>
             <Row>
-              <Col xs={20} pr="0px" pb="0px">
+              <Col xs={100} dXs={showResponsive == 'trades' ? 'block' : 'none'} dLg="block" lg={20} pr="0px" pb="0px">
                 <LastTrades symbol={symbol}/>
               </Col>
-              <Col xs={100} md={60} pr='0px' pb="0px">
+              <Col xs={100} lg={60} pr='0px' pb="0px">
                 <OrderPanel symbol={symbol}/>
               </Col>
-              <Col md={20} pr="0px" pb="0px">
+              <Col lg={20} pr="0px" pb="0px">
                 <Assets />
               </Col>
             </Row>          

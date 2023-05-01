@@ -2,10 +2,16 @@ import styled from "styled-components";
 
 export const OrderWrapper = styled.div`
   width: 100%;
-  height: 333px;
-  border: 1px solid rgb(90, 90, 90);
-  border-top: none;
+  height: 666px;
+  border-bottom: 10px solid var(--theme-dark);
   padding: 10px;
+  @media screen and (min-width: 1000px){
+    border: 1px solid var(--border-dark);
+    border-top: none;
+  }
+  @media screen and (min-width: 800px) {
+    height: 333px;
+  }
 `
 
 export const Balance = styled.p`

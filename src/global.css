@@ -3,14 +3,3 @@
 * {
   margin: 0;
 }
-
-.navbar-color{
-  background-color: #0a0e15;
-  color: white;
-  height: 66px;
-}
-
-.navbar-collapse {
-  flex-grow: 0 !important;
-}
-

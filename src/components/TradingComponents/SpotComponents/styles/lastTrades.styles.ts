@@ -3,10 +3,14 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   color: #c4c4c4;
   width: 100%;
-  border: 1px solid rgb(90,90,90);
+  border-bottom: 10px solid var(--theme-dark);
   height: 333px;
-  border-top: none;
-  border-right: none;  
+   
+  @media screen and (min-width: 1000px) {
+    border: 1px solid var(--border-dark);
+    border-top: none;
+    border-right: none; 
+  }
 `
 
 export const Flex = styled.div`

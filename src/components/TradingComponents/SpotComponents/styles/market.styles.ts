@@ -3,13 +3,17 @@ import styled from "styled-components";
 
 export const MarketWrapper = styled.div`
   width: 100%;
-  height: 500px;
-  border: 1px solid rgb(90,90,90);
-  border-left: none;
-  border-top: none;
+  height: 510px;
+  border-bottom: 10px solid var(--theme-dark);  
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  @media screen and (min-width: 1000px){
+    height: 500px;
+    border: 1px solid var(--border-dark);
+    border-left: none;
+    border-top: none;
+  }
 `
 
 export const InputWrapper = styled.div`

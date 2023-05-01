@@ -2,11 +2,14 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 500px;
-  border-left: 1px solid rgb(90, 90, 90);
-  border-bottom: 1px solid rgb(90, 90, 90);
-  border-right: 1px solid rgb(90, 90, 90);
+  height: 510px;
   padding: 0px;
+  border-bottom: 10px solid var(--theme-dark);
+  @media screen and (min-width: 1000px) {
+    height: 500px;
+    border: 1px solid var(--border-dark);
+    border-top: none;
+  }
 `
 
 export const SettingsBar = styled.div`

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  border: 1px solid rgb(90, 90, 90);
+  border-bottom: 10px solid var(--theme-dark);
   min-height: 66px;
-  border-top: none;
   color: white;
   width: 100%;
   @media screen and (min-width: 1000px){
-    
+    border: 1px solid var(--border-dark);
+    border-top: none;
     border-left: none;
   }
 `
