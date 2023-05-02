@@ -9,13 +9,13 @@ import { Container } from "../../../shared/container";
 import { Row } from "../../../shared/row";
 import { Col } from "../../../shared/col";
 import OrderBook from "./components/OrderBook/OrderBook";
-import OrderPanel from "./components/OrderPanel/orderPanel";
+import OrderPanel from "./components/OrderPanel/OrderPanel";
 import LastTrades from "./components/LastTrades/lastTrades";
 import Assets from "./components/SpotAssets/Assets";
 import Market from "./components/Markets/Market";
 import ResponsiveSelect from "./components/ResponsiveSelect/ResponsiveSelect";
 import useWebSocket from "../../../hooks/useWebSocket";
-import AuthContext from "../../../contexts/AuthContext";
+import useWallet from "../../../hooks/useWallet";
 
 interface TradingView {
   widget: (options: any) => any;
@@ -25,11 +25,6 @@ declare global {
   interface Window {
     TradingView: TradingView;
   }
-}
-
-interface IOrderBook {
-  asks: [];
-  bids: [];
 }
 
 const SpotPage: React.FC = () => {
@@ -56,10 +51,12 @@ const SpotPage: React.FC = () => {
     onMessage
   });
 
+  const { balance } = useWallet(); 
+
   useEffect(() => {
     setLoading(true);
   }, [symbol])
-
+  
   return(
     <>
     {
@@ -96,7 +93,7 @@ const SpotPage: React.FC = () => {
                 <LastTrades symbol={symbol}/>
               </Col>
               <Col xs={100} lg={60} pr='0px' pb="0px">
-                <OrderPanel symbol={symbol}/>
+                <OrderPanel symbol={symbol} balance={balance} pairPrice={data.c}/>
               </Col>
               <Col lg={20} pr="0px" pb="0px">
                 <Assets />

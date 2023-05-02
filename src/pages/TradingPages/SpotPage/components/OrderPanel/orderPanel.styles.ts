@@ -30,7 +30,7 @@ export const InputWrapper = styled.div`
   margin-bottom: 15px;
 `
 
-export const Input = styled.input`
+export const Input = styled.input`  
   flex: 1 1 auto;
   background-color: #2A2D35;
   color: white;
