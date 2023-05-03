@@ -16,6 +16,7 @@ import Market from "./components/Markets/Market";
 import ResponsiveSelect from "./components/ResponsiveSelect/ResponsiveSelect";
 import useWebSocket from "../../../hooks/useWebSocket";
 import useWallet from "../../../hooks/useWallet";
+import TransactionHistory from "./components/TransactionHistory/TransactionHistory";
 
 interface TradingView {
   widget: (options: any) => any;
@@ -51,7 +52,7 @@ const SpotPage: React.FC = () => {
     onMessage
   });
 
-  const { balance } = useWallet(); 
+  const { balance, fetchBalance} = useWallet(); 
 
   useEffect(() => {
     setLoading(true);
@@ -93,11 +94,16 @@ const SpotPage: React.FC = () => {
                 <LastTrades symbol={symbol}/>
               </Col>
               <Col xs={100} lg={60} pr='0px' pb="0px">
-                <OrderPanel symbol={symbol} balance={balance} pairPrice={data.c}/>
+                <OrderPanel symbol={symbol} balance={balance} pairPrice={data.c} fetchBalance={fetchBalance}/>
               </Col>
-              <Col lg={20} pr="0px" pb="0px">
-                <Assets />
+              <Col xs={100} lg={20} pr="0px" pb="0px">
+                <Assets wallet={balance}/>
               </Col>
+            </Row>
+            <Row>
+              <Col xs={100} pr='0px' pb="0px">
+                <TransactionHistory />
+              </Col>  
             </Row>          
         </Container>
       </TradingLayout>

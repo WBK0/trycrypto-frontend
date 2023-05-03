@@ -1,12 +1,16 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 333px;
+  max-height: 333px;
   border: 1px solid var(--border-dark);
   border-left: none;
   border-top: none;
   color: white;
+  @media screen and (min-width: 1000px) {
+    min-height: 333px;
+  }
 `
 
 export const Header = styled.p`
@@ -47,4 +51,18 @@ export const CryptoSymbol = styled.span`
 export const Quantity = styled.span`
   font-size: 14px;
   font-weight: 400;
+`
+
+export const LinkContainer = styled.div`
+  width: 100%;
+  text-align: center;
+`
+
+export const LoginLink = styled(Link)`
+  text-decoration: none;
+  color: var(--font-yellow);
+  font-weight: 500;
+  &:hover{
+    color: var(--font-yellow);
+  }
 `

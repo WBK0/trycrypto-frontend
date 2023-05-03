@@ -10,16 +10,17 @@ interface IOrderPanel{
   symbol: string | undefined;
   balance?: IWallet;
   pairPrice: number;
+  fetchBalance: () => void;
 }
 
-const OrderPanel: React.FC<IOrderPanel> = ({ symbol, balance, pairPrice }) => {
+const OrderPanel: React.FC<IOrderPanel> = ({ symbol, balance, pairPrice, fetchBalance }) => {
   const { isLoggedIn } = useContext(AuthContext)
   
   return(
     <OrderWrapper>
     <Row>
-      <BuyPanel balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice}/>
-      <SellPanel balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} />
+      <BuyPanel balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance}/>
+      <SellPanel balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance}/>
     </Row>
     </OrderWrapper>
   )

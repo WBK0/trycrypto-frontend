@@ -2,37 +2,79 @@ import { Col } from "../../../../../shared/col";
 import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "./orderPanel.styles";
 import IWallet from './../../../../../interfaces/Wallet.interface';
 import { useEffect, useState } from "react";
+import decimalPlaces from "../../../../../services/decimalPlaces";
+import api from "../../../../../services/api";
+import { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 interface IBuyPanel {
   balance?: IWallet;
   isLoggedIn: boolean;
   symbol: string | undefined;
   pairPrice: number;
+  fetchBalance: () => void;
 }
 
-const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice }) => {
-  const [orderQuantity, setOrderQuantity] = useState("0");
+const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
+  const [orderQuantity, setOrderQuantity] = useState("");
 
   const handleChange = (e : {target: {value: string}}) => {
-    const quantity = e.target.value;
-    const decimalIndex = quantity.indexOf('.');
-    const numDecimalPlaces = decimalIndex === -1 ? 0 : quantity.length - decimalIndex - 1;
-    console.log(numDecimalPlaces)
-    if(balance && Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)) && numDecimalPlaces <= 1){
-      setOrderQuantity(e.target.value);
-    }else if(balance && Number(e.target.value) && numDecimalPlaces <= 1){
-      setOrderQuantity((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1))
+    if(balance){
+      const decimalNumber = decimalPlaces(e.target.value);
+      
+      if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)) && decimalNumber <= 1){
+        setOrderQuantity(e.target.value);
+      }else if(Number(e.target.value) && decimalNumber <= 1){
+        setOrderQuantity((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1))
+      }
     }
   }
 
+  const handleSubmit = () => {
+    api.post('/api/spot/market/buy/' + symbol?.toUpperCase(), {
+      'quantity': orderQuantity
+    },{
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json', // nagłówek typu treści
+        'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
+      },
+    }).then((response: AxiosResponse) => {
+      console.log(response.data);
+      fetchBalance();
+      toast.success('Successfully purchased ' + orderQuantity + ' ' + symbol?.replace('usdt', '').toUpperCase(), {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        });
+        setOrderQuantity("")
+    })
+    .catch((error: Error) => {
+      console.error(error);
+      toast.error('Purchase failed', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        });
+    });
+  }
+
   useEffect(() => {
-    setOrderQuantity("0")
-  }, [symbol])
+    setOrderQuantity("");
+  }, [symbol, isLoggedIn])
 
   return(
     <Col xs={100} md={50} pr="0px" prMd="12px">
       <Balance>
-        Dostępne: {balance?.currentBalance.toFixed(2)} USDT
+        Dostępne: {balance?.currentBalance.toFixed(2) || '0'} USDT
       </Balance>
       <InputWrapper>
         <InputText>Cena</InputText>
@@ -41,7 +83,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice 
       </InputWrapper>
       <InputWrapper>
         <InputText>Ilość</InputText>
-        <Input value={orderQuantity} onChange={handleChange}/>
+        <Input value={orderQuantity || 0} onChange={handleChange}/>
         <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
       </InputWrapper>
       <RangeInput type="range" min="0" step={0.1} max={balance && (Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)} onChange={handleChange} value={orderQuantity}></RangeInput>
@@ -51,7 +93,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice 
         <InputSymbol>USDT</InputSymbol>
       </InputWrapper>
       {isLoggedIn ?
-        <OrderButton orderType="buy">Buy {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
+        <OrderButton orderType="buy" onClick={handleSubmit}>Buy {symbol?.toUpperCase().replace('USDT', '')}</OrderButton>
       :
         <LoginButton>
           <LoginLink to='/login'>Login</LoginLink> or <LoginLink to='/register'>Register</LoginLink>
