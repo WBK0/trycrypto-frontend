@@ -4,12 +4,13 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   width: 100%;
   max-height: 333px;
-  border: 1px solid var(--border-dark);
-  border-left: none;
-  border-top: none;
   color: white;
+  border-bottom: 10px solid var(--theme-dark);
   @media screen and (min-width: 1000px) {
     min-height: 333px;
+    border: 1px solid var(--border-dark);
+    border-left: none;
+    border-top: none;
   }
 `
 

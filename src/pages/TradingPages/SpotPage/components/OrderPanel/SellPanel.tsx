@@ -33,7 +33,7 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
 
   const handleSubmit = () => {
     api.post('/api/spot/market/sell/' + symbol?.toUpperCase(), {
-      'quantity': orderQuantity
+      'quantity': Number(orderQuantity)
     },{
       withCredentials: true,
       headers: {

@@ -55,7 +55,7 @@ useEffect(() => {
     }
   
   }
-}, []);
+}, [ symbol ]);
 
   return(
     <Row>
