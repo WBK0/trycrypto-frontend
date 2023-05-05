@@ -1,6 +1,6 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import TradingLayout from "../../../layout/TradingLayout/TradingLayout";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Chart from "./components/Chart/Chart";
 import Pair from "./components/PairSymbol/Pair";
 import PairInfo from "./components/PairInfo/PairInfo";
@@ -16,7 +16,6 @@ import Market from "./components/Markets/Market";
 import ResponsiveSelect from "./components/ResponsiveSelect/ResponsiveSelect";
 import useWebSocket from "../../../hooks/useWebSocket";
 import useWallet from "../../../hooks/useWallet";
-import TransactionHistory from "./components/Transactions/transactionHistory/TransactionHistory";
 import Transactions from "./components/Transactions/Transactions";
 
 interface TradingView {
