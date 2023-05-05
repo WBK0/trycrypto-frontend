@@ -1,5 +1,4 @@
 import { Row } from '../../../shared/row';
-import styles from './marketSelect.module.css';
 import { SelectButton } from './styles/marketSelect.styles';
 
 // Define interface

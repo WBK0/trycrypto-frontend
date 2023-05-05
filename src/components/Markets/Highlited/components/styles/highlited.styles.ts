@@ -1,4 +1,13 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+export const HighlitedLink = styled(Link)`
+  text-decoration: none;
+  color: white;
+  &:hover{
+    color: white;
+  }
+`
 
 export const ItemWrapper = styled.div`
   background-color: var(--theme-dark);

@@ -10,6 +10,14 @@ interface IOrderBook{
 }
 
 const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
+  const [asksView, setAsksView] = useState(10);
+  const [bidsView, setBidsView] = useState(10);
+
+  const handleChangeView = (asks: number, bids: number) => {
+    setAsksView(asks)
+    setBidsView(bids)
+  }
+
   const [orderBook, setOrderBook] = useState({
     asks: [],
     bids: []
@@ -23,7 +31,7 @@ const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
   }
 
   useWebSocket({
-    url: 'wss://stream.binance.com/ws/' + symbol + '@depth10', 
+    url: 'wss://stream.binance.com/ws/' + symbol + '@depth20', 
     onMessage, 
     onOpen
   })
@@ -33,7 +41,7 @@ const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
     if(type == 'ask'){
       return `linear-gradient(to left, #770303 ${Number(percentage * 115).toFixed(0) + "%"}, transparent ${Number(percentage * 100).toFixed(0) + "%"})`;
     }else{
-      return `linear-gradient(to left, #077703 ${Number(percentage * 115  ).toFixed(0) + "%"}, transparent ${Number(percentage * 100).toFixed(0) + "%"})`;
+      return `linear-gradient(to left, #077703 ${Number(percentage * 115).toFixed(0) + "%"}, transparent ${Number(percentage * 100).toFixed(0) + "%"})`;
     }
    
   }
@@ -45,13 +53,13 @@ const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
     <Wrapper>
       <SettingsBar>
         <BookWrapper color='white'>
-          <i className='bi bi-book' />
+          <i className='bi bi-book' onClick={() => handleChangeView(10, 10)} />
         </BookWrapper>
         <BookWrapper color='#077703'>
-          <i className='bi bi-book-half' />
+          <i className='bi bi-book-half' onClick={() => handleChangeView(0, 20)} />
         </BookWrapper>
         <BookWrapper color='#770303'>
-          <i className='bi bi-book-half' />
+          <i className='bi bi-book-half' onClick={() => handleChangeView(20, 0)} />
         </BookWrapper>
       </SettingsBar>
       <InfoBar>
@@ -59,7 +67,7 @@ const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
         <span>QUANTITY</span>
       </InfoBar>
       <AsksWrapper>
-        {orderBook.asks.sort((a: any, b: any) => b[0] - a[0]).map((item: any) => {
+        {orderBook.asks.slice(0, asksView).sort((a: any, b: any) => b[0] - a[0]).map((item: any) => {
           return(
             <Item background={getBackgroundColor(item[1], maxAmountAsk, 'ask')} key={item}>
               <span>{Number(item[0]).toFixed(item[0] <= 15 ? 5 : 2)}</span>
@@ -72,7 +80,7 @@ const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
           {Number(data?.c).toFixed(data?.c <= 15 ? 5 : 2)}$
         </PriceInfo>
       <BidsWrapper>
-        {orderBook.bids.map((item: any) => {
+        {orderBook.bids.slice(0, bidsView).map((item: any) => {
           return(
             <Item background={getBackgroundColor(item[1], maxAmountBid, 'bid')} key={item}>
               <span>{Number(item[0]).toFixed(item[0] <= 15 ? 5 : 2)}</span>

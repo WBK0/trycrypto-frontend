@@ -44,6 +44,7 @@ interface ITh{
 export const Th = styled.th<ITh>`
   padding-left: 10px;
   font-weight: 400;
+  text-align: left;
   width: ${props => props.width + '%'};
 `
 
@@ -99,4 +100,6 @@ export const EmptyHistoryHeader = styled.span`
   margin-bottom: 20px;
   color: rgb(150, 150, 150);
   font-weight: 500;
+  padding-left: 12px;
+  padding-right: 12px;
 `

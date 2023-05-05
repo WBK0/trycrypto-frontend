@@ -4,10 +4,10 @@ export const Wrapper = styled.div`
   border-bottom: 10px solid var(--theme-dark);
   width: 100%;
   display: flex;
-  justify-content: end;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
   padding-top: 5px;
-  padding-right: 5px;
+  padding-left: 5px;
+  overflow-x: scroll;
   @media screen and (min-width: 1000px){
     border: 1px solid var(--border-dark);
   }
@@ -22,6 +22,7 @@ export const SelectButton = styled.button<ISelectButton>`
   color: ${props => props.active ? 'var(--font-yellow)' : 'var(--font-grey)'};
   outline: none;
   border: none;
+  white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
   margin-left: 3px;

@@ -47,19 +47,22 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) 
       <Table>
         <THead>
           <Tr>
-            <Th width={20}>
+            <Th width={16.66}>
               Type
             </Th>
-            <Th width={20}>
+            <Th width={16.66}>
               Pair
             </Th>
-            <Th width={20}>
+            <Th width={16.66}>
               Quantity
             </Th>
-            <Th width={20}>
+            <Th width={16.66}>
               Price
             </Th>
-            <Th width={20}>
+            <Th width={16.66}>
+              Total price
+            </Th>
+            <Th width={16.66}>
               Date
             </Th>
           </Tr>
@@ -72,14 +75,17 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) 
             <Td color={item.type} width="50px" weight='600'>
               {item.type.toUpperCase()}
             </Td>
-            <Td width="110px" weight='400'>
+            <Td width="120px" weight='400'>
               {item.pair}
             </Td>
-            <Td width="90px" weight='400'>
+            <Td width="120px" weight='400'>
               {item.quantity} {item.pair.replace('USDT', '')}
             </Td>
             <Td width="140px" weight='400'>
               {item.price} USDT
+            </Td>
+            <Td width="140px" weight='400'>
+              {item.price * item.quantity} USDT
             </Td>
             <Td width="160px" weight='400'>
               {date}

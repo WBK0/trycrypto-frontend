@@ -8,6 +8,7 @@ interface IResponsiveSelect{
 const ResponsiveSelect: React.FC<IResponsiveSelect> = ({ showResponsive, setShowResponsive }) => {
   return(
     <Wrapper>
+      {/* <div style={{overflowX: 'scroll', width: '300px', display: 'flex'}}> */}
       <SelectButton 
         active={showResponsive == 'chart' ? true : false} 
         onClick={() => setShowResponsive('chart')}>
@@ -28,6 +29,8 @@ const ResponsiveSelect: React.FC<IResponsiveSelect> = ({ showResponsive, setShow
         onClick={() => setShowResponsive('market')}>
         Other Markets
       </SelectButton>
+      {/* </div> */}
+      
     </Wrapper>
   )
 }

@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
 
 export const Text = styled.span`
   font-size: 18px;
+  text-align: center;
 `
 
 export const LoginLink = styled(Link)`

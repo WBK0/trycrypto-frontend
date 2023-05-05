@@ -87,7 +87,7 @@ const MarketsPage: React.FC = () => {
     <Layout>
       <MarketHeader>Market Overview</MarketHeader>
       <MarketSelect market={market} setMarket={setMarket} />
-      <HighlightedTokens data={data} />
+      <HighlightedTokens data={data} market={market} />
       <Searchbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
       <Row>
         {data.length > 0 ?

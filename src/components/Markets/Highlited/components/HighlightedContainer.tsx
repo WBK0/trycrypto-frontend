@@ -1,18 +1,18 @@
-import styles from '../HighlightedTokens.module.css';
 import HighlitedItem from './HighlightedItem';
 import { MarketData } from '../../interfaces/interfaces';
 import { Col } from '../../../../shared/col';
-import { Heading, ItemWrapper } from './styles/highlited.styles';
+import { Heading, HighlitedLink, ItemWrapper } from './styles/highlited.styles';
 
 // Define the interface
 interface IHighlitedContainer{
   data: MarketData[];
   text: string;
   condition: any;
+  market: string;
 }
 
 // This component renders a single highlighted container for the item
-const HighlitedContainer : React.FC<IHighlitedContainer> = ({ data, text, condition }) => {
+const HighlitedContainer : React.FC<IHighlitedContainer> = ({ data, text, condition, market }) => {
   return(
     <Col xs={100} sm={50} xl={25}>
       <ItemWrapper>
@@ -21,7 +21,10 @@ const HighlitedContainer : React.FC<IHighlitedContainer> = ({ data, text, condit
           .sort(condition)
           .slice(0,3)
           .map((item) => (
-          <HighlitedItem item={item} key={item.pair}/>
+            <HighlitedLink to={`/market/${market}/${item.pair.toLowerCase()}`} key={item.pair}>
+              <HighlitedItem item={item}/>
+            </HighlitedLink>
+          
         ))} 
       </ItemWrapper>
     </Col>

@@ -20,23 +20,23 @@ const PairInfo: React.FC<IPairInfo> = ({ data }) => {
       <Row alignItems='center' height='65px' pt='10px' pb='10px'>
         <Col md={16.66} xs={33.33} pb='0px' pr='0px'>
           <Title>PRICE</Title>
-          <Info>{Number(data.c).toFixed(2)}$</Info>
+          <Info>{Number(data.c).toFixed(data.c <= 15 ? 5 : 2)}$</Info>
         </Col>
         <Col md={16.66} xs={33.33} pb='0px' pr='0px'>
           <Title>24H CHANGE</Title>
-          <Info>{Number(data.p).toFixed(2)}$ {Number(data.P).toFixed(2)}%</Info>
+          <Info>{Number(data.p).toFixed(data.c <= 15 ? 5 : 2)}$ {Number(data.P).toFixed(2)}%</Info>
         </Col>
         <Col md={16.66} xs={33.33} pb='0px' pr='0px'>
           <Title>24H HIGH</Title>
-          <Info>{Number(data.h).toFixed(2)}$</Info>
+          <Info>{Number(data.h).toFixed(data.c <= 15 ? 5 : 2)}$</Info>
         </Col>
         <Col md={16.66} xs={33.33} pb='0px' pr='0px'>
           <Title>24H LOW</Title>
-          <Info>{Number(data.l).toFixed(2)}$</Info>
+          <Info>{Number(data.l).toFixed(data.c <= 15 ? 5 : 2)}$</Info>
         </Col>
         <Col md={16.66} xs={33.33} pb='0px' pr='0px'>
           <Title>OPEN PRICE</Title>
-          <Info>{Number(data.o).toFixed(2)}$</Info>
+          <Info>{Number(data.o).toFixed(data.c <= 15 ? 5 : 2)}$</Info>
         </Col>
         <Col md={16.66} xs={33.33} pb='0px' pr='0px'>
           <Title>24H VOLUME</Title>

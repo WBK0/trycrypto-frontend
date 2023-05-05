@@ -12,4 +12,7 @@ export const Wrapper = styled.div`
 export const Info = styled.span`
   color: rgb(150, 150, 150);
   font-size: 18px;
+  text-align: center;
+  padding-left: 12px;
+  padding-right: 12px;
 `
