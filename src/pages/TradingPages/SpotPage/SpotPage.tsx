@@ -16,7 +16,8 @@ import Market from "./components/Markets/Market";
 import ResponsiveSelect from "./components/ResponsiveSelect/ResponsiveSelect";
 import useWebSocket from "../../../hooks/useWebSocket";
 import useWallet from "../../../hooks/useWallet";
-import TransactionHistory from "./components/TransactionHistory/TransactionHistory";
+import TransactionHistory from "./components/Transactions/transactionHistory/TransactionHistory";
+import Transactions from "./components/Transactions/Transactions";
 
 interface TradingView {
   widget: (options: any) => any;
@@ -102,7 +103,7 @@ const SpotPage: React.FC = () => {
             </Row>
             <Row>
               <Col xs={100} pr='0px' pb="0px">
-                <TransactionHistory wallet={balance} />
+                <Transactions wallet={balance} symbol={symbol} />
               </Col>  
             </Row>          
         </Container>

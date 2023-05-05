@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import api from "../../../../../services/api";
-import { HeadingSelect, HistoryHeader, HistoryLink, MoreHistory, SelectButton, TBody, THead, Table, TableWrapper, Td, Th, Tr, Wrapper } from "./transactionHistory.styles";
-import IWallet from "../../../../../interfaces/Wallet.interface";
+import { useContext, useEffect, useState } from "react";
+import api from "../../../../../../services/api";
+import { EmptyHistoryHeader, HistoryHeader, HistoryLink, MoreHistory, TBody, THead, Table, TableWrapper, Td, Th, Tr, Wrapper } from "./transactionHistory.styles";
+import IWallet from "../../../../../../interfaces/Wallet.interface";
+import AuthContext from "../../../../../../contexts/AuthContext";
 
 interface IHistory{
   type: string;
@@ -13,14 +14,21 @@ interface IHistory{
 
 interface ITransactionHistory{
   wallet?: IWallet;
+  symbol?: string;
 }
 
-const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet }) => {
+const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) => {
   const [history, setHistory] = useState<IHistory>()
 
+  const { isLoggedIn } = useContext(AuthContext);
+
+  console.log(isLoggedIn)
+
   const getHistory = async () => {
+    if(isLoggedIn == false)
+      setHistory(undefined)
     try {
-      const response = await api.get('/api/history/spot/last', {
+      const response = await api.get('/api/history/spot/last/' + symbol?.toUpperCase(), {
         withCredentials: true
       })
       setHistory(response.data)
@@ -31,14 +39,10 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet }) => {
  
   useEffect(() => {
     getHistory()
-  }, [wallet])
-  
+  }, [wallet, symbol, isLoggedIn])
+
   return(
     <Wrapper>
-      <HeadingSelect>
-        <SelectButton active={true}>Transaction History</SelectButton>
-        <SelectButton>Orders History</SelectButton>
-      </HeadingSelect>
       <TableWrapper>
       <Table>
         <THead>
@@ -65,7 +69,7 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet }) => {
           const date = new Date(item.date).toLocaleString();
           return(
           <Tr>
-            <Td color={item.type == 'buy' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'} width="50px" weight='600'>
+            <Td color={item.type} width="50px" weight='600'>
               {item.type.toUpperCase()}
             </Td>
             <Td width="110px" weight='400'>
@@ -86,8 +90,12 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet }) => {
       </Table>
       </TableWrapper>
       <MoreHistory>
+        {Array.isArray(history) && history.length == 0 || !history ?
+          <EmptyHistoryHeader>Currently nothing to display, trade the cryptocurrency pair to add to the history</EmptyHistoryHeader>
+        :<>
         <HistoryHeader>Wanna see more history?</HistoryHeader>
-        <HistoryLink to='/wallet/history/spot'>See more</HistoryLink>
+        <HistoryLink to='/wallet/history/spot'>See more</HistoryLink></>
+        }
       </MoreHistory>
     </Wrapper>
   )

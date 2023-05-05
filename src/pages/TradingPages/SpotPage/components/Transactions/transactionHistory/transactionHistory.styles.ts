@@ -2,35 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 100%;
-  
-  margin-bottom: 100px;
-  @media screen and (min-width: 1000px){
-    border: 1px solid var(--border-dark);
-  }
-`
-
-export const HeadingSelect = styled.div`
-  display: flex;
-  padding-top: 12px;
-  padding-left: 12px;
-`
-
-interface ISelectButton{
-  active?: boolean;
-}
-
-export const SelectButton = styled.div<ISelectButton>`
-  background-color: transparent;
-  color: var(--font-yellow);
-  color: ${props => props.active ? 'var(--font-yellow)' : 'var(--font-grey)'};
-  outline: none;
-  border: none;
-  font-size: 14px;
-  font-weight: 500;
-  margin-left: 3px;
-  margin-right: 15px;
-  cursor: pointer;
+  min-height: 200px;
 `
 
 export const Table = styled.table`
@@ -60,7 +32,7 @@ export const Td = styled.td<ITd>`
   padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
-  color: ${props => props.color};
+  color: ${props => props.color == 'buy' && 'rgb(7, 119, 3)' || props.color == 'sell' && 'rgb(119, 3, 3)'};
   font-weight: ${props => props.weight};
   min-width: ${props => props.width};
   font-size: 16px;
@@ -102,6 +74,7 @@ export const MoreHistory = styled.div`
 export const HistoryHeader = styled.span`
   width: 100%;
   text-align: center;
+  margin-top: 20px;
 `
 
 export const HistoryLink = styled(Link)`
@@ -116,4 +89,14 @@ export const HistoryLink = styled(Link)`
     color: var(--font-yellow);
     background-color: transparent;
   }
+  margin-bottom: 20px;
+`
+
+export const EmptyHistoryHeader = styled.span`
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: rgb(150, 150, 150);
+  font-weight: 500;
 `
