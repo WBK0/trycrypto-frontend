@@ -15,6 +15,25 @@ export const Wrapper = styled.div`
 export const SettingsBar = styled.div`
   height: 34px;
   display: flex;
+  justify-content: space-between;
+`
+
+export const Select = styled.select`
+  border: none;
+  background-color: transparent;
+  color: white;
+  margin-left: 10px;
+  outline: none;
+`
+
+export const Option = styled.option`
+  background-color: var(--theme-primary);
+  border: none;
+  outline: none;  
+`
+
+export const Books = styled.div`
+  display: flex;
   justify-content: right;
 `
 

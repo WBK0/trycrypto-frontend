@@ -22,7 +22,6 @@ const FuturesPage = () => {
   const { symbol } = useParams()
 
   const onMessage = (event: MessageEvent) => {
-    console.log(JSON.parse(event.data))
     setData(JSON.parse(event.data))
   }
 
