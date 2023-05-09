@@ -56,10 +56,11 @@ export const InfoBar = styled.div`
 export const AsksWrapper = styled.div`
   display: flex;  
   flex-direction: column-reverse;
+ 
 `
 
 export const BidsWrapper = styled.div`
-
+ 
 `
 
 export const PriceInfo = styled.div`
