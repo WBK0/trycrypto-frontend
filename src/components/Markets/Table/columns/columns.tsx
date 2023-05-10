@@ -26,7 +26,17 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
       const value = parseFloat(info.getValue());
       return value > 1 ? value.toFixed(2) : value.toFixed(4);
     },
-    sortingFn: 'alphanumeric',
+    sortingFn: (a: any, b: any, desc: any) => {
+      const numA = parseFloat(a.getValue('lastPrice'));
+      const numB = parseFloat(b.getValue('lastPrice'));
+      if (numA < numB) {
+        return desc ? -1 : 1;
+      }
+      if (numA > numB) {
+        return desc ? 1 : -1;
+      }
+      return 0;
+    },
     header: () => <span>Price</span>,
     enableGlobalFilter: false,
     size: 100
@@ -60,7 +70,17 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
       const value = parseFloat(info.getValue());
       return value > 1 ? value.toFixed(2) : value.toFixed(4);
     },
-    sortingFn: 'alphanumeric',
+    sortingFn: (a: any, b: any, desc: any) => {
+      const numA = parseFloat(a.getValue('highPrice'));
+      const numB = parseFloat(b.getValue('highPrice'));
+      if (numA < numB) {
+        return desc ? -1 : 1;
+      }
+      if (numA > numB) {
+        return desc ? 1 : -1;
+      }
+      return 0;
+    },
     enableGlobalFilter: false,
     size: 150
   },
@@ -71,7 +91,17 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
       const value = parseFloat(info.getValue());
       return value > 1 ? value.toFixed(2) : value.toFixed(4);
     },
-    sortingFn: 'alphanumeric',
+    sortingFn: (a: any, b: any, desc: any) => {
+      const numA = parseFloat(a.getValue('lowPrice'));
+      const numB = parseFloat(b.getValue('lowPrice'));
+      if (numA < numB) {
+        return desc ? -1 : 1;
+      }
+      if (numA > numB) {
+        return desc ? 1 : -1;
+      }
+      return 0;
+    },
     enableGlobalFilter: false,
     size: 150
   },
@@ -82,7 +112,17 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
       const value = parseFloat(info.getValue());
       return (value / 1000000).toFixed(2) + 'M';
     },
-    sortingFn: 'alphanumeric',
+    sortingFn: (a: any, b: any, desc: any) => {
+      const numA = parseFloat(a.getValue('volume'));
+      const numB = parseFloat(b.getValue('volume'));
+      if (numA < numB) {
+        return desc ? -1 : 1;
+      }
+      if (numA > numB) {
+        return desc ? 1 : -1;
+      }
+      return 0;
+    },
     enableGlobalFilter: false,
     size: 150
   },

@@ -10,7 +10,7 @@ import { Row } from "../../../shared/row";
 import { Col } from "../../../shared/col";
 import OrderBook from "./components/OrderBook/OrderBook";
 import OrderPanel from "./components/OrderPanel/OrderPanel";
-import LastTrades from "./components/LastTrades/lastTrades";
+import LastTrades from "./components/LastTrades/LastTrades";
 import Assets from "./components/SpotAssets/Assets";
 import Market from "./components/Markets/Market";
 import ResponsiveSelect from "./components/ResponsiveSelect/ResponsiveSelect";

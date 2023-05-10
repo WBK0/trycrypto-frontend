@@ -6,12 +6,13 @@ import Bids from "./components/Bids";
 
 interface IOrderBook{
   price: number,
+  symbol?: string
 }
 
-const OrderBook: React.FC<IOrderBook> = ({ price }) => {
+const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
   const [asksView, setAsksView] = useState(10);
   const [bidsView, setBidsView] = useState(10);
-  const [tickSize, setTickSize] = useState(0.01);
+  const [tickSize, setTickSize] = useState(price <= 5 ? 0.0001 : 0.01);
   const [asks, setAsks] = useState<Record<string, number>>({});
   const [bids, setBids] = useState<Record<string, number>>({});
   const [asksMax, setAsksMax] = useState(0)
@@ -57,7 +58,7 @@ const OrderBook: React.FC<IOrderBook> = ({ price }) => {
     });
   };
 
-  useWebSocket({url: 'wss://fstream.binance.com/ws/ethusdt@depth@500ms', onMessage})
+  useWebSocket({url: `wss://fstream.binance.com/ws/${symbol?.toLowerCase()}@depth@500ms`, onMessage})
 
   let maxAmount = asksMax >= bidsMax ? asksMax : bidsMax;
 
@@ -75,8 +76,13 @@ const OrderBook: React.FC<IOrderBook> = ({ price }) => {
     fixed: 2,
     floor: 100
   }
-  
-  if(tickSize == 0.01){
+  if(tickSize == 0.0001){
+    tick.fixed = 4;
+    tick.floor = 10000;
+  }else if(tickSize == 0.001){
+    tick.fixed = 3;
+    tick.floor = 1000;
+  }else if(tickSize == 0.01){
     tick.fixed = 2;
     tick.floor = 100
   }else if (tickSize == 0.1){
@@ -98,18 +104,50 @@ const OrderBook: React.FC<IOrderBook> = ({ price }) => {
     <Wrapper>
       <SettingsBar>
         <Select onChange={(e) => setTickSize(Number(e.target.value))}>
-          <Option value={0.01}>
-            0.01
-          </Option>
-          <Option value={0.1}>
-            0.1
-          </Option>
-          <Option value={1}>
-            1
-          </Option>
-          <Option value={10}>
-            10
-          </Option>
+          {price <= 5 ?
+            <Option value={0.0001} selected>
+              0.0001
+            </Option>
+            : null
+          }
+          {price <= 10 ?
+            <Option value={0.001}>
+              0.001
+            </Option>
+            : null
+          }
+          {price <= 5000 ?
+            <Option value={0.01} selected={price >= 5 ? true : false}>
+              0.01
+            </Option>
+            : null
+          }
+          
+          {price >= 5 ?
+            <Option value={0.1}>
+              0.1
+            </Option>
+            : null
+          }
+          {price >= 25 ?
+            <Option value={1}>
+              1
+            </Option>
+            : null
+          }
+          {price >= 300 ?
+            <Option value={10}>
+              10
+            </Option>
+            : null
+          }
+          {price >= 5000 ?
+            <Option value={100}>
+              100
+            </Option>
+            : null
+          }
+          
         </Select>
         <Books>
           <BookWrapper color='white'>

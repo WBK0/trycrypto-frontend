@@ -34,15 +34,16 @@ const Bids: React.FC<IBids> = ({ bids, bidsView, tick, setBidsMax, getBackground
     }
 
     if (Object.keys(temp).length < bidsView) {
-      let maxKey = Math.max(...Object.keys(temp).map(parseFloat));
-      for (let i = 1; i <= 10; i++) {
-        let newKey = (maxKey + i * 10).toFixed(tick.fixed);
-        if (!temp[newKey]) {
+      let minKey = Math.min(...Object.keys(temp).map(parseFloat));
+      console.log(minKey)
+      for (let i = 1; i <= bidsView; i++) {
+        let newKey = (minKey - i / tick.floor).toFixed(tick.fixed);
+        if (!temp[newKey] && Number(newKey) >= 0) {
           temp[newKey] = 0;
         }
       }
     }
-
+    console.log(temp)
     setBidsFilter(temp)
   }, [bids, tick])
 

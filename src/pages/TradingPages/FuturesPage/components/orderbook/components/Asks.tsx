@@ -35,14 +35,14 @@ const Asks: React.FC<IAsks> = ({ asks, asksView, tick, setAsksMax, getBackground
 
     if (Object.keys(temp).length < asksView) {
       let maxKey = Math.max(...Object.keys(temp).map(parseFloat));
-      for (let i = 1; i <= 10; i++) {
-        let newKey = (maxKey + i * 10).toFixed(tick.fixed);
+      for (let i = 1; i <= asksView; i++) {
+        let newKey = (maxKey + i / tick.floor).toFixed(tick.fixed);
         if (!temp[newKey]) {
           temp[newKey] = 0;
         }
       }
     }
-
+    
     setAsksFilter(temp)
   }, [asks, tick])
   

@@ -8,6 +8,7 @@ import { useState } from "react";
 import SymbolInfo from "./components/symbolInfo/SymbolInfo";
 import OrderBook from "./components/orderbook/OrderBook";
 import Chart from "./components/chart/Chart";
+import LastTrades from "./components/lastTrades/lastTrades";
 
 const FuturesPage = () => {
   const [data, setData] = useState({
@@ -49,7 +50,8 @@ const FuturesPage = () => {
         <Col xs={30} pr="0px" pb="0px">
           <Row>
             <Col xs={50} pr="0px" pb="0px">
-              <OrderBook price={data.c}/>
+              <OrderBook price={data.c} symbol={symbol}/>
+              <LastTrades symbol={symbol}/>
             </Col>
           </Row>
         </Col>
