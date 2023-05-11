@@ -23,7 +23,7 @@ const LastTrades : React.FC<ILastTrades> = ({ symbol }) => {
     });
   }
 
-  useWebSocket({url: 'wss://stream.binance.com/ws/' + symbol + '@aggTrade', onMessage})
+  useWebSocket({url: 'wss://fstream.binance.com/ws/' + symbol + '@aggTrade', onMessage})
 
   useEffect(() => {
     setData([])

@@ -17,7 +17,7 @@ export const Flex = styled.div`
   display: flex;  
   flex-direction: column;
   width: 100%;
-  max-height: 333px;
+  max-height: 280px;
   padding: 10px;
   overflow-y: scroll;
   overflow-anchor: auto;

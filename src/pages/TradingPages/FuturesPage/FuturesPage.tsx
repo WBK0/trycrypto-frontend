@@ -8,7 +8,8 @@ import { useState } from "react";
 import SymbolInfo from "./components/symbolInfo/SymbolInfo";
 import OrderBook from "./components/orderbook/OrderBook";
 import Chart from "./components/chart/Chart";
-import LastTrades from "./components/lastTrades/lastTrades";
+import LastTrades from "./components/lastTrades/LastTrades";
+import OrderPanel from "./components/orderPanel/OrderPanel";
 
 const FuturesPage = () => {
   const [data, setData] = useState({
@@ -34,7 +35,7 @@ const FuturesPage = () => {
   return(
     <Layout>
       <Row>
-        <Col xs={70} pr="0px" pb="0px">
+        <Col xs={68} pr="0px" pb="0px">
           <Row>
             <Col xs={30} pr="0px" pb="0px">
               <Symbol symbol={symbol}/>
@@ -47,11 +48,14 @@ const FuturesPage = () => {
             </Col>
           </Row>
         </Col> 
-        <Col xs={30} pr="0px" pb="0px">
+        <Col xs={32} pr="0px" pb="0px">
           <Row>
             <Col xs={50} pr="0px" pb="0px">
               <OrderBook price={data.c} symbol={symbol}/>
               <LastTrades symbol={symbol}/>
+            </Col>
+            <Col xs={50} pr="0px" pb="0px">
+              <OrderPanel price={data.c} symbol={symbol}/>
             </Col>
           </Row>
         </Col>
