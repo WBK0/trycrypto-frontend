@@ -102,7 +102,6 @@ export const RangeInput = styled.input`
     background-color: grey;
     cursor: pointer;
   }
-
 `
 
 interface IOrderButton {

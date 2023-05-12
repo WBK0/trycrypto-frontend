@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { LeverageButton, LeverageWrapper, OrderTypeLink, OrderTypeWrapper, Wrapper } from "./orderPanel.styles";
+import { Balance, Button, Hr, Input, InputSymbol, InputText, InputWrapper, LeverageButton, LeverageWrapper, OrderButtons, OrderTypeLink, OrderTypeWrapper, Price, PriceInfo, PriceText, PriceWrapper, RangeInput, RangeWrapper, Wallet, WalletText, Wrapper } from "./orderPanel.styles";
+import useWallet from "../../../../../hooks/useWallet";
+import Modal from "./components/Modal";
+import decimalPlaces from "../../../../../services/decimalPlaces";
+import api from "../../../../../services/api";
 
 interface IOrderPanel{
   price: number;
@@ -8,17 +12,126 @@ interface IOrderPanel{
 
 const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol }) => {
   const [orderType, setOrderType] = useState(0);
+  const [takeProfit, setTakeProfit] = useState("");
+  const [stopLoss, setStopLoss] = useState("");
+  const [leverage, setLeverage] = useState(11);
+  const [showModal, setShowModal] = useState(false);
+  const [orderQuantity, setOrderQuantity] = useState("0");
+
+  const {balance} = useWallet();
+
+  const handleChangeOrder = (e : {target: {value: string}}) => {
+    if(balance){
+      const decimalNumber = decimalPlaces(e.target.value);
+      
+      if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / price * 10) / 10).toFixed(1)) && decimalNumber <= 1){
+        setOrderQuantity(e.target.value);
+      }else if(Number(e.target.value) && decimalNumber <= 1){
+        setOrderQuantity((Math.floor(balance?.currentBalance / price * 10) / 10).toFixed(1))
+      }
+      console.log(e.target.value)
+    }
+  }
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSave = (lever: number) => {
+    setShowModal(false);
+    setLeverage(lever)
+  };
+
+  const handleChangeTP = (e) => {
+    const value = e.target.value;
+    if(value < price){
+      setTakeProfit(value)
+    }  
+  }
+
+  const onSubmit = async(type : string) => {
+    try {
+      const response = await api.post('/api/derivatives/market/open/' + symbol?.toUpperCase(), {
+        'type': type,
+        'quantity': orderQuantity,
+        'leverage': leverage
+      },{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      console.log(response)
+    } catch (error) {
+      console.error(error)      
+    }
+    
+  }
 
   return(
     <Wrapper>
       <LeverageWrapper>
-        <LeverageButton>20x</LeverageButton>
-      </LeverageWrapper>    
+        <LeverageButton onClick={handleShowModal}>{leverage}X</LeverageButton>
+      </LeverageWrapper>
+      {showModal && (
+        <Modal onClose={handleCloseModal} mainLeverage={leverage} onSave={handleSave}/>
+      )}
       <OrderTypeWrapper>
         <OrderTypeLink onClick={() => setOrderType(0)} active={orderType == 0 ? true : false}>Market</OrderTypeLink>
         <OrderTypeLink onClick={() => setOrderType(1)} active={orderType == 1 ? true : false}>Limit</OrderTypeLink>
       </OrderTypeWrapper>
-      
+      <Wallet>
+        <WalletText>Available:</WalletText> 
+        <Balance>{balance?.currentBalance.toFixed(2) || 0} USDT</Balance>
+      </Wallet>
+      <InputWrapper>
+        <InputText>Quantity</InputText>
+        <Input value={(Number(orderQuantity) * leverage).toFixed(1)} disabled/>
+        <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
+      </InputWrapper>
+      <RangeWrapper>
+        <RangeInput type="range" min={0} step={0.1} max={balance && (balance.currentBalance / price).toFixed(1)} onChange={handleChangeOrder}/>
+      </RangeWrapper>
+      <PriceInfo>
+        <PriceWrapper>
+          <PriceText>Buy</PriceText>
+          <Price>{(Number(orderQuantity) * leverage).toFixed(1)} {symbol?.toUpperCase().replace("USDT", "")}</Price>
+        </PriceWrapper>
+        <PriceWrapper>
+          <PriceText>Sell</PriceText>
+          <Price>{(Number(orderQuantity) * leverage).toFixed(1)} {symbol?.toUpperCase().replace("USDT", "")}</Price>
+        </PriceWrapper>
+      </PriceInfo>
+      <Hr />
+      <InputWrapper>
+        <InputText>Take Profit</InputText>
+        <Input value={takeProfit} onChange={handleChangeTP}/>
+        <InputSymbol>USDT</InputSymbol>
+      </InputWrapper>
+      <InputWrapper>
+        <InputText>Stop Loss</InputText>
+        <Input value="0" />
+        <InputSymbol>USDT</InputSymbol>
+      </InputWrapper>
+      <OrderButtons>
+        <Button orderType="buy" onClick={() => onSubmit('LONG')}>BUY/LONG</Button>
+        <Button orderType="sell" onClick={() => onSubmit('SHORT')}>SELL/SHORT</Button>
+      </OrderButtons>
+      <PriceInfo>
+        <PriceWrapper>
+          <PriceText>Cost</PriceText>
+          <Price>{(Number(orderQuantity) * price).toFixed(2)} USDT</Price>
+        </PriceWrapper>
+        <PriceWrapper>
+          <PriceText>Cost</PriceText>
+          <Price>{(Number(orderQuantity) * price).toFixed(2)} USDT</Price>
+        </PriceWrapper>
+      </PriceInfo>
     </Wrapper>
   )
 }

@@ -36,8 +36,8 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
     },{
       withCredentials: true,
       headers: {
-        'Content-Type': 'application/json', // nagłówek typu treści
-        'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
       },
     }).then((response: AxiosResponse) => {
       console.log(response.data);

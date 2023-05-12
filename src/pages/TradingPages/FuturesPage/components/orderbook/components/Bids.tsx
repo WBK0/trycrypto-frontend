@@ -43,7 +43,6 @@ const Bids: React.FC<IBids> = ({ bids, bidsView, tick, setBidsMax, getBackground
         }
       }
     }
-    console.log(temp)
     setBidsFilter(temp)
   }, [bids, tick])
 
