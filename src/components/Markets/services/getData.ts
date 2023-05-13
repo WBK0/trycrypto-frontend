@@ -6,7 +6,6 @@ const getData = async (market : string): Promise<never[]> => {
   
   await api.get("/data").then((response) => {
     let res: any;
-    console.log(market)
     if(market === 'spot'){
       res = response.data.spot;
     }else if(market === 'futures'){

@@ -12,8 +12,8 @@ interface IOrderPanel{
 
 const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol }) => {
   const [orderType, setOrderType] = useState(0);
-  const [takeProfit, setTakeProfit] = useState("");
-  const [stopLoss, setStopLoss] = useState("");
+  const [takeProfit, setTakeProfit] = useState(0);
+  const [stopLoss, setStopLoss] = useState(0);
   const [leverage, setLeverage] = useState(11);
   const [showModal, setShowModal] = useState(false);
   const [orderQuantity, setOrderQuantity] = useState("0");
@@ -46,19 +46,24 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol }) => {
     setLeverage(lever)
   };
 
-  const handleChangeTP = (e) => {
-    const value = e.target.value;
-    if(value < price){
-      setTakeProfit(value)
-    }  
+  const handleChangeTP = (e : {target: {value: string}}) => {
+    if(Number(e.target.value) || Number(e.target.value) == 0){
+      setTakeProfit(Number(e.target.value));
+    }
+  }
+
+  const handleChangeSL = (e : {target: {value: string}}) => {
+    if(Number(e.target.value) || Number(e.target.value) == 0){
+      setStopLoss(Number(e.target.value));    
+    }
   }
 
   const onSubmit = async(type : string) => {
     try {
       const response = await api.post('/api/derivatives/market/open/' + symbol?.toUpperCase(), {
         'type': type,
-        'quantity': orderQuantity,
-        'leverage': leverage
+        'quantity': Number(orderQuantity),
+        'leverage': Number(leverage)
       },{
         withCredentials: true,
         headers: {
@@ -115,7 +120,7 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol }) => {
       </InputWrapper>
       <InputWrapper>
         <InputText>Stop Loss</InputText>
-        <Input value="0" />
+        <Input value={stopLoss} onChange={handleChangeSL} />
         <InputSymbol>USDT</InputSymbol>
       </InputWrapper>
       <OrderButtons>

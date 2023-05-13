@@ -10,6 +10,7 @@ import OrderBook from "./components/orderbook/OrderBook";
 import Chart from "./components/chart/Chart";
 import LastTrades from "./components/lastTrades/LastTrades";
 import OrderPanel from "./components/orderPanel/OrderPanel";
+import InfoPanel from "./components/infoPanel/InfoPanel";
 
 const FuturesPage = () => {
   const [data, setData] = useState({
@@ -59,7 +60,9 @@ const FuturesPage = () => {
             </Col>
           </Row>
         </Col>
-        
+        <Col xs={100} pr="0px" pb="0px">
+          <InfoPanel />
+        </Col>
       </Row>
     </Layout>
   )
