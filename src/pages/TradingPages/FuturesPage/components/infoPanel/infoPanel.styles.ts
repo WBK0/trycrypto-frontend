@@ -64,6 +64,7 @@ export const Pnl = styled.td`
 export const PnlText = styled.span`
   word-wrap: break-word;
   width: 100%;
+  color ${props => props.color};
 `
 
 export const Td = styled.td`
