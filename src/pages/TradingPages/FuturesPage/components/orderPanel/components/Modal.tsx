@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Close, LeverageLevel, ModalContent, ModalWrapper, RangeInput, SaveButton, Warning } from "../orderPanel.styles";
+import { LeverageLevel, RangeInput, SaveButton, Warning } from "../orderPanel.styles";
+import { Close, ModalContent, ModalWrapper } from "../../../../../../shared/modal.styles";
 
 interface IModal{
   onClose: () => void;
@@ -16,7 +17,7 @@ const Modal: React.FC<IModal> = ({ onClose, mainLeverage, onSave }) => {
 
   return (
     <ModalWrapper onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
+      <ModalContent onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
         <Close onClick={onClose}>X</Close>
         <LeverageLevel>{leverage}X</LeverageLevel>
         <RangeInput type="range" min={1} max={50} value={leverage} onChange={handleChange}/>

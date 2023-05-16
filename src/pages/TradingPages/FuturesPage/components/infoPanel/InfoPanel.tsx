@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../../../../../services/api";
-import { InputTd, Pnl, PnlText, SelectBar, SelectButton, TBody, THead, Table, Td, Th, Tr, Type, Wrapper } from "./infoPanel.styles";
+import { SelectBar, SelectButton, THead, Table, Th, Tr, Wrapper } from "./infoPanel.styles";
 import getData from "../../../../../components/Markets/services/getData";
 import TableBody from "./components/TableBody";
 
-interface IPositions{
+export interface IPositions{
   type: string;
   pair: string;
   leverage: number;

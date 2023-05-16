@@ -81,3 +81,78 @@ export const InputTd = styled.input`
   color: white;
   width: 50%;
 `
+
+export const CloseButton = styled.button`
+  border: none;
+  background-color: red;
+  color: white;
+  border-radius: 6px;
+  padding: 5px 9px 5px 9px;
+  font-weight: 500;
+  font-size: 14px;
+`
+
+export const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const ModalContent = styled.div`
+  background-color: var(--theme-primary);
+  border-radius: 8px;
+  padding: 25px;
+  padding-top: 45px;
+  width: 400px;
+  height: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+`;
+
+export const Quantity = styled.h1`
+  text-align: center;
+  margin-bottom: 25px;
+`
+
+export const RangeInput = styled.input`
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;  
+  background-color: #b3b3b3;  
+  outline: none;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background-color: #3b3e47;
+    cursor: pointer;
+  }
+  &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background-color: grey;
+    cursor: pointer;
+  }
+`
+
+export const Info = styled.p`
+  padding-top: 30px;
+  font-size: 15px;
+`
+
+export const InfoPNL = styled.span`
+  color: ${props => props.color};
+`
