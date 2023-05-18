@@ -28,6 +28,9 @@ export const Flex = styled.div`
     background-color: grey;
     border-radius: 10px;
   }
+  ::-webkit-scrollbar-track {
+    background-color: var(--theme-primary);
+  }
 `
 
 export const TradeWrapper = styled.div`

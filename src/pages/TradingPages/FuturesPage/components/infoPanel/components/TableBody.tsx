@@ -1,32 +1,56 @@
 import { useState } from "react";
 import { IPositions } from "../InfoPanel";
-import { CloseButton, InputTd, Pnl, PnlText, TBody, Td, Tr, Type } from "../infoPanel.styles";
-import { Close } from "../../orderPanel/orderPanel.styles";
-import CloseModal from "./CloseModal";
+import { CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../infoPanel.styles";
+import CloseModal from "./Modals/CloseModal";
+import api from "../../../../../../services/api";
+import UpdateModal from "./Modals/UpdateModal";
 
 interface ITableBody{
   positions: IPositions[],
   pairPrice: {
     [x: string]: number;
-  }
+  },
+  fetchPositions: () => void;
 }
 
-const TableBody : React.FC<ITableBody> = ({ positions, pairPrice}) => {
-  const [showModal, setShowModal] = useState(false);
-  const [modalItem, setModalItem] = useState({})
 
-  const handleShowModal = (item) => {
+const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions }) => {
+  const [showCloseModal, setShowCloseModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [modalItem, setModalItem] = useState<IPositions>()
+
+  const handleShowCloseModal = (item: IPositions) => {
     setModalItem(item);
-    setShowModal(true);
+    setShowCloseModal(true);
+  };
+
+  const handleShowUpdateModal = (item: IPositions) => {
+    setModalItem(item);
+    setShowUpdateModal(true);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setShowCloseModal(false);
   };
 
-  const handleClose = () => {
-    setShowModal(false);
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
   };
+
+  const handleClose = async (quantity: number) => {
+    const response = await api.post('/api/derivatives/market/close/' + modalItem?.id, {
+      quantity: quantity
+    },{
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json', // nagłówek typu treści
+        'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
+      }})
+    fetchPositions();
+    setShowCloseModal(false);
+  };
+
+
 
   return(
     <TBody>
@@ -47,13 +71,17 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice}) => {
             <Td>{item.stopLoss || 0}</Td>
             <Td>{item.liquidationPrice.toFixed(2)}</Td>
             <Td>
-              <CloseButton onClick={() => handleShowModal(item)}>CLOSE</CloseButton>
+              <UpdateButton onClick={() => handleShowUpdateModal(item)}>UPDATE</UpdateButton>
+              <CloseButton onClick={() => handleShowCloseModal(item)}>CLOSE</CloseButton>
             </Td>
           </Tr>
         )
       })}   
-      {showModal && (
+      {showCloseModal && modalItem && (
         <CloseModal onClose={handleCloseModal} onSubmit={handleClose} modalItem={modalItem} pairPrice={pairPrice}/>
+      )}
+      {showUpdateModal && modalItem && (
+        <UpdateModal onClose={handleCloseUpdateModal} onSubmit={handleClose} modalItem={modalItem} pairPrice={pairPrice} fetchPositions={fetchPositions}/>
       )}
     </TBody>
   )

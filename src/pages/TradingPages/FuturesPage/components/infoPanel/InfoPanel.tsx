@@ -5,6 +5,7 @@ import getData from "../../../../../components/Markets/services/getData";
 import TableBody from "./components/TableBody";
 
 export interface IPositions{
+  id: number;
   type: string;
   pair: string;
   leverage: number;
@@ -23,15 +24,13 @@ const InfoPanel = () => {
   const [positions, setPositions] = useState<IPositions[]>([])
   const [pairPrice, setPairPrice] = useState<IPairPrice>({})
 useEffect(() => {
-  setTimeout(async () => {
+  setInterval(async () => {
     const response: IPairPrice[] = await getData('futures')
-    console.log(response)
     let temp: Record<string, number> = {};
     for (let i = 0; i < response.length; i++) {
       const currentObject = response[i];
       temp[currentObject.pair] = currentObject.lastPrice
     }
-
     setPairPrice(temp)
   }, 4000);
 }, [])
@@ -50,7 +49,7 @@ useEffect(() => {
   useEffect(() => {
     fetchPositions()
   }, [])
-  console.log(positions)
+
   return(
     <Wrapper>
       <SelectBar>
@@ -70,10 +69,10 @@ useEffect(() => {
             <Th>Take Profit</Th>
             <Th>Stop Loss</Th>
             <Th>Liquidation Price</Th>
-            <Th>Close</Th>
+            <Th>Actions</Th>
           </Tr>
         </THead>
-        <TableBody positions={positions} pairPrice={pairPrice} />
+        <TableBody positions={positions} pairPrice={pairPrice} fetchPositions={fetchPositions}/>
       </Table>
     </Wrapper>
   )

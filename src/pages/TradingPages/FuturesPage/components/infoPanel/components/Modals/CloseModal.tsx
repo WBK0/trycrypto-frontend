@@ -1,13 +1,23 @@
 import { useState } from "react";
-import { Close, ModalContent, ModalWrapper } from "../../../../../../shared/modal.styles";
-import { Info, InfoPNL, Quantity, RangeInput } from "../infoPanel.styles";
+import { Close, ModalContent, ModalWrapper } from "../../../../../../../shared/modal.styles";
+import { CloseButton, Info, InfoPNL, Quantity, RangeInput } from "./modal.styles";
+import { IPositions } from "../../InfoPanel";
 
-const CloseModal = ({ onClose, onSubmit, modalItem, pairPrice }) => {
+interface ICloseModal{
+  onClose: () => void;
+  onSubmit: (toSold: number) => void;
+  modalItem: IPositions;
+  pairPrice: {
+    [x: string]: number;
+  }
+}
+
+const CloseModal: React.FC<ICloseModal> = ({ onClose, onSubmit, modalItem, pairPrice }) => {
   const [toSold, setToSold] = useState(0)
   console.log(modalItem);
 
-  const handleChange = (e) => {
-    setToSold(e.target.value)
+  const handleChange = (e : {target: {value: string}}) => {
+    setToSold(Number(e.target.value))
   }
 
   return(
@@ -21,7 +31,9 @@ const CloseModal = ({ onClose, onSubmit, modalItem, pairPrice }) => {
           ? toSold * (pairPrice[modalItem.pair] - modalItem.purchasePrice) * modalItem.leverage 
           : toSold * (modalItem.purchasePrice - pairPrice[modalItem.pair]) * modalItem.leverage).toFixed(2)} USDT</InfoPNL>
         </Info>
+        <CloseButton onClick={() => onSubmit(toSold)}>Close</CloseButton>
       </ModalContent>
+      
     </ModalWrapper>
   );
 }

@@ -46,15 +46,15 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol }) => {
     setLeverage(lever)
   };
 
-  const handleChangeTP = (e : {target: {value: string}}) => {
+  const handleChangeTP = (e : any) => {
     if(Number(e.target.value) || Number(e.target.value) == 0){
-      setTakeProfit(Number(e.target.value));
+      setTakeProfit(e.target.value);
     }
   }
 
-  const handleChangeSL = (e : {target: {value: string}}) => {
+  const handleChangeSL = (e : any) => {
     if(Number(e.target.value) || Number(e.target.value) == 0){
-      setStopLoss(Number(e.target.value));    
+      setStopLoss(e.target.value);    
     }
   }
 

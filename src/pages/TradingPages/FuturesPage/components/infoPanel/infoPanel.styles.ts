@@ -2,18 +2,31 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   flex-wrap: wrap;
-  min-height: 300px;
+  max-height: 300px;
+  overflow-y: auto;
   margin-bottom: 10px;
   color: white;
   @media screen and (min-width: 1000px){
     border: 1px solid var(--border-dark);
     border-top: none; 
   }
+  &::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: var(--theme-primary);
+  }
 `
 
 export const SelectBar = styled.div`
+  width: 100%;
   margin-top: 7px;
 `
 
@@ -64,7 +77,7 @@ export const Pnl = styled.td`
 export const PnlText = styled.span`
   word-wrap: break-word;
   width: 100%;
-  color ${props => props.color};
+  color: ${props => props.color};
 `
 
 export const Td = styled.td`
@@ -82,13 +95,14 @@ export const InputTd = styled.input`
   width: 50%;
 `
 
-export const CloseButton = styled.button`
+export const UpdateButton = styled.button`
   border: none;
-  background-color: red;
+  background-color: darkcyan;
   color: white;
   border-radius: 6px;
   padding: 5px 9px 5px 9px;
   font-weight: 500;
+  margin-right: 6px;
   font-size: 14px;
 `
 
@@ -117,42 +131,12 @@ export const ModalContent = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Quantity = styled.h1`
-  text-align: center;
-  margin-bottom: 25px;
-`
-
-export const RangeInput = styled.input`
-  appearance: none;
-  -webkit-appearance: none;
-  width: 100%;
-  height: 8px;
-  border-radius: 5px;  
-  background-color: #b3b3b3;  
-  outline: none;
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%; 
-    background-color: #3b3e47;
-    cursor: pointer;
-  }
-  &::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%; 
-    background-color: grey;
-    cursor: pointer;
-  }
-`
-
-export const Info = styled.p`
-  padding-top: 30px;
-  font-size: 15px;
-`
-
-export const InfoPNL = styled.span`
-  color: ${props => props.color};
+export const CloseButton = styled.button`
+  border: none;
+  background-color: red;
+  color: white;
+  border-radius: 6px;
+  padding: 5px 9px 5px 9px;
+  font-weight: 500;
+  font-size: 14px;
 `
