@@ -11,6 +11,20 @@ import Chart from "./components/chart/Chart";
 import LastTrades from "./components/lastTrades/LastTrades";
 import OrderPanel from "./components/orderPanel/OrderPanel";
 import InfoPanel from "./components/infoPanel/InfoPanel";
+import useWallet from "../../../hooks/useWallet";
+import api from "../../../services/api";
+
+export interface IPositions{
+  id: number;
+  type: string;
+  pair: string;
+  leverage: number;
+  quantity: number;
+  purchasePrice: number;
+  takeProfit?: number;
+  stopLoss?: number;
+  liquidationPrice: number;
+}
 
 const FuturesPage = () => {
   const [data, setData] = useState({
@@ -22,7 +36,24 @@ const FuturesPage = () => {
     o: 0,
     q: 0
   });
+  const [positions, setPositions] = useState<IPositions[]>([])
   const { symbol } = useParams()
+  const { balance, fetchBalance } = useWallet();
+  
+  const fetchPositions = async () => {
+    try {
+      const response = await api.get('/api/positions/futures', {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        }
+      })
+      setPositions(response.data)
+    } catch (error) {
+      console.error(error)
+    } 
+  }
 
   const onMessage = (event: MessageEvent) => {
     setData(JSON.parse(event.data))
@@ -56,12 +87,12 @@ const FuturesPage = () => {
               <LastTrades symbol={symbol}/>
             </Col>
             <Col xs={50} pr="0px" pb="0px">
-              <OrderPanel price={data.c} symbol={symbol}/>
+              <OrderPanel price={data.c} symbol={symbol} balance={balance} fetchBalance={fetchBalance} fetchPositions={fetchPositions}/>
             </Col>
           </Row>
         </Col>
         <Col xs={100} pr="0px" pb="0px">
-          <InfoPanel />
+          <InfoPanel fetchBalance={fetchBalance} positions={positions} fetchPositions={fetchPositions}/>
         </Col>
       </Row>
     </Layout>

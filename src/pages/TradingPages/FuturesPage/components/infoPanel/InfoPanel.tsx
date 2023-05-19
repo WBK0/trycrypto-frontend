@@ -3,25 +3,21 @@ import api from "../../../../../services/api";
 import { SelectBar, SelectButton, THead, Table, Th, Tr, Wrapper } from "./infoPanel.styles";
 import getData from "../../../../../components/Markets/services/getData";
 import TableBody from "./components/TableBody";
+import { IPositions } from "../../FuturesPage";
 
-export interface IPositions{
-  id: number;
-  type: string;
-  pair: string;
-  leverage: number;
-  quantity: number;
-  purchasePrice: number;
-  takeProfit?: number;
-  stopLoss?: number;
-  liquidationPrice: number;
-}
+
 
 interface IPairPrice{
   [x: string]: number;
 }
 
-const InfoPanel = () => {
-  const [positions, setPositions] = useState<IPositions[]>([])
+interface IInfoPanel{
+  fetchBalance: () => void
+  positions: IPositions[];
+  fetchPositions: () => void;
+}
+
+const InfoPanel: React.FC<IInfoPanel> = ({ fetchBalance, positions, fetchPositions }) => {
   const [pairPrice, setPairPrice] = useState<IPairPrice>({})
 useEffect(() => {
   setInterval(async () => {
@@ -35,16 +31,7 @@ useEffect(() => {
   }, 4000);
 }, [])
   
-  const fetchPositions = async () => {
-    const response = await api.get('/api/positions/futures', {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      }
-    })
-    setPositions(response.data)
-  }
+  
   
   useEffect(() => {
     fetchPositions()
@@ -72,7 +59,7 @@ useEffect(() => {
             <Th>Actions</Th>
           </Tr>
         </THead>
-        <TableBody positions={positions} pairPrice={pairPrice} fetchPositions={fetchPositions}/>
+        <TableBody positions={positions} pairPrice={pairPrice} fetchPositions={fetchPositions} fetchBalance={fetchBalance}/>
       </Table>
     </Wrapper>
   )

@@ -1,24 +1,64 @@
 import { useState } from "react";
 import { Close, ModalContent, ModalWrapper } from "../../../../../../../shared/modal.styles";
 import { CloseButton, Info, InfoPNL, Quantity, RangeInput } from "./modal.styles";
-import { IPositions } from "../../InfoPanel";
+import { IPositions } from "../../../../FuturesPage";
+import api from "../../../../../../../services/api";
+import { toast } from "react-toastify";
 
 interface ICloseModal{
   onClose: () => void;
-  onSubmit: (toSold: number) => void;
+  fetchPositions: () => void;
   modalItem: IPositions;
   pairPrice: {
     [x: string]: number;
-  }
+  };
+  fetchBalance: () => void;
 }
 
-const CloseModal: React.FC<ICloseModal> = ({ onClose, onSubmit, modalItem, pairPrice }) => {
+const CloseModal: React.FC<ICloseModal> = ({ onClose, fetchPositions, modalItem, pairPrice, fetchBalance }) => {
   const [toSold, setToSold] = useState(0)
   console.log(modalItem);
 
   const handleChange = (e : {target: {value: string}}) => {
     setToSold(Number(e.target.value))
   }
+
+  const handleClose = async () => {
+    try {
+      await api.post('/api/derivatives/market/close/' + modalItem.id, {
+        quantity: toSold
+      },{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json', // nagłówek typu treści
+          'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
+        }})
+        fetchPositions();
+        onClose();
+        toast.success(`${toSold}/${modalItem.quantity} of this position has been successfully closed`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+          });
+          fetchBalance();
+    } catch (error) {
+      toast.error('The position cannot be closed for some unknown reason', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      })
+    }
+    
+  };
+
 
   return(
     <ModalWrapper onClick={onClose}>
@@ -31,7 +71,7 @@ const CloseModal: React.FC<ICloseModal> = ({ onClose, onSubmit, modalItem, pairP
           ? toSold * (pairPrice[modalItem.pair] - modalItem.purchasePrice) * modalItem.leverage 
           : toSold * (modalItem.purchasePrice - pairPrice[modalItem.pair]) * modalItem.leverage).toFixed(2)} USDT</InfoPNL>
         </Info>
-        <CloseButton onClick={() => onSubmit(toSold)}>Close</CloseButton>
+        <CloseButton onClick={handleClose}>Close</CloseButton>
       </ModalContent>
       
     </ModalWrapper>

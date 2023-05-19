@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { Close, ModalContent, ModalWrapper } from "../../../../../../../shared/modal.styles";
 import { Input, InputLabel, UpdateButton } from "./modal.styles";
-import { IPositions } from "../../InfoPanel";
+import { IPositions } from "../../../../FuturesPage";
 import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
 
 interface IUpdateModal{
   onClose: () => void;
-  onSubmit: (toSold: number) => void;
   modalItem: IPositions;
   pairPrice: {
     [x: string]: number;
   },
   fetchPositions: () => void;
+  fetchBalance: () => void;
 }
 
-const UpdateModal: React.FC<IUpdateModal> = ({ onClose, onSubmit, modalItem, pairPrice, fetchPositions }) => {
+const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, pairPrice, fetchPositions, fetchBalance }) => {
   const [takeProfit, setTakeProfit] = useState(modalItem.takeProfit || 0);
   const [stopLoss, setStopLoss] = useState(modalItem.stopLoss || 0);
 
@@ -31,7 +31,7 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, onSubmit, modalItem, pai
   }
   const handleSubmit = async () => {
     try {
-      const response = await api.post("/api/derivatives/position/update/" + modalItem.id, {
+      await api.post("/api/derivatives/position/update/" + modalItem.id, {
         takeProfit: Number(takeProfit),
         stopLoss: Number(stopLoss)
       },{
@@ -51,7 +51,7 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, onSubmit, modalItem, pai
         });
       fetchPositions();
       onClose();
-      console.log(response)
+      fetchBalance();
     } catch (error) {
       toast.error('The position cannot be updated, please check the data provided', {
         position: "bottom-right",
@@ -61,7 +61,7 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, onSubmit, modalItem, pai
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        })
+      })
     } 
   }
 

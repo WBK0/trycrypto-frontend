@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IPositions } from "../InfoPanel";
+import { IPositions } from "../../../FuturesPage";
 import { CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../infoPanel.styles";
 import CloseModal from "./Modals/CloseModal";
 import api from "../../../../../../services/api";
@@ -11,10 +11,11 @@ interface ITableBody{
     [x: string]: number;
   },
   fetchPositions: () => void;
+  fetchBalance: () => void;
 }
 
 
-const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions }) => {
+const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions, fetchBalance }) => {
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [modalItem, setModalItem] = useState<IPositions>()
@@ -54,7 +55,7 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
 
   return(
     <TBody>
-      {positions.map((item) => {
+      {positions.sort((a, b) => a.id - b.id).map((item) => {
         return(
           <Tr>
             <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3);'}>{item.type}</Type>
@@ -78,10 +79,10 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
         )
       })}   
       {showCloseModal && modalItem && (
-        <CloseModal onClose={handleCloseModal} onSubmit={handleClose} modalItem={modalItem} pairPrice={pairPrice}/>
+        <CloseModal onClose={handleCloseModal} fetchPositions={fetchPositions} modalItem={modalItem} pairPrice={pairPrice} fetchBalance={fetchBalance}/>
       )}
       {showUpdateModal && modalItem && (
-        <UpdateModal onClose={handleCloseUpdateModal} onSubmit={handleClose} modalItem={modalItem} pairPrice={pairPrice} fetchPositions={fetchPositions}/>
+        <UpdateModal onClose={handleCloseUpdateModal} modalItem={modalItem} pairPrice={pairPrice} fetchPositions={fetchPositions} fetchBalance={fetchBalance}/>
       )}
     </TBody>
   )

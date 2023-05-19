@@ -4,21 +4,23 @@ import useWallet from "../../../../../hooks/useWallet";
 import Modal from "./components/Modal";
 import decimalPlaces from "../../../../../services/decimalPlaces";
 import api from "../../../../../services/api";
+import IWallet from "../../../../../interfaces/Wallet.interface";
 
 interface IOrderPanel{
   price: number;
   symbol?: string;
+  balance?: IWallet;
+  fetchBalance: () => void;
+  fetchPositions: () => void;
 }
 
-const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol }) => {
+const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol, balance, fetchBalance, fetchPositions }) => {
   const [orderType, setOrderType] = useState(0);
   const [takeProfit, setTakeProfit] = useState(0);
   const [stopLoss, setStopLoss] = useState(0);
   const [leverage, setLeverage] = useState(11);
   const [showModal, setShowModal] = useState(false);
   const [orderQuantity, setOrderQuantity] = useState("0");
-
-  const {balance} = useWallet();
 
   const handleChangeOrder = (e : {target: {value: string}}) => {
     if(balance){
@@ -72,6 +74,8 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol }) => {
         },
       })
       console.log(response)
+      fetchBalance();
+      fetchPositions();
     } catch (error) {
       console.error(error)      
     }
