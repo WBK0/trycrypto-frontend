@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   flex-wrap: wrap;
-  max-height: 300px;
+  height: 300px;
   overflow-y: auto;
   margin-bottom: 10px;
   color: white;
@@ -139,4 +139,11 @@ export const CloseButton = styled.button`
   padding: 5px 9px 5px 9px;
   font-weight: 500;
   font-size: 14px;
+`
+
+export const Text = styled.span`
+  text-align: center;
+  font-size: 17px;
+  margin-top: 25px;
+  color: rgb(200,200,200);
 `

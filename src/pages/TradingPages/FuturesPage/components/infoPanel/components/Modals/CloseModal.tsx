@@ -30,8 +30,8 @@ const CloseModal: React.FC<ICloseModal> = ({ onClose, fetchPositions, modalItem,
       },{
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/json', // nagłówek typu treści
-          'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
         }})
         fetchPositions();
         onClose();
@@ -55,10 +55,8 @@ const CloseModal: React.FC<ICloseModal> = ({ onClose, fetchPositions, modalItem,
         draggable: true,
         theme: "dark",
       })
-    }
-    
+    } 
   };
-
 
   return(
     <ModalWrapper onClick={onClose}>

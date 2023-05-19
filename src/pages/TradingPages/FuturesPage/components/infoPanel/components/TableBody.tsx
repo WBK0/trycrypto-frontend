@@ -2,7 +2,6 @@ import { useState } from "react";
 import { IPositions } from "../../../FuturesPage";
 import { CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../infoPanel.styles";
 import CloseModal from "./Modals/CloseModal";
-import api from "../../../../../../services/api";
 import UpdateModal from "./Modals/UpdateModal";
 
 interface ITableBody{
@@ -37,21 +36,6 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
   const handleCloseUpdateModal = () => {
     setShowUpdateModal(false);
   };
-
-  const handleClose = async (quantity: number) => {
-    const response = await api.post('/api/derivatives/market/close/' + modalItem?.id, {
-      quantity: quantity
-    },{
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json', // nagłówek typu treści
-        'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
-      }})
-    fetchPositions();
-    setShowCloseModal(false);
-  };
-
-
 
   return(
     <TBody>

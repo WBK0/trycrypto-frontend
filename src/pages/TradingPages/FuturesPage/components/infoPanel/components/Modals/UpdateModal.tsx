@@ -15,7 +15,7 @@ interface IUpdateModal{
   fetchBalance: () => void;
 }
 
-const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, pairPrice, fetchPositions, fetchBalance }) => {
+const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, fetchPositions, fetchBalance }) => {
   const [takeProfit, setTakeProfit] = useState(modalItem.takeProfit || 0);
   const [stopLoss, setStopLoss] = useState(modalItem.stopLoss || 0);
 
@@ -37,8 +37,8 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, pairPrice, fe
       },{
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/json', // nagłówek typu treści
-          'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
         }})
       toast.success('The position has been successfully updated', {
         position: "bottom-right",
@@ -50,8 +50,8 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, pairPrice, fe
         theme: "dark",
         });
       fetchPositions();
-      onClose();
       fetchBalance();
+      onClose();
     } catch (error) {
       toast.error('The position cannot be updated, please check the data provided', {
         position: "bottom-right",

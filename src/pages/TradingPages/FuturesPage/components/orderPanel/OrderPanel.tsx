@@ -5,6 +5,7 @@ import Modal from "./components/Modal";
 import decimalPlaces from "../../../../../services/decimalPlaces";
 import api from "../../../../../services/api";
 import IWallet from "../../../../../interfaces/Wallet.interface";
+import { toast } from "react-toastify";
 
 interface IOrderPanel{
   price: number;
@@ -76,10 +77,29 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol, balance, fetchBalanc
       console.log(response)
       fetchBalance();
       fetchPositions();
+      toast.success(`Successfully opened an ${symbol?.toUpperCase()} position of ${orderQuantity} quantity`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        });
+        fetchBalance();
     } catch (error) {
       console.error(error)      
+      toast.error(`Position not opened, unknown error occurred`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        });
     }
-    
+
   }
 
   return(
