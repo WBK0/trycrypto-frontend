@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
-import api from "../../../../../services/api";
-import { SelectBar, SelectButton, THead, Table, Text, Th, Tr, Wrapper } from "./infoPanel.styles";
-import getData from "../../../../../components/Markets/services/getData";
-import TableBody from "./components/TableBody";
+import { SelectBar, SelectButton, Wrapper } from "./infoPanel.styles";
 import { IPositions } from "../../FuturesPage";
-
-
-
-interface IPairPrice{
-  [x: string]: number;
-}
+import Positions from "./components/Positions/Positions";
+import TransactionHistoryView from "./components/TransactionHistory/TransactionHistory";
 
 interface IInfoPanel{
   fetchBalance: () => void
@@ -18,18 +11,7 @@ interface IInfoPanel{
 }
 
 const InfoPanel: React.FC<IInfoPanel> = ({ fetchBalance, positions, fetchPositions }) => {
-  const [pairPrice, setPairPrice] = useState<IPairPrice>({})
-  useEffect(() => {
-    setInterval(async () => {
-      const response: IPairPrice[] = await getData('futures')
-      let temp: Record<string, number> = {};
-      for (let i = 0; i < response.length; i++) {
-        const currentObject = response[i];
-        temp[currentObject.pair] = currentObject.lastPrice
-      }
-      setPairPrice(temp)
-    }, 4000);
-  }, [])
+  const [view, setView] = useState(0);
   
   useEffect(() => {
     fetchPositions()
@@ -38,34 +20,30 @@ const InfoPanel: React.FC<IInfoPanel> = ({ fetchBalance, positions, fetchPositio
   return(
     <Wrapper>
       <SelectBar>
-        <SelectButton active={true}>Positions</SelectButton>
-        <SelectButton active={false}>Transaction History</SelectButton>
+        <SelectButton active={view == 0 ? true : false} onClick={() => setView(0)}>Positions</SelectButton>
+        <SelectButton active={view == 1 ? true : false} onClick ={() => setView(1)}>Transaction History</SelectButton>
       </SelectBar>
-      {
-        positions.length >= 1 ? 
-        <Table>
-          <THead>
-            <Tr>
-              <Th>Type</Th>
-              <Th>Pair</Th>
-              <Th>Leverage</Th>
-              <Th>Quantity</Th>
-              <Th>Purchase Price</Th>
-              <Th>Price</Th>
-              <Th>PNL</Th>
-              <Th>Take Profit</Th>
-              <Th>Stop Loss</Th>
-              <Th>Liquidation Price</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </THead>
-          <TableBody positions={positions} pairPrice={pairPrice} fetchPositions={fetchPositions} fetchBalance={fetchBalance}/>
-        </Table>
-        :
-        <Text>
-          You don't have any open positions yet
-        </Text>
-      }
+      {(() => {
+          switch (view) {
+            case 0:
+              return(
+                <Positions 
+                  positions={positions} 
+                  fetchBalance={fetchBalance} 
+                  fetchPositions={fetchPositions}
+                />
+              )
+            case 1:
+              return(
+                <TransactionHistoryView 
+                  
+                />
+              )
+            default:
+              console.warn(`Unexpected step value: ${view}`);
+              return null
+          }
+        })()}      
       
     </Wrapper>
   )
