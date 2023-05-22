@@ -17,17 +17,22 @@ interface IPositionsView{
 const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fetchBalance}) => {
   const [pairPrice, setPairPrice] = useState<IPairPrice>({})
   useEffect(() => {
+    getPairPrice();
     setInterval(async () => {
-      const response: IPairPrice[] = await getData('futures')
-      let temp: Record<string, number> = {};
-      for (let i = 0; i < response.length; i++) {
-        const currentObject = response[i];
-        temp[currentObject.pair] = currentObject.lastPrice
-      }
-      setPairPrice(temp)
+      getPairPrice()
     }, 4000);
   }, [])
 
+  const getPairPrice = async () => {
+    const response: IPairPrice[] = await getData('futures')
+    let temp: Record<string, number> = {};
+    for (let i = 0; i < response.length; i++) {
+      const currentObject = response[i];
+      temp[currentObject.pair] = currentObject.lastPrice
+    }
+    setPairPrice(temp)
+  }
+  
   return(
     <>
       {

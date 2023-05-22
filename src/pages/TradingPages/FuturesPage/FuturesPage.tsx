@@ -4,7 +4,7 @@ import { Row } from "../../../shared/row";
 import { Col } from "../../../shared/col";
 import Symbol from "./components/symbol/Symbol";
 import useWebSocket from "../../../hooks/useWebSocket";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SymbolInfo from "./components/symbolInfo/SymbolInfo";
 import OrderBook from "./components/orderbook/OrderBook";
 import Chart from "./components/chart/Chart";
@@ -39,7 +39,7 @@ const FuturesPage = () => {
   const [positions, setPositions] = useState<IPositions[]>([])
   const { symbol } = useParams()
   const { balance, fetchBalance } = useWallet();
-  
+
   const fetchPositions = async () => {
     try {
       const response = await api.get('/api/positions/futures', {

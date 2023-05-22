@@ -66,7 +66,9 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol, balance, fetchBalanc
       const response = await api.post('/api/derivatives/market/open/' + symbol?.toUpperCase(), {
         'type': type,
         'quantity': Number(orderQuantity),
-        'leverage': Number(leverage)
+        'leverage': Number(leverage),
+        'takeProfit': Number(takeProfit),
+        'stopLoss': Number(stopLoss)
       },{
         withCredentials: true,
         headers: {

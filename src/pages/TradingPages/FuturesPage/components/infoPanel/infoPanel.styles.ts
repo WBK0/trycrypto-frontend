@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
+  flex-direction: column;
   height: 300px;
   overflow-y: auto;
   margin-bottom: 10px;
@@ -23,6 +23,10 @@ export const Wrapper = styled.div`
   ::-webkit-scrollbar-track {
     background-color: var(--theme-primary);
   }
+`
+
+export const Content = styled.div`
+  flex-grow: 1;
 `
 
 export const SelectBar = styled.div`
@@ -45,7 +49,7 @@ export const SelectButton = styled.button<ISelectButton>`
 `
 
 export const Table = styled.table`
-  margin-top: 10px;
+  margin-top: 5px;
   margin-left: 10px;
 `
 
@@ -141,8 +145,9 @@ export const CloseButton = styled.button`
   font-size: 14px;
 `
 
-export const Text = styled.span`
+export const Text = styled.div`
   text-align: center;
+  width: 100%;
   font-size: 17px;
   margin-top: 25px;
   color: rgb(200,200,200);
