@@ -4,12 +4,13 @@ export const Wrapper = styled.div`
   color: #c4c4c4;
   width: 100%;
   border-bottom: 10px solid var(--theme-dark);
-  height: 285px;
+  height: 410px;
    
   @media screen and (min-width: 1000px) {
     border: 1px solid var(--border-dark);
     border-left: none;
     border-top: none; 
+    height: 285px;
   }
 `
 
@@ -17,7 +18,7 @@ export const Flex = styled.div`
   display: flex;  
   flex-direction: column;
   width: 100%;
-  max-height: 280px;
+  max-height: 400px;
   padding: 10px;
   overflow-y: scroll;
   overflow-anchor: auto;
@@ -30,6 +31,9 @@ export const Flex = styled.div`
   }
   ::-webkit-scrollbar-track {
     background-color: var(--theme-primary);
+  }
+  @media screen and (min-width: 1000px) {
+    max-height: 280px;
   }
 `
 

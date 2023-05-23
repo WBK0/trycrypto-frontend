@@ -16,38 +16,38 @@ interface ISymbolInfo{
 const SymbolInfo: React.FC<ISymbolInfo> = ({ data }) => {
   return(
     <Wrapper>
-      <Col xs={16.66} pr="0px" pb="0px">
+      <Col xl={16.66} xs={33.33} pr="0px" pb="0px">
         <InfoWrapper>
           <Price>
             {data.c}
           </Price>
         </InfoWrapper> 
       </Col>
-      <Col xs={16.66} pr="0px" pb="0px">
+      <Col xl={16.66} xs={33.33} pr="0px" pb="0px">
         <InfoWrapper>
           <InfoHeader>24H change</InfoHeader>
           <InfoData>{Number(data.P).toFixed(2) + "% " + Number(data.p).toFixed(data.c <= 15 ? 5 : 2) + "$"}</InfoData>
         </InfoWrapper>
       </Col>
-      <Col xs={16.66} pr="0px" pb="0px">
+      <Col xl={16.66} xs={33.33} pr="0px" pb="0px">
         <InfoWrapper>
           <InfoHeader>24H High</InfoHeader>
           <InfoData>{Number(data.h).toFixed(data.c <= 15 ? 5 : 2)}</InfoData>
         </InfoWrapper>
       </Col>
-      <Col xs={16.66} pr="0px" pb="0px">
+      <Col xl={16.66} xs={33.33} pr="0px" pb="0px">
         <InfoWrapper>
           <InfoHeader>24H Low</InfoHeader>
           <InfoData>{Number(data.l).toFixed(data.c <= 15 ? 5 : 2)}</InfoData>
         </InfoWrapper>
       </Col>
-      <Col xs={16.66} pr="0px" pb="0px">
+      <Col xl={16.66} xs={33.33} pr="0px" pb="0px">
         <InfoWrapper>
           <InfoHeader>Open price</InfoHeader>
           <InfoData>{Number(data.o).toFixed(data.c <= 15 ? 5 : 2)}</InfoData>
         </InfoWrapper>
       </Col>
-      <Col xs={16.66} pr="0px" pb="0px">
+      <Col xl={16.66} xs={33.33} pr="0px" pb="0px">
         <InfoWrapper>
           <InfoHeader>24H volume</InfoHeader>
           <InfoData>{Number(data.q / 1000000).toFixed(2)}M</InfoData>

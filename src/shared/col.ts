@@ -6,6 +6,7 @@ type ColProps = {
   md?: number;
   lg?: number;
   xl?: number;
+  xxl?: number;
   pr?: string;
   pb?: string;
   pl?: string;
@@ -43,5 +44,8 @@ export const Col = styled.div<ColProps>`
   }
   @media (min-width: 1200px) {
     width: ${props => props.xl + "%"};
+  }
+  @media (min-width: 1400px) {
+    width: ${props => props.xxl + "%"};
   }
 `

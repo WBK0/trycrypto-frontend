@@ -51,6 +51,7 @@ export const SelectButton = styled.button<ISelectButton>`
 export const Table = styled.table`
   margin-top: 5px;
   margin-left: 10px;
+  overflow-x: auto;
 `
 
 export const THead = styled.thead`
@@ -76,16 +77,17 @@ export const Pnl = styled.td`
   flex-wrap: wrap;
   justify-content: start;
   width: 200px;
+  color: ${props => props.color};
 `
 
 export const PnlText = styled.span`
   word-wrap: break-word;
   width: 100%;
-  color: ${props => props.color};
 `
 
 export const Td = styled.td`
-  width: 200px;
+  min-width: 120px;
+  width: 20vw;
 `
 
 export const Th = styled.th`

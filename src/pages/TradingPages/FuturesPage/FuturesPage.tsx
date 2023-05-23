@@ -4,7 +4,7 @@ import { Row } from "../../../shared/row";
 import { Col } from "../../../shared/col";
 import Symbol from "./components/symbol/Symbol";
 import useWebSocket from "../../../hooks/useWebSocket";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SymbolInfo from "./components/symbolInfo/SymbolInfo";
 import OrderBook from "./components/orderbook/OrderBook";
 import Chart from "./components/chart/Chart";
@@ -13,6 +13,7 @@ import OrderPanel from "./components/orderPanel/OrderPanel";
 import InfoPanel from "./components/infoPanel/InfoPanel";
 import useWallet from "../../../hooks/useWallet";
 import api from "../../../services/api";
+import ResponsiveSelect from "./components/responsiveSelect/ResponsiveSelect";
 
 export interface IPositions{
   id: number;
@@ -39,6 +40,7 @@ const FuturesPage = () => {
   const [positions, setPositions] = useState<IPositions[]>([])
   const { symbol } = useParams()
   const { balance, fetchBalance } = useWallet();
+  const [showResponsive, setShowResponsive] = useState('chart');
 
   const fetchPositions = async () => {
     try {
@@ -67,26 +69,33 @@ const FuturesPage = () => {
   return(
     <Layout>
       <Row>
-        <Col xs={68} pr="0px" pb="0px">
+        <Col xxl={68} lg={50} xs={100} pr="0px" pb="0px">
           <Row>
-            <Col xs={30} pr="0px" pb="0px">
+            <Col xxl={30} xs={100} pr="0px" pb="0px">
               <Symbol symbol={symbol}/>
             </Col>
-            <Col xs={70} pr="0px" pb="0px">
+            <Col xxl={70} xs={100} pr="0px" pb="0px">
               <SymbolInfo data={data}/>
             </Col>
-            <Col xs={100} pr="0px" pb="0px">
+            <Col xs={100} lg={100} dLg="none" pb="0px" pr="0px">
+              <ResponsiveSelect showResponsive={showResponsive} setShowResponsive={setShowResponsive} />
+            </Col>
+            <Col xs={100} pr="0px" pb="0px" dXs={showResponsive == 'chart' ? 'block' : 'none'} dLg="block">
               <Chart symbol={symbol} />
             </Col>
           </Row>
         </Col> 
-        <Col xs={32} pr="0px" pb="0px">
+        <Col xxl={32} xs={100} lg={50} pr="0px" pb="0px">
           <Row>
-            <Col xs={50} pr="0px" pb="0px">
-              <OrderBook price={data.c} symbol={symbol}/>
-              <LastTrades symbol={symbol}/>
+            <Col xs={100} lg={45} pr="0px" pb="0px" dXs={showResponsive == 'orderBook' || showResponsive == 'trades' ? 'block' : 'none'} dLg="block">
+              <Col xs={100} pr="0px" pb="0px" dXs={showResponsive == 'orderBook' ? 'block' : 'none'} dLg="block">
+                <OrderBook price={data.c} symbol={symbol}/>
+              </Col>
+              <Col xs={100} pr="0px" pb="0px" dXs={showResponsive == 'trades' ? 'block' : 'none'} dLg="block">
+                <LastTrades symbol={symbol}/>
+              </Col>
             </Col>
-            <Col xs={50} pr="0px" pb="0px">
+            <Col lg={55} pr="0px" pb="0px" dXs="none" dLg="block">
               <OrderPanel price={data.c} symbol={symbol} balance={balance} fetchBalance={fetchBalance} fetchPositions={fetchPositions}/>
             </Col>
           </Row>

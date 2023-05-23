@@ -22,12 +22,7 @@ const ResponsiveSelect: React.FC<IResponsiveSelect> = ({ showResponsive, setShow
         active={showResponsive == 'trades' ? true : false} 
         onClick={() => setShowResponsive('trades')}>
         Last Trades
-      </SelectButton>
-      <SelectButton 
-        active={showResponsive == 'market' ? true : false} 
-        onClick={() => setShowResponsive('market')}>
-        Other Markets
-      </SelectButton>      
+      </SelectButton>     
     </Wrapper>
   )
 }

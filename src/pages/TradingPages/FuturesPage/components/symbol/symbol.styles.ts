@@ -9,8 +9,11 @@ export const Wrapper = styled.div`
   align-items: center;
   font-size: 20px;
   font-weight: 500;
+  border-bottom: 10px solid var(--theme-dark);
   @media screen and (min-width: 1000px){
     border: 1px solid var(--border-dark);
+  }
+  @media screen and (min-width: 1400px){
     border-right: none;
   }
 `

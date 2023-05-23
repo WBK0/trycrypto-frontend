@@ -2,14 +2,17 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   padding-left: 12px;
   padding-right: 12px;
+  padding-top: 7px;
   color: white;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   font-size: 20px;
   font-weight: 500;
+  border-bottom: 10px solid var(--theme-dark);
   @media screen and (min-width: 1000px){
     border: 1px solid var(--border-dark);
     /* border-right: none; */
@@ -26,6 +29,7 @@ export const InfoWrapper = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   padding-left: 12px;
+  height: 2.4em;
 `
 
 export const InfoHeader = styled.span`

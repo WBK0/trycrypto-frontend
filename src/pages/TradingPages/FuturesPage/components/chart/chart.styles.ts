@@ -12,5 +12,12 @@ export const ChartWrapper = styled.div`
     border: 1px solid var(--border-dark);
     border-top: none;
     border-left: none;
+    height: 596px;
+  }
+  @media screen and (min-width: 1200px){
+    height: 640px;
+  }
+  @media screen and (min-width: 1400px){
+    height: 700px;
   }
 `

@@ -1,6 +1,43 @@
-import { Pnl, PnlText, TBody, THead, Table, Td, Th, Tr } from "../../infoPanel.styles";
+import { useEffect, useState } from "react";
+import api from "../../../../../../../services/api";
+import { THead, Table, Th, Tr } from "../../infoPanel.styles";
+import TableBody from "./TableBody";
+
+export interface IHistory{
+  type: string;
+  pair: string;
+  date: string;
+  quantityPosition: number;
+  quantitySold: number;
+  purchasePrice: number;
+  sellingPrice: number;
+  leverage: number;
+}
 
 const TransactionHistoryView = () => {
+  const [history, setHistory] = useState<IHistory[]>()
+
+  const getHistory = async () => {
+    try {
+      const response = await api.get('/api/history/futures/last', {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+
+      setHistory(response.data)
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getHistory()
+  }, [])
+
   return(
     <Table>
       <THead>
@@ -16,23 +53,7 @@ const TransactionHistoryView = () => {
           <Th>Date</Th>
         </Tr>
       </THead>
-      <TBody>
-        <Tr>
-          <Td>LONG</Td>
-          <Td>ETHUSDT</Td>
-          <Td>6.4</Td>
-          <Td>6.4</Td>
-          <Td>50</Td>
-          <Td>1813.13</Td>
-          <Td>1813.32</Td>
-          <Pnl>
-            <PnlText>20$</PnlText>
-            <PnlText>10%</PnlText>
-          </Pnl>
-          <Td>2023-05-22T17:18:50.782Z</Td>
-        </Tr>
-      </TBody>
-      
+      <TableBody history={history}/>
     </Table>
   )
 }

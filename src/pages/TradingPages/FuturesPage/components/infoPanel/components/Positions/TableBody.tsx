@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { IPositions } from "../../../FuturesPage";
-import { CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../infoPanel.styles";
-import CloseModal from "./Modals/CloseModal";
-import UpdateModal from "./Modals/UpdateModal";
+import { IPositions } from "../../../../FuturesPage";
+import { CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../../infoPanel.styles";
+import CloseModal from "../Modals/CloseModal";
+import UpdateModal from "../Modals/UpdateModal";
 
 interface ITableBody{
   positions: IPositions[],
@@ -48,9 +48,9 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
             <Td>{item.quantity}</Td>
             <Td>{item.purchasePrice}</Td>
             <Td>{pairPrice[item.pair]}</Td>
-            <Pnl>
-              <PnlText color={item.purchasePrice <= pairPrice[item.pair] ? item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)' : item.type == 'SHORT' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type == 'LONG' ? ((pairPrice[item.pair] - item.purchasePrice) * item.leverage * item.quantity).toFixed(2) : ((item.purchasePrice - pairPrice[item.pair]) * item.leverage * item.quantity).toFixed(2)} </PnlText>
-              <PnlText color={item.purchasePrice <= pairPrice[item.pair] ? item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)' : item.type == 'SHORT' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type == 'LONG' ? ((pairPrice[item.pair] / item.purchasePrice * 100 - 100) * item.leverage).toFixed(2) : -((pairPrice[item.pair] / item.purchasePrice * 100 - 100) * item.leverage ).toFixed(2)}%</PnlText>
+            <Pnl color={item.purchasePrice <= pairPrice[item.pair] ? item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)' : item.type == 'SHORT' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>
+              <PnlText>{item.type == 'LONG' ? ((pairPrice[item.pair] - item.purchasePrice) * item.leverage * item.quantity).toFixed(2) : ((item.purchasePrice - pairPrice[item.pair]) * item.leverage * item.quantity).toFixed(2)} </PnlText>
+              <PnlText>{item.type == 'LONG' ? ((pairPrice[item.pair] / item.purchasePrice * 100 - 100) * item.leverage).toFixed(2) : -((pairPrice[item.pair] / item.purchasePrice * 100 - 100) * item.leverage ).toFixed(2)}%</PnlText>
             </Pnl>
             <Td>{item.takeProfit || 0}</Td>
             <Td>{item.stopLoss || 0}</Td>

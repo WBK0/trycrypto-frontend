@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { THead, Table, Th, Tr, Text } from "../../infoPanel.styles";
-import TableBody from "../TableBody";
+import TableBody from "./TableBody";
 import getData from "../../../../../../../components/Markets/services/getData";
 import { IPositions } from "../../../../FuturesPage";
 
