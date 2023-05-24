@@ -14,6 +14,7 @@ import InfoPanel from "./components/infoPanel/InfoPanel";
 import useWallet from "../../../hooks/useWallet";
 import api from "../../../services/api";
 import ResponsiveSelect from "./components/responsiveSelect/ResponsiveSelect";
+import OrderPanelMobile from "./components/orderPanel/mobile/OrderPanel";
 
 export interface IPositions{
   id: number;
@@ -102,6 +103,9 @@ const FuturesPage = () => {
         </Col>
         <Col xs={100} pr="0px" pb="0px">
           <InfoPanel fetchBalance={fetchBalance} positions={positions} fetchPositions={fetchPositions}/>
+        </Col>
+        <Col xs={100} pr="0px" pb="0px" dLg="none">
+          <OrderPanelMobile />
         </Col>
       </Row>
     </Layout>
