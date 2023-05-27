@@ -62,6 +62,7 @@ export const WalletText = styled.span`
 `
 
 export const Balance = styled.span`
+  color: white;
   font-size: 15px;
 `
 
@@ -175,6 +176,7 @@ export const PriceText = styled.span`
 
 export const Price = styled.span`
   font-size: 15px;
+  color: white;
   word-wrap: break-word;
   
 `

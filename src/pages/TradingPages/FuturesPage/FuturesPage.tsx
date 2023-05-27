@@ -105,7 +105,7 @@ const FuturesPage = () => {
           <InfoPanel fetchBalance={fetchBalance} positions={positions} fetchPositions={fetchPositions}/>
         </Col>
         <Col xs={100} pr="0px" pb="0px" dLg="none">
-          <OrderPanelMobile />
+          <OrderPanelMobile symbol={symbol} balance={balance} price={data.c} fetchBalance={fetchBalance} fetchPositions={fetchPositions}/>
         </Col>
       </Row>
     </Layout>

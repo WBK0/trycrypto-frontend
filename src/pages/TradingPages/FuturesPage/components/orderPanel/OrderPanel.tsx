@@ -88,8 +88,7 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol, balance, fetchBalanc
         draggable: true,
         theme: "dark",
         });
-        fetchBalance();
-    } catch (error) {
+      } catch (error) {
       console.error(error)      
       toast.error(`Position not opened, unknown error occurred`, {
         position: "bottom-right",
