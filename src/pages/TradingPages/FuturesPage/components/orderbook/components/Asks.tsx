@@ -19,7 +19,6 @@ interface Temp {
 
 const Asks: React.FC<IAsks> = ({ asks, asksView, tick, setAsksMax, getBackgroundColor }) => {
   const [asksFilter, setAsksFilter] = useState<Record<string, number>>({})
-
   useEffect(() => {
     let temp: Temp = {}
     for (let klucz in asks) {

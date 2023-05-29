@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -235,4 +236,26 @@ export const SaveButton = styled.button`
   margin-top: 20px;
   font-weight: 500;
   border-radius: 6px;
+`
+
+export const LoginWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+`
+
+export const LoginText = styled.span`
+  font-size: 14px;
+  padding: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+`
+
+export const LoginLink = styled(Link)`
+  color: var(--font-yellow);
+  text-decoration: none;
+  &:hover{
+    color: var(--font-yellow);
+  }
 `

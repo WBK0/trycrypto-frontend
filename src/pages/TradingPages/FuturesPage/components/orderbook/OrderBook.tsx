@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useWebSocket from "../../../../../hooks/useWebSocket";
 import { BookWrapper, Books, Option, PriceInfo, Select, SettingsBar, Wrapper } from "./orderBook.styles";
 import Asks from "./components/Asks";
@@ -12,7 +12,7 @@ interface IOrderBook{
 const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
   const [asksView, setAsksView] = useState(10);
   const [bidsView, setBidsView] = useState(10);
-  const [tickSize, setTickSize] = useState(price <= 5 ? 0.0001 : 0.01);
+  const [tickSize, setTickSize] = useState(0.0001);
   const [asks, setAsks] = useState<Record<string, number>>({});
   const [bids, setBids] = useState<Record<string, number>>({});
   const [asksMax, setAsksMax] = useState(0)
@@ -31,7 +31,7 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
           delete newState[key];
         }
       }
-
+      
       JSON.parse(event.data).a.forEach((newItem: [string, number]) => {
         newState[newItem[0]] = newItem[1]
         if(newItem[1] == 0){
@@ -103,7 +103,7 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
   return(
     <Wrapper>
       <SettingsBar>
-        <Select onChange={(e) => setTickSize(Number(e.target.value))}>
+        <Select onChange={(e) => setTickSize(Number(e.target.value))} value={tickSize}>
           {price <= 5 ?
             <Option value={0.0001}>
               0.0001

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -153,4 +154,28 @@ export const Text = styled.div`
   font-size: 17px;
   margin-top: 25px;
   color: rgb(200,200,200);
+`
+
+export const LoginWrapper = styled.div`
+  display: flex;
+  height: calc(100% - 40px);
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
+
+export const LoginText = styled.span`
+  font-size: 14px;
+  padding: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+`
+
+export const LoginLink = styled(Link)`
+  color: var(--font-yellow);
+  text-decoration: none;
+  &:hover{
+    color: var(--font-yellow);
+  }
 `
