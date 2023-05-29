@@ -15,6 +15,7 @@ import useWallet from "../../../hooks/useWallet";
 import api from "../../../services/api";
 import ResponsiveSelect from "./components/responsiveSelect/ResponsiveSelect";
 import OrderPanelMobile from "./components/orderPanel/mobile/OrderPanel";
+import Loading from "../../../components/Loading/Loading";
 
 export interface IPositions{
   id: number;
@@ -42,6 +43,7 @@ const FuturesPage = () => {
   const { symbol } = useParams()
   const { balance, fetchBalance } = useWallet();
   const [showResponsive, setShowResponsive] = useState('chart');
+  const [loading, setLoading] = useState(true);
 
   const fetchPositions = async () => {
     try {
@@ -60,15 +62,19 @@ const FuturesPage = () => {
 
   const onMessage = (event: MessageEvent) => {
     setData(JSON.parse(event.data))
+    setLoading(false)
   }
 
   useWebSocket({
     url: 'wss://fstream.binance.com/ws/' + symbol + '@ticker',
-    onMessage
+    onMessage,
   });
 
   return(
     <Layout>
+      {
+      loading ? <Loading /> : null
+      }
       <Row>
         <Col xxl={68} lg={50} xs={100} pr="0px" pb="0px">
           <Row>

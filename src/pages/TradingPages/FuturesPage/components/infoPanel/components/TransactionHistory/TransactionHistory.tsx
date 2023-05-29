@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../../../../../../services/api";
 import { THead, Table, Th, Tr } from "../../infoPanel.styles";
 import TableBody from "./TableBody";
+import LoadingTable from "../../../../../../../components/Loading/LoadingTable";
 
 export interface IHistory{
   type: string;
@@ -16,6 +17,7 @@ export interface IHistory{
 
 const TransactionHistoryView = () => {
   const [history, setHistory] = useState<IHistory[]>()
+  const [loading, setLoading] = useState(true);
 
   const getHistory = async () => {
     try {
@@ -28,7 +30,7 @@ const TransactionHistoryView = () => {
       })
 
       setHistory(response.data)
-      
+      setLoading(false);
     } catch (error) {
       console.log(error)
     }
@@ -39,6 +41,10 @@ const TransactionHistoryView = () => {
   }, [])
 
   return(
+  <>
+    {loading ?
+    <LoadingTable />
+    :
     <Table>
       <THead>
         <Tr>
@@ -55,6 +61,9 @@ const TransactionHistoryView = () => {
       </THead>
       <TableBody history={history}/>
     </Table>
+    }
+    </>
+    
   )
 }
 

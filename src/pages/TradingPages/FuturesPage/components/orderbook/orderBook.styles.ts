@@ -77,7 +77,11 @@ interface IItem {
   background?: string;
 }
 
-export const Item = styled.div<IItem>`
+export const Item = styled.div.attrs(({color}) => ({
+  style: {
+    background: color
+  }
+}))`
   color: white; 
   display: flex;
   padding-left: 10px;
@@ -86,5 +90,4 @@ export const Item = styled.div<IItem>`
   height: 20px;
   font-size: 15px;
   line-height: 20px;
-  background: ${props => props.background};
 `

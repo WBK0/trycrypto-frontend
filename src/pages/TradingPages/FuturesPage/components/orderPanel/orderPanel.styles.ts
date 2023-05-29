@@ -218,6 +218,7 @@ export const Button = styled.button<IButton>`
 export const LeverageLevel = styled.h1`
   text-align: center;
   margin-bottom: 25px;
+  color: white;
 `
 
 export const Warning = styled.span`

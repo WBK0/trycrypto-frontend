@@ -105,7 +105,7 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
       <SettingsBar>
         <Select onChange={(e) => setTickSize(Number(e.target.value))}>
           {price <= 5 ?
-            <Option value={0.0001} selected>
+            <Option value={0.0001}>
               0.0001
             </Option>
             : null
@@ -117,7 +117,7 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
             : null
           }
           {price <= 5000 ?
-            <Option value={0.01} selected={price >= 5 ? true : false}>
+            <Option value={0.01}>
               0.01
             </Option>
             : null

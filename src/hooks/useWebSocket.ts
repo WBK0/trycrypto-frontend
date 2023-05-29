@@ -22,7 +22,8 @@ function useWebSocket({ url, onOpen, onMessage }: IUseWebSocket) {
     return () => {
       ws.close();
     };
-  }, [url, onMessage, onOpen]);
+    
+  }, []);
 
   return null;
 }

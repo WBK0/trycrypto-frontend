@@ -42,23 +42,25 @@ const Asks: React.FC<IAsks> = ({ asks, asksView, tick, setAsksMax, getBackground
         }
       }
     }
-    
+    let asksMax = 0;
+    Object.keys(asksFilter).sort((a, b) => Number(a) - Number(b)).slice(0, asksView).forEach(key => {
+      asksMax = asksMax += Number(asksFilter[key]);
+    });
+    setAsksMax(asksMax)
     setAsksFilter(temp)
   }, [asks, tick])
   
   let sumAsks = 0;
-  let asksMax = 0;
-  Object.keys(asksFilter).sort((a, b) => Number(a) - Number(b)).slice(0, asksView).forEach(key => {
-    asksMax = asksMax += Number(asksFilter[key]);
-  });
-  setAsksMax(asksMax)
+  useEffect(() => {
+    
+  }, [])
 
   return(
     <AsksWrapper>
       {Object.keys(asksFilter).sort((a, b) => Number(a) - Number(b)).slice(0, asksView).map((key) => {
         sumAsks += Number(asksFilter[key]);
         return(
-          <Item background={getBackgroundColor(sumAsks, 'ask')} key={key}>
+          <Item color={getBackgroundColor(sumAsks, 'ask')} key={key}>
             <span>{key} </span>
             <span>{asksFilter[key].toFixed(3)}</span>
           </Item>

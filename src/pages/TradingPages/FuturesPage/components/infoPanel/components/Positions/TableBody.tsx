@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IPositions } from "../../../../FuturesPage";
-import { CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../../infoPanel.styles";
+import { Buttons, CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../../infoPanel.styles";
 import CloseModal from "../Modals/CloseModal";
 import UpdateModal from "../Modals/UpdateModal";
 
@@ -55,10 +55,10 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
             <Td>{item.takeProfit || 0}</Td>
             <Td>{item.stopLoss || 0}</Td>
             <Td>{item.liquidationPrice.toFixed(2)}</Td>
-            <Td>
+            <Buttons>
               <UpdateButton onClick={() => handleShowUpdateModal(item)}>UPDATE</UpdateButton>
               <CloseButton onClick={() => handleShowCloseModal(item)}>CLOSE</CloseButton>
-            </Td>
+            </Buttons>
           </Tr>
         )
       })}   

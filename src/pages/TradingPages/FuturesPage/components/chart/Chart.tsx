@@ -3,7 +3,7 @@ import { Row } from "../../../../../shared/row";
 import { ChartWrapper } from "./chart.styles";
 
 interface IChart {
-  symbol: string | undefined;
+  symbol?: string;
 }
 
 const Chart: React.FC<IChart> = ({ symbol }) => {
@@ -36,7 +36,7 @@ useEffect(() => {
       const widgetOptions = {
         autosize: true,
         symbol: 'BINANCE:' + symbol + ".P",
-        interval: 'D',
+        interval: '1',
         timezone: 'Etc/UTC',
         theme: 'dark',
         style: '1',

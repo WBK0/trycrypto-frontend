@@ -7,6 +7,8 @@ interface IOrderPanelMobile{
   symbol?: string;
   balance?: IWallet;
   price: number;
+  fetchBalance: () => void;
+  fetchPositions: () => void;
 }
 
 const OrderPanelMobile: React.FC<IOrderPanelMobile> = ({ symbol, balance, price, fetchBalance, fetchPositions }) => {

@@ -1,10 +1,10 @@
-import { BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import { ToastContainer } from "react-toastify";
 import LoginGuard from "./routes/LoginGuard";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "./contexts/AuthContext";
 import Loading from "./components/Loading/Loading";
 import MarketsPage from "./pages/MarketsPage/MarketsPage";
@@ -12,31 +12,40 @@ import SpotPage from "./pages/TradingPages/SpotPage/SpotPage";
 import FuturesPage from "./pages/TradingPages/FuturesPage/FuturesPage";
 
 function App() {
-  const { loading, lastLocation, setLastLocation } = useContext(AuthContext);
+  const { loading, setLastLocation } = useContext(AuthContext);
   const location = useLocation();
-  if (location.pathname !== '/login' && lastLocation !== location.pathname) {
-    setLastLocation(location.pathname);
-  }
+  const [lastLocation, setAppLastLocation] = useState('/');
+
+  useEffect(() => {
+    if (location.pathname !== '/login' && lastLocation !== location.pathname) {
+      setAppLastLocation(location.pathname);
+      setLastLocation(location.pathname);
+    }
+  }, [location, lastLocation, setLastLocation]);
+
   return (
     <>
       <ToastContainer />
-      {!loading ?
+      {!loading ? (
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={
-            <LoginGuard>
-              <LoginPage />
-            </LoginGuard>
-          } />
+          <Route
+            path="/login"
+            element={
+              <LoginGuard>
+                <LoginPage />
+              </LoginGuard>
+            }
+          />
           <Route path="/markets" element={<MarketsPage />} />
           <Route path="/market/spot/:symbol" element={<SpotPage />} />
           <Route path="/market/futures/:symbol" element={<FuturesPage />} />
         </Routes>
-        :
-        <Loading />    
-      }
-    </>  
-  )
+      ) : (
+        <Loading />
+      )}
+    </>
+  );
 }
 
 export default App;

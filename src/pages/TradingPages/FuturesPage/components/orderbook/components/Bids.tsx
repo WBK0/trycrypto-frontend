@@ -35,7 +35,6 @@ const Bids: React.FC<IBids> = ({ bids, bidsView, tick, setBidsMax, getBackground
 
     if (Object.keys(temp).length < bidsView) {
       let minKey = Math.min(...Object.keys(temp).map(parseFloat));
-      console.log(minKey)
       for (let i = 1; i <= bidsView; i++) {
         let newKey = (minKey - i / tick.floor).toFixed(tick.fixed);
         if (!temp[newKey] && Number(newKey) >= 0) {
@@ -43,22 +42,22 @@ const Bids: React.FC<IBids> = ({ bids, bidsView, tick, setBidsMax, getBackground
         }
       }
     }
+    let bidsMax = 0;
+    Object.keys(bidsFilter).sort((a, b) => Number(b) - Number(a)).slice(0, bidsView).forEach(key => {
+      bidsMax = bidsMax += Number(bidsFilter[key]);
+    });
+    setBidsMax(bidsMax)
     setBidsFilter(temp)
   }, [bids, tick])
 
   let sumBids = 0;
-  let bidsMax = 0;
-  Object.keys(bidsFilter).sort((a, b) => Number(b) - Number(a)).slice(0, bidsView).forEach(key => {
-    bidsMax = bidsMax += Number(bidsFilter[key]);
-  });
-  setBidsMax(bidsMax)
 
   return(
     <BidsWrapper>
       {Object.keys(bidsFilter).sort((a, b) => Number(b) - Number(a)).slice(0, bidsView).map((key) => {
         sumBids += Number(bidsFilter[key]);
         return(
-          <Item background={getBackgroundColor(sumBids, 'bids')} key={key}>
+          <Item color={getBackgroundColor(sumBids, 'bids')} key={key}>
             <span>{key} </span>
             <span>{bidsFilter[key].toFixed(3)}</span>
           </Item>

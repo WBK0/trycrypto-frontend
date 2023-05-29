@@ -69,14 +69,15 @@ export const TBody = styled.tbody`
 export const Type = styled.td`
   color: ${props => props.color};
   font-weight: 600;
-  width: 80px;
+  min-width: 60px;
 `
 
 export const Pnl = styled.td`
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
-  width: 200px;
+  width: 20vw;
+  min-width: 120px;
   color: ${props => props.color};
 `
 
@@ -94,12 +95,11 @@ export const Th = styled.th`
   
 `
 
-export const InputTd = styled.input`
-  background-color: transparent;
-  border: none;
-  color: white;
-  width: 50%;
+export const Buttons = styled.td`
+  width: 20vw;
+  min-width: 160px;
 `
+
 
 export const UpdateButton = styled.button`
   border: none;
