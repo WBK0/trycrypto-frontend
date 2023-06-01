@@ -53,7 +53,12 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
               <Th>Actions</Th>
             </Tr>
           </THead>
-          <TableBody positions={positions} pairPrice={pairPrice} fetchPositions={fetchPositions} fetchBalance={fetchBalance}/>
+          <TableBody 
+            positions={positions} 
+            pairPrice={pairPrice} 
+            fetchPositions={fetchPositions} 
+            fetchBalance={fetchBalance}
+          />
         </Table>
         :
         <Text>

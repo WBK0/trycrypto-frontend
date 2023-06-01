@@ -24,11 +24,13 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, fetchPosition
       setTakeProfit(e.target.value);
     }
   }
+  
   const handleChangeSL = (e : any) => {
     if(Number(e.target.value) || Number(e.target.value) == 0){
       setStopLoss(e.target.value);
     }
   }
+
   const handleSubmit = async () => {
     try {
       await api.post("/api/derivatives/position/update/" + modalItem.id, {

@@ -3,6 +3,7 @@ import useWebSocket from "../../../../../hooks/useWebSocket";
 import { BookWrapper, Books, Option, PriceInfo, Select, SettingsBar, Wrapper } from "./orderBook.styles";
 import Asks from "./components/Asks";
 import Bids from "./components/Bids";
+import SelectTick from "./components/SelectTick";
 
 interface IOrderBook{
   price: number,
@@ -108,52 +109,7 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
   return(
     <Wrapper>
       <SettingsBar>
-        <Select onChange={(e) => setTickSize(Number(e.target.value))} value={tickSize}>
-          {price <= 5 ?
-            <Option value={0.0001}>
-              0.0001
-            </Option>
-            : null
-          }
-          {price <= 10 ?
-            <Option value={0.001}>
-              0.001
-            </Option>
-            : null
-          }
-          {price <= 5000 ?
-            <Option value={0.01}>
-              0.01
-            </Option>
-            : null
-          }
-          
-          {price >= 5 ?
-            <Option value={0.1}>
-              0.1
-            </Option>
-            : null
-          }
-          {price >= 25 ?
-            <Option value={1}>
-              1
-            </Option>
-            : null
-          }
-          {price >= 300 ?
-            <Option value={10}>
-              10
-            </Option>
-            : null
-          }
-          {price >= 5000 ?
-            <Option value={100}>
-              100
-            </Option>
-            : null
-          }
-          
-        </Select>
+        
         <Books>
           <BookWrapper color='white'>
             <i className='bi bi-book' onClick={() => handleChangeView(10, 10)} />
@@ -165,11 +121,27 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
             <i className='bi bi-book-half' onClick={() => handleChangeView(20, 0)} />
           </BookWrapper>
         </Books>
-       
+      <SelectTick
+        price={price}
+        setTickSize={setTickSize} 
+        tickSize={tickSize}
+      />
       </SettingsBar>
-        <Asks asks={asks} asksView={asksView} tick={tick} setAsksMax={setAsksMax} getBackgroundColor={getBackgroundColor} />
+        <Asks 
+          asks={asks} 
+          asksView={asksView} 
+          tick={tick} 
+          setAsksMax={setAsksMax} 
+          getBackgroundColor={getBackgroundColor} 
+        />
       <PriceInfo>{price}</PriceInfo>
-        <Bids bids={bids} bidsView={bidsView} tick={tick} setBidsMax={setBidsMax} getBackgroundColor={getBackgroundColor} />
+        <Bids 
+          bids={bids} 
+          bidsView={bidsView} 
+          tick={tick} 
+          setBidsMax={setBidsMax} 
+          getBackgroundColor={getBackgroundColor} 
+        />
     </Wrapper>
   )
 }

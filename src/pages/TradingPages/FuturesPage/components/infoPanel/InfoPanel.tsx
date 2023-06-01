@@ -43,12 +43,10 @@ const InfoPanel: React.FC<IInfoPanel> = ({ fetchBalance, positions, fetchPositio
                 )
               case 1:
                 return(
-                  <TransactionHistoryView 
-                    
-                  />
+                  <TransactionHistoryView  />
                 )
               default:
-                console.warn(`Unexpected step value: ${view}`);
+                console.warn(`Unexpected view value: ${view}`);
                 return null
             }
           })()
@@ -58,8 +56,6 @@ const InfoPanel: React.FC<IInfoPanel> = ({ fetchBalance, positions, fetchPositio
           </LoginWrapper>
         }   
       </Content>
-      
-      
     </Wrapper>
   )
 }
