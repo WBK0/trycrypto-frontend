@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Change, CurrenciesWrapper, DataWrapper, Name, Price, Wrapper } from "./symbol.styles";
+import { Change, CurrenciesWrapper, DataWrapper, Name, Price, SearchBar, Wrapper } from "./symbol.styles";
 import getData from "../../../../../components/Markets/services/getData";
 import { MarketData } from "../../../../../components/Markets/interfaces/interfaces";
 
@@ -9,6 +9,11 @@ interface ISymbol{
 
 const Symbol: React.FC<ISymbol> = ({ symbol }) => {
   const [data, setData] = useState<MarketData[] | []>([]);
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (e: {target: {value: string}}) => {
+    setSearch(e.target.value);
+  }
 
   useEffect(() => {
     const fetchData = async (market : string) => {
@@ -35,9 +40,10 @@ const Symbol: React.FC<ISymbol> = ({ symbol }) => {
       <Wrapper>
         {symbol?.replace('usdt', '/usdt').toUpperCase()}
         <CurrenciesWrapper>
-          {data.map((item) => {
+          <SearchBar onChange={handleSearch}/>
+          {data.filter(obj => obj.pair.includes(search.toUpperCase())).map((item) => {
             return(
-              <DataWrapper>
+              <DataWrapper to={`/market/futures/${item.pair.toLowerCase()}`}>
                 <Name>
                   {item.pair}
                 </Name>

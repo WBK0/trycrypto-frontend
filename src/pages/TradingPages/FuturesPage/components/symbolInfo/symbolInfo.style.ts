@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
 
 export const Price = styled.span`
   text-align: center;
+  color: ${props => props.color};
   font-size: 22px;
 `
 
@@ -42,4 +43,5 @@ export const InfoData = styled.span`
   width: 100%;
   font-size: 12px;
   text-align: center;
+  color: ${props => props.color || 'white'}
 `

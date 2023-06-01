@@ -79,6 +79,7 @@ export const Pnl = styled.td`
   justify-content: start;
   width: 20vw;
   min-width: 120px;
+  max-width: 200px;
   color: ${props => props.color};
 `
 

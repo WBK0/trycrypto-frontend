@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -11,6 +12,12 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   font-size: 20px;
   font-weight: 500;
+  &:hover{
+    @media screen and (min-width: 1000px){
+      border-bottom: 1px solid var(--border-dark);
+    }
+    border-bottom: 10px solid var(--theme-primary);
+  }
   border-bottom: 10px solid var(--theme-dark);
   @media screen and (min-width: 1000px){
     border: 1px solid var(--border-dark);
@@ -31,6 +38,7 @@ export const CurrenciesWrapper = styled.div`
   overflow-y: auto;
   z-index: 999;
   flex-wrap: wrap;
+  padding: 4px 0px 8px 0px;
   &::-webkit-scrollbar{
    width: 5px;
   }
@@ -44,12 +52,18 @@ export const CurrenciesWrapper = styled.div`
   }
 `
 
-export const DataWrapper = styled.div`
+export const DataWrapper = styled(Link)`
+  color: white;
+  text-decoration: none;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
   font-size: 14px;
+  padding: 2px 5px 2px 5px;
+  &:hover{
+    color: var(--font-yellow)
+  }
 `
 
 export const Name = styled.span`
@@ -64,4 +78,17 @@ export const Change = styled.span`
 export const Price = styled.span`
  width: 37.5%;
  text-align: right;
+`
+
+export const SearchBar = styled.input`
+  height: 25px;
+  width: 97%;
+  background-color: rgb(42, 45, 53);
+  border: none;
+  border-radius: 6px;
+  margin: 0 auto;
+  margin-bottom: 6px;
+  color: white;
+  outline: none;
+  font-size: 14px;
 `

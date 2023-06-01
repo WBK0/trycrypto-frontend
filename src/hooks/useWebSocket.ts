@@ -23,7 +23,7 @@ function useWebSocket({ url, onOpen, onMessage }: IUseWebSocket) {
       ws.close();
     };
     
-  }, []);
+  }, [url]);
 
   return null;
 }

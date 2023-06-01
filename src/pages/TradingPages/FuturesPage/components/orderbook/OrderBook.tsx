@@ -18,6 +18,11 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
   const [asksMax, setAsksMax] = useState(0)
   const [bidsMax, setBidsMax] = useState(0)
 
+  useEffect(() => {
+    setAsks({});
+    setBids({});
+  }, [symbol])
+
   const handleChangeView = (asks: number, bids: number) => {
     setAsksView(asks)
     setBidsView(bids)

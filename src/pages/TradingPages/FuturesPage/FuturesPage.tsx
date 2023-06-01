@@ -4,7 +4,7 @@ import { Row } from "../../../shared/row";
 import { Col } from "../../../shared/col";
 import Symbol from "./components/symbol/Symbol";
 import useWebSocket from "../../../hooks/useWebSocket";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SymbolInfo from "./components/symbolInfo/SymbolInfo";
 import OrderBook from "./components/orderbook/OrderBook";
 import Chart from "./components/chart/Chart";
@@ -70,10 +70,14 @@ const FuturesPage = () => {
     onMessage,
   });
 
+  useEffect(() => {
+    setLoading(true)
+  }, [symbol])
+
   return(
     <Layout>
       {
-      loading ? <Loading /> : null
+        loading ? <Loading /> : null
       }
       <Row>
         <Col xxl={68} lg={50} xs={100} pr="0px" pb="0px">

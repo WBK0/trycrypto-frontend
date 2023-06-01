@@ -53,7 +53,6 @@ useEffect(() => {
       };
       const widget = new (window as any).TradingView.widget(widgetOptions);
     }
-  
   }
 }, [ symbol ]);
 
