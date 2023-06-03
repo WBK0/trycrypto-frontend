@@ -10,6 +10,7 @@ import Loading from "./components/Loading/Loading";
 import MarketsPage from "./pages/MarketsPage/MarketsPage";
 import SpotPage from "./pages/TradingPages/SpotPage/SpotPage";
 import FuturesPage from "./pages/TradingPages/FuturesPage/FuturesPage";
+import WalletPage from "./pages/WalletPage/WalletPage";
 
 function App() {
   const { loading, setLastLocation } = useContext(AuthContext);
@@ -40,6 +41,7 @@ function App() {
           <Route path="/markets" element={<MarketsPage />} />
           <Route path="/market/spot/:symbol" element={<SpotPage />} />
           <Route path="/market/futures/:symbol" element={<FuturesPage />} />
+          <Route path="/wallet" element={<WalletPage />} />
         </Routes>
       ) : (
         <Loading />

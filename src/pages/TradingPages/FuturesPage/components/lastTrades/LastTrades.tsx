@@ -41,7 +41,7 @@ const LastTrades : React.FC<ILastTrades> = ({ symbol }) => {
           const date = new Date(item.T);
           return(
             <TradeWrapper key={item.a}>
-              <Price color={item.m == true ? '#770303' : '#077703'}>{Number(item.p).toFixed((item.p <= 15 ? 4 : 2))}</Price>
+              <Price color={item.m == true ? '#770303' : '#077703'}>{Number(item.p).toFixed((item.p <= 50 ? 4 : 2))}</Price>
               <Quantity>{Number(item.q).toFixed((item.p <= 15 ? 3 : 4))}</Quantity>
               <Time>{date.getHours() + ':' + (date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes()) + ':'+ (date.getSeconds() >= 10 ? date.getSeconds() : '0' + date.getSeconds())}</Time>
             </TradeWrapper>

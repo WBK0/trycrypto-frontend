@@ -109,7 +109,6 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
   return(
     <Wrapper>
       <SettingsBar>
-        
         <Books>
           <BookWrapper color='white'>
             <i className='bi bi-book' onClick={() => handleChangeView(10, 10)} />

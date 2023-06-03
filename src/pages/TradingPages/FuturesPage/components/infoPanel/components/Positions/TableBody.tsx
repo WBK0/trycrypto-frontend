@@ -54,7 +54,7 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
             </Pnl>
             <Td>{item.takeProfit || 0}</Td>
             <Td>{item.stopLoss || 0}</Td>
-            <Td>{item.liquidationPrice.toFixed(2)}</Td>
+            <Td>{item.liquidationPrice.toFixed(4)}</Td>
             <Buttons>
               <UpdateButton onClick={() => handleShowUpdateModal(item)}>UPDATE</UpdateButton>
               <CloseButton onClick={() => handleShowCloseModal(item)}>CLOSE</CloseButton>

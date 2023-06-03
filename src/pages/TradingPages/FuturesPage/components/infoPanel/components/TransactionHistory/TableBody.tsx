@@ -20,8 +20,8 @@ const TableBody: React.FC<ITableBody> = ({ history }) => {
           <Td>{item.quantityPosition}</Td>
           <Td>{item.quantitySold}</Td>
           <Td>{item.leverage}</Td>
-          <Td>{item.purchasePrice}</Td>
-          <Td>{item.sellingPrice}</Td>
+          <Td>{Number(item.purchasePrice).toFixed(4)}</Td>
+          <Td>{Number(item.sellingPrice).toFixed(4)}</Td>
           <Pnl color={item.purchasePrice <= item.sellingPrice ? item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)' : item.type == 'SHORT' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>
             <PnlText>{pnlAmount}$</PnlText>
             <PnlText>{pnlPercent}%</PnlText>

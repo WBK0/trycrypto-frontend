@@ -37,7 +37,7 @@ useEffect(() => {
         autosize: true,
         symbol: 'BINANCE:' + symbol,
         interval: 'D',
-        timezone: 'Etc/UTC',
+        timezone: "Europe/Warsaw",
         theme: 'dark',
         style: '1',
         locale: 'pl',

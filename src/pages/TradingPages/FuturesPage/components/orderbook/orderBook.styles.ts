@@ -35,6 +35,7 @@ export const Option = styled.option`
 export const Books = styled.div`
   display: flex;
   justify-content: right;
+  margin-left: 3px;
 `
 
 export const BookWrapper = styled.div`
