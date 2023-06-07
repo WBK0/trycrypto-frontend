@@ -13,28 +13,41 @@ export const Avatar = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  margin: 0 auto;
+  @media screen and (min-width: 1000px){
+    margin: 0; 
+  }
 `
 
 export const Nickname = styled.span`
-  padding-left: 20px;
   font-size: 22px;
-  
+  min-width: 100%;
+  text-align: center;
+  @media screen and (min-width: 1000px){
+    min-width: 1%;
+    padding-left: 20px;
+  }
 `
 
-export const AvatarWrapper = styled.div`
+export const UserWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  flex-wrap: wrap;
 `
 
 export const InfoWrapper = styled.div`
-  padding-left: 100px;
+  margin-top: 10px;
 `
 
 export const DetailsWrapper = styled.div`
   display: inline-block;
-  padding: 0px 35px 0px 35px;
+    
+  min-width: 100%;
+  @media screen and (min-width: 1000px){
+    min-width: 1%;
+    padding: 0px 35px 0px 35px;
+  }
 `
 
 export const FlexWrapper = styled.div`
@@ -58,6 +71,7 @@ export const DetailsContent = styled.span`
 `
 
 export const EditButton = styled(Link)`
+  display: none;
   margin-left: auto;
   background-color: var(--font-yellow);
   color: white;
@@ -69,5 +83,8 @@ export const EditButton = styled(Link)`
   &:hover{
     background-color: var(--theme-dark);
     color: var(--font-yellow);
+  }
+  @media screen and (min-width: 1000px){
+    display: block;
   }
 `

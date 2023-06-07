@@ -4,12 +4,13 @@ export const Wrapper = styled.div`
   color: #c4c4c4;
   width: 100%;
   border-bottom: 10px solid var(--theme-dark);
-  height: 333px;
+  height: 343px;
    
   @media screen and (min-width: 1000px) {
     border: 1px solid var(--border-dark);
     border-top: none;
     border-right: none; 
+    height: 333px;
   }
 `
 

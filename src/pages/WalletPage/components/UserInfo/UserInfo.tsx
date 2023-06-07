@@ -1,21 +1,39 @@
-import { Avatar, AvatarWrapper, DetailsHeader, DetailsWrapper, DetailsContent, FlexWrapper, InfoWrapper, Nickname, Wrapper, EditButton } from "./userInfo.styles";
+import { Avatar, DetailsHeader, DetailsWrapper, DetailsContent, FlexWrapper, InfoWrapper, Nickname, Wrapper, EditButton, UserWrapper } from "./userInfo.styles";
 import avatar from './img/avatar.png'
+import api from "../../../../services/api";
+import { useEffect, useState } from "react";
 
 const UserInfo = () => {
+  const [user, setUser] = useState({
+    email: '',
+    firstname: '',
+    lastname: ''
+  })
+
+  const fetchUser = async () => {
+    const data = await api.get('/api/user/');
+    setUser(data.data);
+  }
+  
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
+
   return(
     <Wrapper>
-      <AvatarWrapper>
+      <UserWrapper>
         <Avatar src={avatar} alt="user avatar"/>
         <Nickname>Anonymous user</Nickname>
         <EditButton to={'/profile'}>Edit profile</EditButton>
-      </AvatarWrapper> 
+      </UserWrapper> 
       <InfoWrapper>
         <DetailsWrapper>
           <FlexWrapper>
           <DetailsHeader>
             Email
           </DetailsHeader>
-          <DetailsContent>test@test.pl</DetailsContent>
+          <DetailsContent>{user.email}</DetailsContent>
           </FlexWrapper>
         </DetailsWrapper>
         <DetailsWrapper>
@@ -23,7 +41,7 @@ const UserInfo = () => {
           <DetailsHeader>
             Firstname
           </DetailsHeader>
-          <DetailsContent>Joseph</DetailsContent>
+          <DetailsContent>{user.firstname}</DetailsContent>
           </FlexWrapper>
         </DetailsWrapper>
         <DetailsWrapper>
@@ -31,7 +49,7 @@ const UserInfo = () => {
           <DetailsHeader>
             Lastname
           </DetailsHeader>
-          <DetailsContent>Kowalski</DetailsContent>
+          <DetailsContent>{user.lastname}</DetailsContent>
           </FlexWrapper>
         </DetailsWrapper>
       </InfoWrapper>

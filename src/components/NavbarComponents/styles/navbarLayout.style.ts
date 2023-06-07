@@ -8,3 +8,4 @@ export const Navigation = styled.nav`
   width: 100%;
   color: white;
 `
+
