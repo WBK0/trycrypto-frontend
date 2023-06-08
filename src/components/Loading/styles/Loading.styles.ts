@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+interface IWrapper{
+  withNavbar?: boolean;
+}
+
+export const Wrapper = styled.div<IWrapper>`
   position: fixed;
   min-width: 100%;
-  z-index: 1000;
+  z-index: ${props => props.withNavbar == true ? 998 : 1000};
   background-color: var(--theme-primary);
   display: flex;
   align-items: center;

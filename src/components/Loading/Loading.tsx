@@ -1,17 +1,26 @@
 import { useEffect } from 'react';
 import { Loader, Wrapper } from './styles/Loading.styles';
+import Navbar from '../../layout/Navbar/Navbar';
 
-const Loading = () => {
+interface ILoading{
+  withNavbar?: boolean;
+}
+
+const Loading : React.FC<ILoading> = ({ withNavbar }) => {
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    if(withNavbar !== true){
+      document.body.style.overflow = 'hidden';
+    }
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflowY = 'scroll';
     };
   }, [])
   return(
-    <Wrapper>
+  <>
+    <Wrapper withNavbar={withNavbar}>
       <Loader />
     </Wrapper>
+    </>
   ) 
 }
 

@@ -77,7 +77,7 @@ const FuturesPage = () => {
   return(
     <Layout>
       {
-        loading ? <Loading /> : null
+        loading ? <Loading withNavbar={true}/> : null
       }
       <Row>
         <Col xxl={68} lg={50} xs={100} pr="0px" pb="0px">

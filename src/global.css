@@ -11,11 +11,11 @@
     border-radius: 10px;
   }
   ::-webkit-scrollbar-track {
-    background-color: var(--theme-dark);
+    background: linear-gradient(to bottom, var(--theme-dark) 0, var(--theme-dark) 60px, var(--theme-primary) 60px);
   }
   
 }
 
 body{
-  overflow-y: scroll !important;
+  overflow-y: scroll;
 }

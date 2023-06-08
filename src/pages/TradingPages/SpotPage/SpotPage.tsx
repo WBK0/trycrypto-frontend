@@ -61,7 +61,7 @@ const SpotPage: React.FC = () => {
   return(
     <>
     {
-      loading ? <Loading /> : null
+      loading ? <Loading withNavbar={true}/> : null
     }
       <TradingLayout>
         <Container pr="0px" pl="0px">

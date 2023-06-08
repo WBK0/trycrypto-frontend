@@ -26,7 +26,7 @@ const WalletPage = () => {
   return(
     <>
     {loading 
-      ? <Loading />
+      ? <Loading withNavbar={true} />
       : null
     }
       <Layout>
@@ -55,8 +55,7 @@ const WalletPage = () => {
             />  
           </Col>
         </Row>
-      </Layout>
-      
+      </Layout> 
     </>
   )
 }
