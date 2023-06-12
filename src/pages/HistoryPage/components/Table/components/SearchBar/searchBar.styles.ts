@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 30px;
-`
 
 export const InputWrapper = styled.div`
   padding: 10px;
@@ -56,13 +50,20 @@ export const Button = styled.button`
   height: 40px;
   margin: 10px;
   padding: 0px 15px 0px 15px;
-  border: 4px solid transparent;
+  border: 2 px solid transparent;
   background-color: var(--font-yellow);
   color: white;
   font-weight: 500;
   border-radius: 6px;
   &:hover{
     background-color: var(--theme-dark);
-    /* border: 2px solid var(--font-grey); */
+    border: 2px solid var(--font-grey);
   }
+`
+
+export const Form = styled.form`
+width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
 `

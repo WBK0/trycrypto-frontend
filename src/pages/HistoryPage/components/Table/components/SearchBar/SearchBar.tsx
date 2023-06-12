@@ -1,12 +1,13 @@
 import { useRef } from "react";
-import { Input, InputWrapper, Wrapper, Loupe, Button } from "./searchBar.styles";
+import { Input, InputWrapper, Loupe, Button, Form } from "./searchBar.styles";
 
 interface ISearchBar{
   setSearch: (value: string) => void;
   search: string;
+  fetchData: () => void;
 }
 
-const SearchBar: React.FC<ISearchBar> = ({ search, setSearch }) => {
+const SearchBar: React.FC<ISearchBar> = ({ search, setSearch, fetchData }) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,15 +23,15 @@ const SearchBar: React.FC<ISearchBar> = ({ search, setSearch }) => {
   }
 
   return(
-    <Wrapper>
+    <Form onSubmit={(e) => e.preventDefault()}>
       <InputWrapper>
         <Loupe onClick={handleClickLoupe}>
           <i className="bi bi-search"></i>
         </Loupe>
         <Input ref={inputRef} placeholder="Search for pairs" onChange={handleChange} value={search}/>
       </InputWrapper>
-      <Button>Search</Button>
-    </Wrapper>
+      <Button onClick={fetchData}>Search</Button>
+    </Form>
   )
 }
 
