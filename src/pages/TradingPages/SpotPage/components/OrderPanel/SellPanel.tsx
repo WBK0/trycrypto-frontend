@@ -75,7 +75,7 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
   return(
     <Col xs={100} md={50} pr="0px" plMd="12px">
       <Balance>
-        Dostępne: {symbol && balance?.spotBalance[symbol.toUpperCase()] ? Number(balance?.spotBalance[symbol?.toUpperCase()]).toFixed(1) : '0'} {symbol?.replace('usdt', '').toUpperCase()}
+        Dostępne: {symbol && balance?.spotBalance && balance?.spotBalance[symbol.toUpperCase()] ? Number(balance?.spotBalance[symbol?.toUpperCase()]).toFixed(1) : '0'} {symbol?.replace('usdt', '').toUpperCase()}
       </Balance>
       <InputWrapper>
         <InputText>Cena</InputText>
@@ -87,7 +87,7 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
         <Input value={orderQuantity || 0} onChange={handleChange}/>
         <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
       </InputWrapper>
-      <RangeInput type="range" min="0" step={0.1} max={balance && symbol && balance?.spotBalance[symbol.toUpperCase()]} onChange={handleChange} value={orderQuantity}></RangeInput>
+      <RangeInput type="range" min="0" step={0.1} max={balance?.spotBalance && symbol && balance?.spotBalance[symbol.toUpperCase()]} onChange={handleChange} value={orderQuantity}></RangeInput>
       <InputWrapper>
         <InputText>Suma</InputText>
         <Input value={(Number(orderQuantity) * pairPrice).toFixed(4)} readOnly/>

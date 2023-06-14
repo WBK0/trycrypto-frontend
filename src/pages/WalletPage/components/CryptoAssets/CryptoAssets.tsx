@@ -8,6 +8,7 @@ interface ICryptoAssets{
 }
 
 const CryptoAssets : React.FC<ICryptoAssets> = ({ instrument, type, balance }) => {
+  console.log(balance?.futureBalance ? '1' : '0')
   return(
     <Wrapper>
       <HeaderWrapper>
@@ -20,7 +21,7 @@ const CryptoAssets : React.FC<ICryptoAssets> = ({ instrument, type, balance }) =
       </HeaderWrapper>
       {balance && (
         <ContentWrapper>
-          {Object.entries(instrument === 'spot' ? balance.spotBalance : type ? balance.futureBalance[type] : {}).map(([key, value]) => (
+          {Object.entries(instrument === 'spot' && balance.spotBalance ? balance.spotBalance : type && balance.futureBalance && balance.futureBalance[type] ? balance.futureBalance[type] : {}).map(([key, value]) => (
             value > 0 ?
             <ContentRow key={key}>
               <Pair>{key}</Pair>

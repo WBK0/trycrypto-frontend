@@ -158,7 +158,7 @@ const TableFutures = () => {
               ?
               <Tr>
                 <Info>
-                  We dont find more history spot data
+                  We dont find more history Futures data
                 </Info>
               </Tr>
               : null

@@ -22,8 +22,6 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) 
 
   const { isLoggedIn } = useContext(AuthContext);
 
-  console.log(isLoggedIn)
-
   const getHistory = async () => {
     if(isLoggedIn == false)
       setHistory(undefined)
@@ -82,10 +80,10 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) 
               {item.quantity} {item.pair.replace('USDT', '')}
             </Td>
             <Td width="140px" weight='400'>
-              {item.price} USDT
+              {item.price.toFixed(4)} USDT
             </Td>
             <Td width="140px" weight='400'>
-              {item.price * item.quantity} USDT
+              {(item.price * item.quantity).toFixed(4)} USDT
             </Td>
             <Td width="160px" weight='400'>
               {date}

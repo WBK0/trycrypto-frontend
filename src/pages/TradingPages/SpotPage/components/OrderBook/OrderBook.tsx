@@ -26,14 +26,10 @@ const OrderBook: React.FC<IOrderBook> = ({ symbol, data }) => {
   const onMessage = (event: MessageEvent) => {
     setOrderBook(JSON.parse(event.data)); 
   }
-  const onOpen = () => {
-    console.log('order open')
-  }
 
   useWebSocket({
     url: 'wss://stream.binance.com/ws/' + symbol + '@depth20', 
-    onMessage, 
-    onOpen
+    onMessage
   })
 
   function getBackgroundColor(amount: number, maxAmount: number, type: string ) {
