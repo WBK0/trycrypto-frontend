@@ -3,10 +3,13 @@ import styled from "styled-components";
 
 export const InputWrapper = styled.div`
   padding: 10px;
-  width: 25%;
+  
   display: flex;
   margin-bottom: 5px;
   align-items: center;
+  @media screen and (min-width: 1000px){
+    width: 25%;
+  }
 `
 
 export const Input = styled.input`
@@ -23,9 +26,8 @@ export const Input = styled.input`
   &:focus{
     border: 2px solid var(--font-grey);
     border-left: 0px;
-  }
+  }  
 `
-
 
 export const Loupe = styled.span`
   display: flex;
@@ -50,11 +52,12 @@ export const Button = styled.button`
   height: 40px;
   margin: 10px;
   padding: 0px 15px 0px 15px;
-  border: 2 px solid transparent;
+  border: 2px solid transparent;
   background-color: var(--font-yellow);
   color: white;
   font-weight: 500;
   border-radius: 6px;
+  outline: none;
   &:hover{
     background-color: var(--theme-dark);
     border: 2px solid var(--font-grey);
@@ -62,7 +65,7 @@ export const Button = styled.button`
 `
 
 export const Form = styled.form`
-width: 100%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-top: 30px;
