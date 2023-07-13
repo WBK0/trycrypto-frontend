@@ -1,9 +1,9 @@
-import { Col } from "../../../../../shared/col";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "./orderPanel.styles";
-import IWallet from './../../../../../interfaces/Wallet.interface';
+import { Col } from "../../../../../../shared/col";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../orderPanel.styles";
+import IWallet from '../../../../../../interfaces/Wallet.interface';
 import { useEffect, useState } from "react";
-import decimalPlaces from "../../../../../services/decimalPlaces";
-import api from "../../../../../services/api";
+import decimalPlaces from "../../../../../../services/decimalPlaces";
+import api from "../../../../../../services/api";
 import { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
@@ -17,15 +17,30 @@ interface IBuyPanel {
 
 const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
   const [orderQuantity, setOrderQuantity] = useState("");
+  const [price, setPrice] = useState("");
+
+  const handleChangePrice = (e : {target: {value: string}}) => {
+    if(balance){
+      const decimalNumber = decimalPlaces(e.target.value);
+      
+      if(Number(e.target.value) <= pairPrice && decimalNumber <= 6){
+        setPrice(e.target.value)
+      }else if(Number(e.target.value) > pairPrice){
+        setPrice(Number(pairPrice).toFixed(6));
+        // wyswietlanie bledu że cena jest za duza i nie zmienianie jej
+      }
+    }
+    
+  }
 
   const handleChange = (e : {target: {value: string}}) => {
     if(balance){
       const decimalNumber = decimalPlaces(e.target.value);
       
-      if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)) && decimalNumber <= 1){
+      if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1)) && decimalNumber <= 1){
         setOrderQuantity(e.target.value);
       }else if(Number(e.target.value) && decimalNumber <= 1){
-        setOrderQuantity((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1))
+        setOrderQuantity((Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1))
       }
     }
   }
@@ -78,7 +93,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
       </Balance>
       <InputWrapper>
         <InputText>Cena</InputText>
-        <Input value="Market" disabled />
+        <Input value={price} onChange={handleChangePrice} />
         <InputSymbol>USDT</InputSymbol>
       </InputWrapper>
       <InputWrapper>

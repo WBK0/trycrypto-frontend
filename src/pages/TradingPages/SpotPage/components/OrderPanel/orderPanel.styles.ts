@@ -9,9 +9,10 @@ export const OrderWrapper = styled.div`
   @media screen and (min-width: 1000px){
     border: 1px solid var(--border-dark);
     border-top: none;
+    height: 333px !important;
   }
   @media screen and (min-width: 800px) {
-    height: 333px;
+    height: 343px;
   }
 `
 
@@ -27,7 +28,7 @@ export const InputWrapper = styled.div`
   flex-wrap: wrap;
   align-items: stretch;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 `
 
 export const Input = styled.input`  
@@ -37,7 +38,7 @@ export const Input = styled.input`
   border: none;
   text-align: right;
   padding-right: 5px;
-  height: 45px;
+  height: 43px;
   font-size: 16px;
   line-height: 28px;
   width: 1%;
@@ -53,7 +54,7 @@ export const InputText = styled.span`
   background-color: #2A2D35;
   color: white;
   border: none;
-  height: 45px;
+  height: 43px;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -67,7 +68,7 @@ export const InputSymbol = styled.span`
   background-color: #2A2D35;
   color: white;
   border: none;
-  height: 45px;
+  height: 43px;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -138,4 +139,22 @@ export const LoginLink = styled(Link)`
   &:hover{
     color: var(--font-yellow);
   }
+`
+
+export const SwitchOrderType = styled.div`
+  padding-top: 0px;
+`
+
+interface ISwitchButton{
+  selected: boolean;
+}
+
+export const SwitchButton = styled.button<ISwitchButton>`
+  border: 0;
+  background-color: transparent;
+  color: ${props => props.selected ? 'var(--font-yellow)' : 'white'};
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0px;
+  margin-right: 15px;
 `

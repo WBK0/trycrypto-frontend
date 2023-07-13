@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import IWallet from "../../../../../interfaces/Wallet.interface";
-import { Col } from "../../../../../shared/col";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "./orderPanel.styles";
-import useWallet from "../../../../../hooks/useWallet";
-import decimalPlaces from "../../../../../services/decimalPlaces";
-import api from "../../../../../services/api";
+import IWallet from "../../../../../../interfaces/Wallet.interface";
+import { Col } from "../../../../../../shared/col";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../orderPanel.styles";
+import useWallet from "../../../../../../hooks/useWallet";
+import decimalPlaces from "../../../../../../services/decimalPlaces";
+import api from "../../../../../../services/api";
 import { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
