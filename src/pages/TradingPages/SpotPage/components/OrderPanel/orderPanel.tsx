@@ -6,6 +6,7 @@ import IWallet from "../../../../../interfaces/Wallet.interface";
 import BuyPanelMarket from "./market/BuyPanel";
 import SellPanelMarket from "./market/SellPanel";
 import BuyPanelLimit from './limit/BuyPanel';
+import SellPanelLimit from './limit/SellPanel';
 
 interface IOrderPanel{
   symbol: string | undefined;
@@ -34,7 +35,7 @@ const OrderPanel: React.FC<IOrderPanel> = ({ symbol, balance, pairPrice, fetchBa
         :
         <Row>
           <BuyPanelLimit balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance}/>
-          {/* <SellPanel balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance}/> */}
+          <SellPanelLimit balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance}/>
         </Row>
       }
       
