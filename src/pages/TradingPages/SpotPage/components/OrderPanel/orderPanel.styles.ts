@@ -31,11 +31,16 @@ export const InputWrapper = styled.div`
   margin-bottom: 12px;
 `
 
-export const Input = styled.input`  
+interface IisError{
+  isError?: boolean;
+}
+
+export const Input = styled.input<IisError>`  
   flex: 1 1 auto;
   background-color: #2A2D35;
   color: white;
-  border: none;
+  border: ${props => props.isError ? 'rgb(182, 34, 22) solid' : 'solid transparent'};
+  border-width: 2px 0px 2px 0px;
   text-align: right;
   padding-right: 5px;
   height: 43px;
@@ -43,17 +48,17 @@ export const Input = styled.input`
   line-height: 28px;
   width: 1%;
   z-index: 1;
-  border: 2px solid transparent;
-  &:focus{
+  ${InputWrapper}:focus-within & {
     outline: none;
-    border-color: rgb(90, 90, 90);
+    border-color: ${props => props.isError ? '' : 'rgb(90, 90, 90)'};
   }
 `
 
-export const InputText = styled.span`
+export const InputText = styled.span<IisError>`
   background-color: #2A2D35;
   color: white;
-  border: none;
+  border: ${props => props.isError ? 'rgb(182, 34, 22) solid' : 'solid transparent'};
+  border-width: 2px 0px 2px 2px;
   height: 43px;
   display: flex;
   align-items: center;
@@ -62,13 +67,18 @@ export const InputText = styled.span`
   text-align: center;
   font-size: 16px;
   line-height: 28px;
+  ${InputWrapper}:focus-within & {
+    outline: none;
+    border-color: ${props => props.isError ? '' : 'rgb(90, 90, 90)'};
+  }
 `
 
-export const InputSymbol = styled.span`
+export const InputSymbol = styled.span<IisError>`
   background-color: #2A2D35;
   color: white;
-  border: none;
-  height: 43px;
+  border: ${props => props.isError ? 'rgb(182, 34, 22) solid' : 'solid transparent'};
+  border-width: 2px 2px 2px 0px;
+    height: 43px;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -76,6 +86,10 @@ export const InputSymbol = styled.span`
   text-align: center;
   font-size: 16px;
   line-height: 28px;
+  ${InputWrapper}:focus-within & {
+    outline: none;
+    border-color: ${props => props.isError ? '' : 'rgb(90, 90, 90)'};
+  }
 `
 
 export const RangeInput = styled.input`

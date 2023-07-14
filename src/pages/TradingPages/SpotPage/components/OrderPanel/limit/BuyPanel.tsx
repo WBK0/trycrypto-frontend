@@ -1,7 +1,7 @@
 import { Col } from "../../../../../../shared/col";
 import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../orderPanel.styles";
 import IWallet from '../../../../../../interfaces/Wallet.interface';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import decimalPlaces from "../../../../../../services/decimalPlaces";
 import api from "../../../../../../services/api";
 import { AxiosResponse } from "axios";
@@ -18,6 +18,10 @@ interface IBuyPanel {
 const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
   const [orderQuantity, setOrderQuantity] = useState("");
   const [price, setPrice] = useState("");
+  const [isIncorrectPrice, setIsIncorrectPrice] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const inputRefPrice = useRef<HTMLInputElement>(null);
+  const inputRefQuantity = useRef<HTMLInputElement>(null);
 
   const handleChangePrice = (e : {target: {value: string}}) => {
     if(balance){
@@ -25,12 +29,12 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
       
       if(Number(e.target.value) <= pairPrice && decimalNumber <= 6){
         setPrice(e.target.value)
+        setIsIncorrectPrice(false);
       }else if(Number(e.target.value) > pairPrice){
-        setPrice(Number(pairPrice).toFixed(6));
-        // wyswietlanie bledu że cena jest za duza i nie zmienianie jej
+        setPrice(e.target.value);
+        setIsIncorrectPrice(true);
       }
     }
-    
   }
 
   const handleChange = (e : {target: {value: string}}) => {
@@ -49,12 +53,6 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
     api.post('/api/spot/limit/buy/' + symbol?.toUpperCase(), {
       'quantity': orderQuantity,
       'price': price
-    },{
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
     }).then((response: AxiosResponse) => {
       console.log(response.data);
       fetchBalance();
@@ -71,7 +69,8 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
     })
     .catch((error: Error) => {
       console.error(error);
-      toast.error('Purchase failed', {
+      setIsSubmitted(true);
+      toast.error('Order creation failed', {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -93,14 +92,45 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
         Dostępne: {balance?.currentBalance.toFixed(2) || '0'} USDT
       </Balance>
       <InputWrapper>
-        <InputText>Cena</InputText>
-        <Input value={price} onChange={handleChangePrice} />
-        <InputSymbol>USDT</InputSymbol>
+        <InputText 
+          isError={isSubmitted && isIncorrectPrice ? true : false}
+          onClick={() => inputRefPrice.current?.focus()}
+        >
+          Cena
+        </InputText>
+        <Input 
+          isError={isSubmitted && isIncorrectPrice ? true : false} 
+          value={price} 
+          onChange={handleChangePrice}
+          ref={inputRefPrice}
+        />
+        <InputSymbol 
+          isError={isSubmitted && isIncorrectPrice ? true : false}           
+          onClick={() => inputRefPrice.current?.focus()}
+        >
+          USDT
+        </InputSymbol>
       </InputWrapper>
       <InputWrapper>
-        <InputText>Ilość</InputText>
-        <Input value={orderQuantity || 0} onChange={handleChange}/>
-        <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
+        <InputText 
+          isError={isSubmitted && Number(orderQuantity) <= 0 ? true : false}
+          onClick={() => inputRefQuantity.current?.focus()}
+        >
+          Ilość
+        </InputText>
+        <Input 
+          isError={isSubmitted && Number(orderQuantity) <= 0 ? true : false} 
+          value={orderQuantity || 0} 
+          onChange={handleChange}
+          ref={inputRefQuantity}
+          disabled={Number(price) <= 0 ? true : false}
+        />
+        <InputSymbol 
+          isError={isSubmitted && Number(orderQuantity) <= 0 ? true : false}
+          onClick={() => inputRefQuantity.current?.focus()}
+        >
+          {symbol?.toUpperCase().replace('USDT', '')}
+        </InputSymbol>
       </InputWrapper>
       <RangeInput type="range" min="0" step={0.1} max={balance && Number(price) > 0 ? (Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1) : 0} onChange={handleChange} value={orderQuantity}></RangeInput>
       <InputWrapper>
