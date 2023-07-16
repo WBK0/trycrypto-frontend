@@ -25,7 +25,7 @@ export const Tr = styled.tr`
 `
 
 interface ITd{
-  weight: string;
+  weight?: string;
 }
 
 export const Td = styled.td<ITd>`

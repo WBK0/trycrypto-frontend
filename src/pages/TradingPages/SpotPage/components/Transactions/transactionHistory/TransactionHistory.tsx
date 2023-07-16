@@ -5,6 +5,7 @@ import IWallet from "../../../../../../interfaces/Wallet.interface";
 import AuthContext from "../../../../../../contexts/AuthContext";
 
 interface IHistory{
+  id: number;
   type: string;
   pair: string;
   quantity: number;
@@ -69,7 +70,7 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) 
         {Array.isArray(history) && history.map((item) => {
           const date = new Date(item.date).toLocaleString();
           return(
-          <Tr>
+          <Tr key={item.id}>
             <Td color={item.type} width="50px" weight='600'>
               {item.type.toUpperCase()}
             </Td>

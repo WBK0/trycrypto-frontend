@@ -39,7 +39,10 @@ const Transactions: React.FC<ITransaction> = ({ wallet, symbol }) => {
               )
             case 1:
               return(
-                <LimitOrders />
+                <LimitOrders 
+                  wallet={wallet}
+                  symbol={symbol}
+                />
               )
             default:
               console.warn(`Unexpected step value: ${transactionView}`);

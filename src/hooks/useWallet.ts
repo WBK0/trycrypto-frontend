@@ -11,9 +11,7 @@ const useWallet = () => {
 
   const fetchBalance = async () => {
     try {
-      const response = await api.get('/api/wallet/balance', {
-        withCredentials: true,
-      });
+      const response = await api.get('/api/wallet/balance');
       setBalance(response.data);
     } catch (error) {
       const err = error as AxiosError
