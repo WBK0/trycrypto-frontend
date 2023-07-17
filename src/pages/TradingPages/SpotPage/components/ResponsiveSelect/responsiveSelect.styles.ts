@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  border-bottom: 10px solid var(--theme-dark);
+  /* border-bottom: 0px solid var(--theme-dark); */
   width: 100%;
   display: flex;
-  padding-bottom: 8px;
+  padding-bottom: 5px;
   padding-top: 5px;
   padding-left: 5px;
   overflow-x: scroll;

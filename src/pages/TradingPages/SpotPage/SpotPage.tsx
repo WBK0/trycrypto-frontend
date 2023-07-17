@@ -52,8 +52,14 @@ const SpotPage: React.FC = () => {
     onMessage
   });
 
-  const { balance, fetchBalance} = useWallet(); 
+  const { balance, fetchBalance } = useWallet(); 
 
+  useEffect(() => {
+    setInterval(() => {
+      fetchBalance();
+    }, 2000)  
+  }, [])
+ 
   useEffect(() => {
     setLoading(true);
   }, [symbol])

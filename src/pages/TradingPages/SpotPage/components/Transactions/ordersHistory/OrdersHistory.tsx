@@ -34,7 +34,7 @@ const OrdersHistory: React.FC<IOrdersHistory> = ({ wallet, symbol }) => {
 
   useEffect(() => {
     getOrders()
-  }, [])
+  }, [wallet, symbol])
 
   return(
     <Wrapper>

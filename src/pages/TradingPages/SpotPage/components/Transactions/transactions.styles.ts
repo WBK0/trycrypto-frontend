@@ -12,7 +12,9 @@ export const Wrapper = styled.div`
 export const HeadingSelect = styled.div`
   display: flex;
   padding-top: 12px;
-  padding-left: 12px;
+  @media screen and (min-width: 1000px){
+    padding-left: 12px;
+  }
 `
 
 interface ISelectButton{
@@ -30,4 +32,8 @@ export const SelectButton = styled.button<ISelectButton>`
   margin-left: 3px;
   margin-right: 15px;
   cursor: pointer;
+  flex: 1;
+  @media screen and (min-width: 1000px) {
+    flex: none;
+  }
 `
