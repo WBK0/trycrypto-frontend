@@ -16,14 +16,15 @@ interface IOrders{
 interface ILimitOrders{
   wallet?: IWallet;
   symbol?: string;
+  fetchBalance: () => void;
 }
 
-const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol }) => {
+const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol, fetchBalance }) => {
   const [limitOrders, setLimitOrders] = useState<IOrders[]>([])
 
   const getOrders = async () => {
     try {
-      const result = await api.get('/api/spot/limit/orders')
+      const result = await api.get('/api/spot/limit/orders/pair/' + symbol?.toUpperCase())
       setLimitOrders(result.data)
     } catch (error) {
       console.log(error)
@@ -42,7 +43,7 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol }) => {
         draggable: true,
         theme: "dark",
       });
-      getOrders()
+      fetchBalance();
     } catch (error) {
       console.log(error);
     }
@@ -58,10 +59,10 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol }) => {
         <Table>
           <THead>
             <Tr>
-              <Th width={1}>Type</Th>
-              <Th width={1}>Pair</Th>
-              <Th width={1}>Quantity</Th>
-              <Th width={1}>Price</Th>
+              <Th width={4}>Type</Th>
+              <Th width={4}>Pair</Th>
+              <Th width={4}>Quantity</Th>
+              <Th width={4}>Price</Th>
               <Th width={1}>Actions</Th>
             </Tr>
           </THead>
@@ -69,11 +70,11 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol }) => {
           {Array.isArray(limitOrders) && limitOrders.map((item) => {
             return(
               <Tr key={item.id}>
-                <Td color={item.type} weight="500">{item.type.toUpperCase()}</Td>
-                <Td>{item.pair}</Td>
-                <Td>{item.quantity} {item.pair.replace("USDT", "")}</Td>
-                <Td>{item.price} USDT</Td>
-                <Td><CancelButton onClick={() => closeOrder(item.id)}>Cancel</CancelButton></Td>
+                <Td color={item.type} weight="500" width="50px">{item.type.toUpperCase()}</Td>
+                <Td width="100px">{item.pair}</Td>
+                <Td width="100px">{item.quantity} {item.pair.replace("USDT", "")}</Td>
+                <Td width="100px">{item.price} USDT</Td>
+                <Td width="100px"><CancelButton onClick={() => closeOrder(item.id)}>Cancel</CancelButton></Td>
               </Tr>
             )
           })}
@@ -81,11 +82,11 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol }) => {
         </Table>
       </TableWrapper>
       <MoreOrders>
-        {Array.isArray(history) && history.length == 0 || !history ?
+        {Array.isArray(limitOrders) && limitOrders.length == 0 || !limitOrders ?
           <EmptyOrdersHeader>Currently nothing to display, trade the cryptocurrency pair with limit orders to add to the orders list</EmptyOrdersHeader>
         :
         <>
-          <OrdersHeader>Wanna see more orders?</OrdersHeader>
+          <OrdersHeader>Wanna see all orders?</OrdersHeader>
           <OrdersLink to='/wallet/history/spot'>See more</OrdersLink>
         </>
         }

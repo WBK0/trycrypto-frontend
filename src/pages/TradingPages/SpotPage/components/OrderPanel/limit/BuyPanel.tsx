@@ -27,7 +27,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
     if(balance){
       const decimalNumber = decimalPlaces(e.target.value);
       
-      if(Number(e.target.value) <= pairPrice && decimalNumber <= 6){
+      if(Number(e.target.value) <= pairPrice && decimalNumber <= 5){
         setPrice(e.target.value)
         setIsIncorrectPrice(false);
       }else if(Number(e.target.value) > pairPrice){

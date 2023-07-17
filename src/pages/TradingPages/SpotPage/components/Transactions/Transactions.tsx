@@ -5,13 +5,15 @@ import { HeadingSelect, SelectButton, Wrapper } from "./transactions.styles";
 import AuthContext from "../../../../../contexts/AuthContext";
 import LoginView from "./loginView/loginView";
 import LimitOrders from "./limitOrders/LimitOrders";
+import OrdersHistory from "./ordersHistory/OrdersHistory";
 
 interface ITransaction{
   wallet?: IWallet;
-  symbol?: string
+  symbol?: string;
+  fetchBalance: () => void;
 }
 
-const Transactions: React.FC<ITransaction> = ({ wallet, symbol }) => {
+const Transactions: React.FC<ITransaction> = ({ wallet, symbol, fetchBalance }) => {
   const [transactionView, setTransactionView] = useState<Number>(0);
 
   const { isLoggedIn } = useContext(AuthContext);
@@ -24,7 +26,8 @@ const Transactions: React.FC<ITransaction> = ({ wallet, symbol }) => {
     <Wrapper>
       <HeadingSelect>
         <SelectButton active={transactionView == 0 ? true : false} onClick={() => HandleChangeView(0)}>Transaction History</SelectButton>
-        <SelectButton active={transactionView == 1 ? true : false} onClick={() => HandleChangeView(1)}>Orders History</SelectButton>
+        <SelectButton active={transactionView == 1 ? true : false} onClick={() => HandleChangeView(1)}>Active Orders</SelectButton>
+        <SelectButton active={transactionView == 2 ? true : false} onClick={() => HandleChangeView(2)}>Orders History</SelectButton>
       </HeadingSelect>
       {
         isLoggedIn ?
@@ -40,6 +43,14 @@ const Transactions: React.FC<ITransaction> = ({ wallet, symbol }) => {
             case 1:
               return(
                 <LimitOrders 
+                  wallet={wallet}
+                  symbol={symbol}
+                  fetchBalance={fetchBalance}
+                />
+              )
+            case 2:
+              return(
+                <OrdersHistory 
                   wallet={wallet}
                   symbol={symbol}
                 />

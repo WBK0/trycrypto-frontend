@@ -102,7 +102,7 @@ const SpotPage: React.FC = () => {
             </Row>
             <Row>
               <Col xs={100} pr='0px' pb="0px">
-                <Transactions wallet={balance} symbol={symbol} />
+                <Transactions wallet={balance} symbol={symbol} fetchBalance={fetchBalance} />
               </Col>  
             </Row>          
         </Container>
