@@ -77,7 +77,11 @@ export const InputWrapper = styled.div`
   padding-bottom: 0px;
 `
 
-export const Input = styled.input`  
+interface IError{
+  error?: boolean;
+}
+
+export const Input = styled.input<IError>`  
   flex: 1 1 auto;
   background-color: #2A2D35;
   color: white;
@@ -89,17 +93,21 @@ export const Input = styled.input`
   line-height: 28px;
   width: 1%;
   z-index: 1;
-  border: 2px solid transparent;
+  border: solid;
+  border-color: ${props => props.error ? 'rgb(182, 34, 22)' : 'transparent'};
+  border-width: 2px 0px 2px 0px;
   &:focus{
     outline: none;
     border-color: rgb(90, 90, 90);
   }
 `
 
-export const InputText = styled.span`
+export const InputText = styled.span<IError>`
   background-color: #2A2D35;
   color: #6d6e73;
-  border: none;
+  border: solid;
+  border-color: ${props => props.error ? 'rgb(182, 34, 22)' : 'transparent'};
+  border-width: 2px 0px 2px 2px;
   height: 45px;
   display: flex;
   align-items: center;
@@ -109,13 +117,19 @@ export const InputText = styled.span`
   font-size: 14px;
   font-weight: 500;
   line-height: 28px;
-  width: 79px;
+  width: 83px;
+  ${InputWrapper}:focus-within & {
+    outline: none;
+    border-color: rgb(90, 90, 90);
+  }
 `
 
-export const InputSymbol = styled.span`
+export const InputSymbol = styled.span<IError>`
   background-color: #2A2D35;
   color: white;
-  border: none;
+  border: solid;
+  border-color: ${props => props.error ? 'rgb(182, 34, 22)' : 'transparent'};
+  border-width: 2px 2px 2px 0px;
   height: 45px;
   display: flex;
   align-items: center;
@@ -124,6 +138,10 @@ export const InputSymbol = styled.span`
   text-align: center;
   font-size: 16px;
   line-height: 28px;
+  ${InputWrapper}:focus-within & {
+    outline: none;
+    border-color: rgb(90, 90, 90);
+  }
 `
 
 export const RangeWrapper = styled.div`
