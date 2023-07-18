@@ -3,6 +3,7 @@ import { THead, Table, Th, Tr, Text } from "../../infoPanel.styles";
 import TableBody from "./TableBody";
 import getData from "../../../../../../../components/Markets/services/getData";
 import { IPositions } from "../../../../FuturesPage";
+import LoadingTable from "../../../../../../../components/Loading/LoadingTable";
 
 interface IPairPrice{
   [x: string]: number;
@@ -16,6 +17,8 @@ interface IPositionsView{
 
 const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fetchBalance}) => {
   const [pairPrice, setPairPrice] = useState<IPairPrice>({})
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     getPairPrice();
     setInterval(async () => {
@@ -31,39 +34,45 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
       temp[currentObject.pair] = currentObject.lastPrice
     }
     setPairPrice(temp)
+    setLoading(false)
   }
   
   return(
     <>
       {
-        positions.length >= 1 ? 
-        <Table>
-          <THead>
-            <Tr>
-              <Th>Type</Th>
-              <Th>Pair</Th>
-              <Th>Leverage</Th>
-              <Th>Quantity</Th>
-              <Th>Purchase Price</Th>
-              <Th>Price</Th>
-              <Th>PNL</Th>
-              <Th>Take Profit</Th>
-              <Th>Stop Loss</Th>
-              <Th>Liquidation Price</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </THead>
-          <TableBody 
-            positions={positions} 
-            pairPrice={pairPrice} 
-            fetchPositions={fetchPositions} 
-            fetchBalance={fetchBalance}
-          />
-        </Table>
+        loading 
+        ?
+          <LoadingTable />
         :
-        <Text>
-          You don't have any open positions yet
-        </Text>
+        positions.length >= 1 
+        ? 
+          <Table>
+            <THead>
+              <Tr>
+                <Th>Type</Th>
+                <Th>Pair</Th>
+                <Th>Leverage</Th>
+                <Th>Quantity</Th>
+                <Th>Purchase Price</Th>
+                <Th>Price</Th>
+                <Th>PNL</Th>
+                <Th>Take Profit</Th>
+                <Th>Stop Loss</Th>
+                <Th>Liquidation Price</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </THead>
+            <TableBody 
+              positions={positions} 
+              pairPrice={pairPrice} 
+              fetchPositions={fetchPositions} 
+              fetchBalance={fetchBalance}
+            />
+          </Table>
+        :
+          <Text>
+            You don't have any open positions yet
+          </Text>
       }
     </>
   )

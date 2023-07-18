@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../../../../../services/api";
-import { THead, Table, Th, Tr } from "../../infoPanel.styles";
+import { THead, Table, Text, Th, Tr } from "../../infoPanel.styles";
 import TableBody from "./TableBody";
 import LoadingTable from "../../../../../../../components/Loading/LoadingTable";
 
@@ -16,7 +16,7 @@ export interface IHistory{
 }
 
 const TransactionHistoryView = () => {
-  const [history, setHistory] = useState<IHistory[]>()
+  const [history, setHistory] = useState<IHistory[]>([])
   const [loading, setLoading] = useState(true);
 
   const getHistory = async () => {
@@ -42,27 +42,34 @@ const TransactionHistoryView = () => {
 
   return(
   <>
-    {loading ?
-    <LoadingTable />
+    {loading 
+    ?
+      <LoadingTable />
     :
-    <Table>
-      <THead>
-        <Tr>
-          <Th>Type</Th>
-          <Th>Pair</Th>
-          <Th>Quantity</Th>
-          <Th>Sold</Th>
-          <Th>Leverage</Th>
-          <Th>PurchasePrice</Th>
-          <Th>SellingPrice</Th>
-          <Th>PNL</Th>
-          <Th>Date</Th>
-        </Tr>
-      </THead>
-      <TableBody history={history}/>
-    </Table>
+      history.length <= 0 
+      ? 
+        <Text>
+          There are no trades in your futures trading history
+        </Text>
+      : 
+        <Table>
+          <THead>
+            <Tr>
+              <Th>Type</Th>
+              <Th>Pair</Th>
+              <Th>Quantity</Th>
+              <Th>Sold</Th>
+              <Th>Leverage</Th>
+              <Th>PurchasePrice</Th>
+              <Th>SellingPrice</Th>
+              <Th>PNL</Th>
+              <Th>Date</Th>
+            </Tr>
+          </THead>
+          <TableBody history={history}/>
+        </Table>
     }
-    </>
+  </>
     
   )
 }
