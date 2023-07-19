@@ -31,7 +31,6 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
 
   const handleChangeQuantity = (e: {target: {value: string}}) => {
     if((Number(e.target.value) || Number(e.target.value) == 0) && decimalPlaces(e.target.value) <= 1){
-      console.log()
       setOrderQuantity(e.target.value)
     }
   }

@@ -35,7 +35,7 @@ const OrderPanelMobile: React.FC<IOrderPanelMobile> = ({ symbol, balance, price,
       </Button>
     </Wrapper>
     
-      {showModal && <Modal onClose={handleCloseModal} symbol={symbol} balance={balance} price={price} type={type} fetchBalance={fetchBalance} fetchPositions={fetchPositions}/>}
+      {showModal && <Modal onClose={handleCloseModal} symbol={symbol} balance={balance} pairPrice={price} type={type} fetchBalance={fetchBalance} fetchPositions={fetchPositions}/>}
     </>
 
 

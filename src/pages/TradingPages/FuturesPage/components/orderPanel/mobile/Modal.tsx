@@ -13,15 +13,20 @@ interface IModal{
   onClose: () => void;
   balance?: IWallet;
   symbol?: string;
-  price: number;
+  pairPrice: number;
   type: 'buy' | 'sell';
   fetchBalance: () => void;
   fetchPositions: () => void;
 }
 
-const Modal: React.FC<IModal> = ({ onClose, balance, symbol, price, type, fetchBalance, fetchPositions }) => {
+const Modal: React.FC<IModal> = ({ onClose, balance, symbol, pairPrice, type, fetchBalance, fetchPositions }) => {
   const [leverage, setLeverage] = useState(10);
   const [view, setView] = useState(0);
+  const [orderType, setOrderType] = useState(0);
+  const [orderQuantity, setOrderQuantity] = useState("");
+  const [takeProfit, setTakeProfit] = useState(0);
+  const [stopLoss, setStopLoss] = useState(0);
+  const [price, setPrice] = useState("");
 
   const handleChangeView = () => {
     setView(1)
@@ -46,8 +51,18 @@ const Modal: React.FC<IModal> = ({ onClose, balance, symbol, price, type, fetchB
               leverage={leverage} 
               balance={balance} 
               handleChangeView={handleChangeView} 
-              price={price} 
+              pairPrice={pairPrice} 
               type={type} 
+              orderType={orderType}
+              setOrderType={setOrderType}
+              orderQuantity={orderQuantity}
+              setOrderQuantity={setOrderQuantity}
+              takeProfit={takeProfit}
+              setTakeProfit={setTakeProfit}
+              stopLoss={stopLoss}
+              setStopLoss={setStopLoss}
+              price={price}
+              setPrice={setPrice}
             />
           :
             <LeverageSelect 
