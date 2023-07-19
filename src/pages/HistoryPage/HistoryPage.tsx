@@ -13,8 +13,9 @@ const HistoryPage = () => {
     <Layout>
       <HeadingWrapper>
         <Header />
-        <SelectInstrument instrument={instrument} setInstrument={setInstrument} />
       </HeadingWrapper>
+      <SelectInstrument instrument={instrument} setInstrument={setInstrument} />
+
       {
         instrument == 0
         ? <TableSpot />

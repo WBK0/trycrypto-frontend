@@ -12,6 +12,7 @@ import SpotPage from "./pages/TradingPages/SpotPage/SpotPage";
 import FuturesPage from "./pages/TradingPages/FuturesPage/FuturesPage";
 import WalletPage from "./pages/WalletPage/WalletPage";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
+import HistoryOrders from "./pages/HistoryOrders/HistoryOrders";
 
 function App() {
   const { loading, setLastLocation } = useContext(AuthContext);
@@ -43,7 +44,8 @@ function App() {
           <Route path="/market/spot/:symbol" element={<SpotPage />} />
           <Route path="/market/futures/:symbol" element={<FuturesPage />} />
           <Route path="/wallet" element={<WalletPage />} />
-          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/history/trades" element={<HistoryPage />} />
+          <Route path="/history/orders" element={<HistoryOrders />} />
         </Routes>
       ) : (
         <Loading />

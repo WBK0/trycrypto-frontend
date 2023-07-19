@@ -68,5 +68,5 @@ export const Form = styled.form`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 30px;
+  margin-top: 0px;
 `
