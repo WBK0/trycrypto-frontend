@@ -15,9 +15,9 @@ export const SelectButton = styled.button<ISelectButton>`
   border: none;
   background-color: ${props => props.active ? 'var(--theme-dark)' : 'var(--theme-primary)'};
   color: ${props => props.active ? 'var(--font-yellow)' : 'rgb(122,122,122)'};
-  padding: 5px 30px 5px 30px;
+  padding: 5px 20px 5px 20px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   margin-right: 20px;
   border-radius: 6px;
   border: 2px solid transparent;
