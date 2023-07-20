@@ -29,6 +29,8 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
   const [quantityView, setQuantityView] = useState(false);
   const [priceError, setPriceError] = useState(false)
   const [quantityError, setQuantityError] = useState(false);
+  const [takeProfitError, setTakeProfitError] = useState(false);
+  const [stopLossError, setStopLossError] = useState(false);
   const inputRefQuantity = useRef<HTMLInputElement>(null);
   const inputRefPrice = useRef<HTMLInputElement>(null);
 
@@ -73,6 +75,10 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
   }
 
   const onSubmit = async(type : string) => {
+    setPriceError(false);
+    setQuantityError(false);
+    setTakeProfitError(false);
+    setStopLossError(false);
     try {
       const response = await api.post('/api/derivatives/limit/open/' + symbol?.toUpperCase(), {
         'type': type,
@@ -109,6 +115,18 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
       }
       if(Number(orderQuantity) == 0 || balance?.currentBalance && Number(price) * Number(orderQuantity) > balance?.currentBalance){
         setQuantityError(true);
+      }
+      if(takeProfit != 0 && (
+        (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
+        (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
+      )){
+        setTakeProfitError(true);
+      }
+      if(stopLoss != 0 && 
+        (type == 'LONG' && (Number(stopLoss) >= Number(price) || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
+        (type == 'SHORT') && (Number(stopLoss) <= Number(price) || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
+      ))){
+        setStopLossError(true)
       }
       console.error(error)      
       toast.error(`Position not opened, unknown error occurred`, {
@@ -172,14 +190,14 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
         <RangeInput type="range" min={0} step={0.1} max={balance && (Number(price) > 0) ? (balance.currentBalance / Number(price)).toFixed(1) : 0} onChange={handleChangeOrder} value={Number(orderQuantity)}/>
       </RangeWrapper>
       <InputWrapper>
-        <InputText>Take Profit</InputText>
-        <Input value={takeProfit} onChange={handleChangeTP}/>
-        <InputSymbol>USDT</InputSymbol>
+        <InputText error={takeProfitError}>Take Profit</InputText>
+        <Input error={takeProfitError} value={takeProfit} onChange={handleChangeTP}/>
+        <InputSymbol error={takeProfitError}>USDT</InputSymbol>
       </InputWrapper>
       <InputWrapper>
-        <InputText>Stop Loss</InputText>
-        <Input value={stopLoss} onChange={handleChangeSL} />
-        <InputSymbol>USDT</InputSymbol>
+        <InputText error={stopLossError}>Stop Loss</InputText>
+        <Input error={stopLossError} value={stopLoss} onChange={handleChangeSL} />
+        <InputSymbol error={stopLossError}>USDT</InputSymbol>
       </InputWrapper>
       <PriceInfo>
         <PriceWrapper>
@@ -187,7 +205,7 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
           <Price>{(Number(orderQuantity) * Number(price)).toFixed(2)} USDT</Price>
         </PriceWrapper>
       </PriceInfo>
-      <OrderButton orderType={type} onClick={() => onSubmit(type == 'buy' ? 'LONG' : 'SHORT')}>BUY/LONG</OrderButton>
+      <OrderButton orderType={type} onClick={() => onSubmit(type == 'buy' ? 'LONG' : 'SHORT')}>{type == 'buy' ? 'BUY/LONG' : 'SELL/SHORT'}</OrderButton>
     </>
   )
 }

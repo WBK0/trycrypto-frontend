@@ -21,6 +21,8 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
   const [price, setPrice] = useState("");
   const [priceError, setPriceError] = useState(false)
   const [quantityError, setQuantityError] = useState(false);
+  const [takeProfitError, setTakeProfitError] = useState(false);
+  const [stopLossError, setStopLossError] = useState(false);
   const inputRefPrice = useRef<HTMLInputElement>(null);
   const inputRefQuantity = useRef<HTMLInputElement>(null);
   const [quantityInputView, setQuantityInputView] = useState(false);
@@ -81,6 +83,8 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
     try {
       setPriceError(false);
       setQuantityError(false);
+      setTakeProfitError(false);
+      setStopLossError(false);
       const response = await api.post('/api/derivatives/limit/open/' + symbol?.toUpperCase(), {
         'type': type,
         'price': Number(price),
@@ -114,6 +118,18 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
       }
       if(Number(orderQuantity) == 0 || balance?.currentBalance && Number(price) * Number(orderQuantity) > balance?.currentBalance){
         setQuantityError(true);
+      }
+      if(takeProfit != 0 && (
+        (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
+        (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
+      )){
+        setTakeProfitError(true);
+      }
+      if(stopLoss != 0 && 
+        (type == 'LONG' && (Number(stopLoss) >= Number(price) || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
+        (type == 'SHORT') && (Number(stopLoss) <= Number(price) || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
+      ))){
+        setStopLossError(true)
       }
       console.error(error)
       toast.error(`The order was not opened, an error occurred`, {
@@ -213,14 +229,14 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
       </PriceInfo>
       <Hr />
       <InputWrapper>
-        <InputText>Take Profit</InputText>
-        <Input value={takeProfit} onChange={handleChangeTP}/>
-        <InputSymbol>USDT</InputSymbol>
+        <InputText error={takeProfitError}>Take Profit</InputText>
+        <Input error={takeProfitError} value={takeProfit} onChange={handleChangeTP}/>
+        <InputSymbol error={takeProfitError}>USDT</InputSymbol>
       </InputWrapper>
       <InputWrapper>
-        <InputText>Stop Loss</InputText>
-        <Input value={stopLoss} onChange={handleChangeSL} />
-        <InputSymbol>USDT</InputSymbol>
+        <InputText error={stopLossError}>Stop Loss</InputText>
+        <Input error={stopLossError} value={stopLoss} onChange={handleChangeSL} />
+        <InputSymbol error={stopLossError}>USDT</InputSymbol>
       </InputWrapper>
       <OrderButtons>
         <Button orderType="buy" onClick={() => onSubmit('LONG')}>BUY/LONG</Button>

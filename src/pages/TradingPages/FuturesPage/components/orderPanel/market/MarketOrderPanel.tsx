@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Balance, Button, Hr, Input, InputSymbol, InputText, InputWrapper, OrderButtons, Price, PriceInfo, PriceText, PriceWrapper, RangeInput, RangeWrapper, Wallet, WalletText } from "../orderPanel.styles";
 import decimalPlaces from "../../../../../../services/decimalPlaces";
 import api from "../../../../../../services/api";
@@ -17,7 +17,26 @@ interface IMarketOrderPanel{
 const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance, fetchBalance, fetchPositions, leverage }) => {
   const [takeProfit, setTakeProfit] = useState(0);
   const [stopLoss, setStopLoss] = useState(0);
-  const [orderQuantity, setOrderQuantity] = useState("0");
+  const [orderQuantity, setOrderQuantity] = useState("");
+  const [quantityError, setQuantityError] = useState(false);
+  const [takeProfitError, setTakeProfitError] = useState(false);
+  const [stopLossError, setStopLossError] = useState(false);
+  const [quantityView, setQuantityView] = useState(false);
+  const inputRefQuantity = useRef<HTMLInputElement>(null);
+
+  const handleChangeView = () => {
+    setQuantityView(!quantityView);
+  }
+
+  const handleChangeQuantity = (e: {target: {value: string}}) => {
+    if((Number(e.target.value) || Number(e.target.value) == 0) && decimalPlaces(e.target.value) <= 1){
+      setOrderQuantity(e.target.value)
+    }
+  }
+
+  useEffect(() => {
+    inputRefQuantity.current?.focus();
+  }, [quantityView])
 
   const handleChangeOrder = (e : {target: {value: string}}) => {
     if(balance){
@@ -45,6 +64,9 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
   }
 
   const onSubmit = async(type : string) => {
+    setQuantityError(false);
+    setTakeProfitError(false);
+    setStopLossError(false);
     try {
       const response = await api.post('/api/derivatives/market/open/' + symbol?.toUpperCase(), {
         'type': type,
@@ -72,17 +94,32 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
         theme: "dark",
         });
       } catch (error) {
-      console.error(error)      
-      toast.error(`Position not opened, unknown error occurred`, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
+        if(Number(orderQuantity) == 0 || (balance?.currentBalance && Number(orderQuantity) >= balance?.currentBalance / price)){
+          setQuantityError(true);
+        }
+        if(takeProfit != 0 && (
+          (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
+          (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
+        )){
+          setTakeProfitError(true);
+        }
+        if(stopLoss != 0 && 
+          (type == 'LONG' && (Number(stopLoss) >= price || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
+          (type == 'SHORT') && (Number(stopLoss) <= price || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
+        ))){
+          setStopLossError(true)
+        }
+        console.error(error)      
+        toast.error(`Position not opened, unknown error occurred`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
         });
-    }
+      } 
   }
 
   return(
@@ -91,13 +128,23 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
         <WalletText>Available:</WalletText> 
         <Balance>{balance?.currentBalance.toFixed(2) || 0} USDT</Balance>
       </Wallet>
-      <InputWrapper>
-        <InputText>Quantity</InputText>
-        <Input value={(Number(orderQuantity) * leverage).toFixed(1)} disabled/>
-        <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
-      </InputWrapper>
+      {
+        quantityView 
+        ?
+          <InputWrapper onClick={handleChangeView} onBlur={handleChangeView}>
+            <InputText>Quantity</InputText>
+            <Input value={orderQuantity} onChange={handleChangeQuantity} ref={inputRefQuantity}/>
+            <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
+          </InputWrapper>
+        :
+          <InputWrapper onClick={handleChangeView}>
+            <InputText error={quantityError}>Total</InputText>
+            <Input error={quantityError} value={(Number(orderQuantity) * leverage).toFixed(1)} disabled/>
+            <InputSymbol error={quantityError}>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
+          </InputWrapper>
+        }
       <RangeWrapper>
-        <RangeInput type="range" min={0} step={0.1} max={balance && (balance.currentBalance / price).toFixed(1)} onChange={handleChangeOrder}/>
+        <RangeInput type="range" min={0} step={0.1} max={balance && (balance.currentBalance / price).toFixed(1)} onChange={handleChangeOrder} value={orderQuantity}/>
       </RangeWrapper>
       <PriceInfo>
         <PriceWrapper>
@@ -111,14 +158,14 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
       </PriceInfo>
       <Hr />
       <InputWrapper>
-        <InputText>Take Profit</InputText>
-        <Input value={takeProfit} onChange={handleChangeTP}/>
-        <InputSymbol>USDT</InputSymbol>
+        <InputText error={takeProfitError}>Take Profit</InputText>
+        <Input error={takeProfitError} value={takeProfit} onChange={handleChangeTP}/>
+        <InputSymbol error={takeProfitError}>USDT</InputSymbol>
       </InputWrapper>
       <InputWrapper>
-        <InputText>Stop Loss</InputText>
-        <Input value={stopLoss} onChange={handleChangeSL} />
-        <InputSymbol>USDT</InputSymbol>
+        <InputText error={stopLossError}>Stop Loss</InputText>
+        <Input error={stopLossError} value={stopLoss} onChange={handleChangeSL} />
+        <InputSymbol error={stopLossError}>USDT</InputSymbol>
       </InputWrapper>
       <OrderButtons>
         <Button orderType="buy" onClick={() => onSubmit('LONG')}>BUY/LONG</Button>
