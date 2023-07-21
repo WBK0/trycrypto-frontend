@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -15,6 +16,9 @@ interface IButton{
   active: boolean;
 }
 
+// export const Link = styled(Link)`
+// `
+
 export const Button = styled.button<IButton>`
   background-color: ${props => props.active ? 'var(--theme-dark)' : 'transparent'};
   color: ${props => props.active ? 'var(--font-yellow)' : 'rgb(122, 122, 122)'};
@@ -24,8 +28,10 @@ export const Button = styled.button<IButton>`
   font-size: 19px;
   border-radius: 7px;
   margin-right: 20px;
+  text-decoration: none;
   &:hover{
     background-color: var(--theme-dark);
+    color: ${props => props.active ? 'var(--font-yellow)' : 'rgb(122, 122, 122)'};
   }
 `
 

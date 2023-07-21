@@ -41,7 +41,7 @@ export const Tr = styled.tr`
 `
 
 export const Th = styled.th`
-  padding-left: 12px;
+  /* padding-left: 12px; */
   padding-bottom: 0px;
   flex: 1;
   min-width: 130px;
@@ -73,7 +73,7 @@ export const TBody = styled.tbody`
 `
 
 export const Td = styled.td`
-  padding-left: 12px;
+  /* padding-left: 12px; */
   flex: 1;
   min-width: 130px;
   border-bottom: 1px solid rgb(70, 70, 70);
@@ -175,7 +175,6 @@ export const Info = styled.td`
 `
 
 export const Pnl = styled.td`
-  padding-left: 12px;
   flex: 1;
   display: flex;
   flex-wrap: wrap;
@@ -208,9 +207,30 @@ export const DateTh = styled.th`
   padding-left: 12px;
   flex: 1;
   min-width: 160px;
-  min-width: 130px;
   border-bottom: 2px solid var(--font-grey);
   height: 45px;
   display: flex;
   align-items: center;
+`
+
+export const StatusTh = styled.th`
+  flex: 1;
+  padding-left: 9px;
+  padding-bottom: 0px;
+  max-width: 55px;
+  border-bottom: 2px solid var(--font-grey);
+  height: 45px;
+  display: flex;
+  align-items: center;
+`
+
+export const StatusTd = styled.td`
+  width: 55px;
+  border-bottom: 1px solid rgb(70, 70, 70);
+  height: 45px;
+  padding-left: 9px;
+  color: ${props => props.color == 'filled' && 'rgb(11, 181, 11)' || props.color == 'active' && 'rgb(130, 130, 130)' || props.color == 'canceled' && 'rgb(182, 34, 22)'};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

@@ -43,7 +43,7 @@ function App() {
           <Route path="/market/spot/:symbol" element={<SpotPage />} />
           <Route path="/market/futures/:symbol" element={<FuturesPage />} />
           <Route path="/wallet" element={<WalletPage />} />
-          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/history/:type" element={<HistoryPage />} />
         </Routes>
       ) : (
         <Loading />

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import api from "../../../../../services/api";
-import { Table, TableWrapper } from "../table.styles";
-import SearchBar from "../components/SearchBar/SearchBar";
+import api from "../../../../../../services/api";
+import { Table, TableWrapper } from "../../table.styles";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import TableHead from "./components/TableHead";
 import TableBody from "./components/TableBody";
 

@@ -9,7 +9,7 @@ const NavbarContent = () => {
       <LinksContainer>
         <NavbarLink to="/markets">Markets</NavbarLink>           
         <NavbarLink to="/wallet">Wallet</NavbarLink>
-        <NavbarLink to="/history">Historical trades</NavbarLink>
+        <NavbarLink to="/history/trades">History</NavbarLink>
       </LinksContainer>    
       <NavbarUserActions extended={false}/>
       <ResponsiveContainer>
@@ -20,7 +20,7 @@ const NavbarContent = () => {
           <NavbarExtendedContainer>
             <NavbarLinkExtended to="/markets">Markets</NavbarLinkExtended>  
             <NavbarLinkExtended to="/wallet">Wallet</NavbarLinkExtended>  
-            <NavbarLinkExtended to="/history">Historical trades</NavbarLinkExtended>  
+            <NavbarLinkExtended to="/history/trades">History</NavbarLinkExtended>  
             <NavbarUserActions extended={true}/>
           </NavbarExtendedContainer>
         : null

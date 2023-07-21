@@ -1,4 +1,4 @@
-import { THead, Th, Tr, TypeTh } from "../../table.styles";
+import { THead, Th, Tr, TypeTh } from "../../../table.styles";
 
 const TableHead = () => {
   return(
