@@ -16,7 +16,7 @@ const Searchbar : React.FC<ISearchbar> = ({globalFilter, setGlobalFilter}) => {
         <SearchInput 
           value={globalFilter ?? ''} 
           onChange={(e) => setGlobalFilter(String(e.target.value))}
-          placeholder='Wpisz nazwę pary'
+          placeholder='Enter pair name'
         />
       </Col>
     </Row>

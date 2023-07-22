@@ -51,6 +51,7 @@ export const Wrapper = styled.div`
   padding-bottom: 6px;
   padding-right: 8px;
   padding-left: 8px;
+  border-radius: 7px;
   &:hover{
     background-color: #0a0e15;
   }
