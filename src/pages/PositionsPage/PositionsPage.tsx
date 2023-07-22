@@ -1,9 +1,13 @@
-import PositionsLayout from "./layout/Layout";
+import { useParams } from "react-router-dom";
+import PositionsLayout from "./Layout/Layout";
+import Header from "./components/Header/Header";
 
 const PositionsPage = () => {
+  const params = useParams()
+
   return(
     <PositionsLayout>
-      s
+      <Header params={params['*']}/>
     </PositionsLayout>
   )
 }

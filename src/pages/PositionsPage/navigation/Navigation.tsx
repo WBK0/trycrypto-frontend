@@ -9,13 +9,13 @@ const Navigation = () => {
         <Text>Spot orders</Text>
         </Item>
       </ItemWrapper>
-      <ItemWrapper to={'/positions/spot/orders'}>
+      <ItemWrapper to={'/positions/futures/orders'}>
         <Item>
         <i className="bi bi-card-list"></i>
         <Text>Futures orders</Text>
         </Item>
       </ItemWrapper>
-      <ItemWrapper to={'/positions/spot/orders'}>
+      <ItemWrapper to={'/positions/futures/positions'}>
         <Item>
         <i className="bi bi-box-arrow-in-up-right"></i>
         <Text>Futures positions</Text>

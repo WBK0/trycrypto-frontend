@@ -1,7 +1,5 @@
 import Navbar from "../../../layout/Navbar/Navbar";
-import { Col } from "../../../shared/col";
-import { Row } from "../../../shared/row";
-import Navigation from "../navigation/Navigation";
+import Navigation from "../Navigation/Navigation";
 import { ContainerFluid, Content, NavbarLeft, Wrapper } from "./layout.styles";
 
 interface IPositionsLayout{
@@ -17,7 +15,7 @@ const PositionsLayout: React.FC<IPositionsLayout> = ({ children }) => {
           <Navigation />
         </NavbarLeft>
         <Content>
-          
+          {children}
         </Content>
       </ContainerFluid>
     </Wrapper>

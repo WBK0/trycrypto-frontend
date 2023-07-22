@@ -45,7 +45,7 @@ function App() {
           <Route path="/market/futures/:symbol" element={<FuturesPage />} />
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/history/:type" element={<HistoryPage />} />
-          <Route path="/positions" element={<PositionsPage />} />
+          <Route path="/positions/*" element={<PositionsPage />} />
         </Routes>
       ) : (
         <Loading />
