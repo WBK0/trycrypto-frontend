@@ -44,6 +44,24 @@ export const Td = styled.td`
   color: ${props => props.color};
 `
 
+export const SubTd = styled.td`
+  height: 50px;
+  min-width: ${props => props.width};
+  color: ${props => props.color};
+`
+
+export const SubTh = styled.th`
+  font-weight: 400;
+  height: 30px;
+`
+
+export const SubTr = styled.tr`
+  margin-left: 30px;
+  /* th:first-child, td:first-child{
+    padding-left: 30px;
+  } */
+`
+
 export const Actions = styled.td`
   text-align: right;
   padding-right: 10px;
@@ -67,6 +85,9 @@ export const ThActions = styled.th`
 export const TBody = styled.tbody`
   color: white;
   margin-top: 20px;
+  ${Tr}:hover {
+    background-color: var(--theme-dark);
+  }
 `
 
 export const CloseButton = styled.button`
@@ -76,5 +97,41 @@ export const CloseButton = styled.button`
   padding: 3px 12px 3px 12px;
   border-radius: 7px;
   font-weight: 500;
-  
+`
+
+export const UpdateButton = styled.button`
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  padding: 3px 12px 3px 12px;
+  border-radius: 7px;
+  font-weight: 500;
+  margin-right: 10px;
+`
+
+export const Pnl = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  min-width: 120px;
+  max-width: 200px;
+  color: ${props => props.color};
+`
+
+export const PnlText = styled.span`
+  word-wrap: break-word;
+  width: 100%;
+`
+
+export const SubSwitch = styled.td`
+  min-width: 30px;
+  max-width: 30px;
+  height: 50px;
+  border: solid rgb(66, 66, 66);
+  border-width: 0px 0px 1px 0px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
 `
