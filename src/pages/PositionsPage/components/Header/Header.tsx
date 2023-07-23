@@ -1,6 +1,10 @@
 import { Heading, Instrument, Wrapper } from "./header.styles";
 
-const Header = ({ params }) => {
+interface IHeader{
+  params: string;
+}
+
+const Header : React.FC<IHeader> = ({ params }) => {
   const parts = params.split("/");
   return(
     <Wrapper>
