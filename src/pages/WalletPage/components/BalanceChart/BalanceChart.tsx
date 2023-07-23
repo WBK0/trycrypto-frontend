@@ -1,11 +1,14 @@
 import Chart from "react-google-charts";
 import { SelectButton, SelectInterval, Wrapper } from "./balanceChart.styles";
 import { useEffect, useState } from "react";
+import api from "../../../../services/api";
 
 const BalanceChart = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [rightSide, setRightSide] = useState(0);
   const [leftSide, setLeftSide] = useState(0);
+  const [interval, setInterval] = useState(7);
+  const [data, setData] = useState(["Day", "Balance"])
 
   useEffect(() => {
     const handleResize = async() => {
@@ -28,42 +31,30 @@ const BalanceChart = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-    
   }, []);
+
+  const getPredictedBalance = async () => {
+    try {
+      const response = await api.get('/api/wallet/predicted/last/' + interval);
+      const responseData = response.data;
+      const dataArray = responseData.sort((a: {date: string}, b: {date: string}) => new Date(a.date).getTime() - new Date(b.date).getTime()).map((item: {date: string, balance: number}) => {
+        const formattedDate = new Date(item.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+        return [formattedDate.replace("/", "."), item.balance];
+      });
+      
+      setData(([["Day", "Balance"], ...dataArray]));
+    
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   
-  const data = [
-    ["Day", "Balance"],
-    ["01.06", 10000],
-    ["02.06", 11700],
-    ["03.06", 12000],
-    ["04.06", 10500],
-    ["05.06", 9800],
-    ["06.06", 15000],
-    ["07.06", 21300],
-    ["08.06", 25000],
-    ["09.06", 24000],
-    ["10.06", 22300],
-    ["11.06", 27500],
-    ["12.06", 19000],
-    ["13.06", 16000],
-    ["14.06", 14500],
-    ["15.06", 11000],
-    ["16.06", 3000],
-    ["17.06", 12000],
-    ["18.06", 18000],
-    ["19.06", 23500],
-    ["20.06", 28000],
-    ["21.06", 45000],
-    ["22.06", 52000],
-    ["23.06", 4000],
-    ["24.06", 7000],
-    ["25.06", 20000],
-    ["26.06", 26000],
-    ["27.06", 40000],
-    ["28.06", 41000],
-    ["29.06", 43000],
-    ["30.06", 45000]
-  ];
+  useEffect(() => {
+    getPredictedBalance()
+  }, [])
+  
+ 
 
   const options = {
     title: "Predicted balance",
@@ -71,7 +62,7 @@ const BalanceChart = () => {
     backgroundColor: '#0a0e15',
     hAxis: {
       textStyle:{color: '#9e9e9e', fontSize: 14},
-      showTextEvery: 4,
+      showTextEvery: data.length <= 7 ? 1 : 4,
     }, 
     vAxis: {
       textStyle:{color: '#9e9e9e'},
@@ -97,8 +88,8 @@ const BalanceChart = () => {
   return(
     <Wrapper>
       <SelectInterval>
-        <SelectButton active={true}>7D</SelectButton>
-        <SelectButton active={false}>30D</SelectButton>
+        <SelectButton active={interval == 7 ? true : false} onClick={() => setInterval(7)}>7D</SelectButton>
+        <SelectButton active={interval == 30 ? true : false} onClick={() => setInterval(30)}>30D</SelectButton>
       </SelectInterval>
       <Chart
           chartType="AreaChart"
