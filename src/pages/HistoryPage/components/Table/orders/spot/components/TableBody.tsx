@@ -49,14 +49,19 @@ const TableBody: React.FC<ITableBody> = ({ elementRef, data, loading, isAll }) =
       : null
       }
       {
-        isAll 
+        isAll && data.length > 0
         ?
         <Tr>
           <Info>
-            We dont find more history spot data
+            We dont find more history spot orders data
           </Info>
         </Tr>
-        : null
+        : data.length == 0 &&
+        <Tr>
+          <Info>
+            Nothing found in the spot orders history
+          </Info>
+        </Tr>
       }
     </TBody>
   )
