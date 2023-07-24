@@ -1,5 +1,5 @@
 import IWallet from "../../../../interfaces/Wallet.interface";
-import { ContentRow, ContentWrapper, Header, HeaderWrapper, Pair, Quantity, Type, Wrapper } from "./cryptoAssets.styles";
+import { ContentRow, ContentWrapper, Header, HeaderWrapper, NoAssets, Pair, Quantity, Type, Wrapper } from "./cryptoAssets.styles";
 
 interface ICryptoAssets{
   instrument: string;
@@ -30,6 +30,14 @@ const CryptoAssets : React.FC<ICryptoAssets> = ({ instrument, type, balance }) =
             : 
             null
           ))}
+          {
+            instrument == 'spot' && !balance.spotBalance 
+            ? <NoAssets>You don't have any cryptocurrencies on the spot market</NoAssets>
+            : 
+            instrument == 'futures' && !balance.futureBalance
+            ? <NoAssets>You don't have any open {type?.toUpperCase()} positions on the futures market</NoAssets>
+            : null
+          }
         </ContentWrapper>
       )}
     </Wrapper>

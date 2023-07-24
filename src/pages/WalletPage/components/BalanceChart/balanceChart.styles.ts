@@ -25,3 +25,18 @@ export const SelectButton= styled.button<ISelectButton> `
   font-weight: 500;
   border: none;
 `
+
+export const NoDataError = styled.div`
+  width: 100%;
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  text-transform: uppercase;
+  flex-direction: column;
+`
+
+export const Icon = styled.div`
+  font-size: 64px;
+`

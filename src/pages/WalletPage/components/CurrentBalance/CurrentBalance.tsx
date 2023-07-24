@@ -28,8 +28,7 @@ const CurrentBalance : React.FC<ICurrentBalance> = ({ balance }) => {
           <BalanceWrapper>
             <HeaderBalance>Current balance</HeaderBalance>
             <ContentBalance>{balance && balance.toFixed(2)} USDT</ContentBalance>
-          </BalanceWrapper>
-          
+          </BalanceWrapper> 
         </Col>
         <Col xs={50} pr="0px" pb="0px">
           <BalanceWrapper>
@@ -37,11 +36,7 @@ const CurrentBalance : React.FC<ICurrentBalance> = ({ balance }) => {
             <ContentBalance>{balance && predictedBalance.toFixed(2)} USDT</ContentBalance>
           </BalanceWrapper>
         </Col>
-        
       </Row>
-      
-
-      
     </Wrapper>
   )
 }

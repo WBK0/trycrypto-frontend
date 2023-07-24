@@ -64,3 +64,10 @@ export const Pair = styled.span`
 export const Quantity = styled.span`
 
 `
+
+export const NoAssets = styled.div`
+  font-size: 15px;
+  padding-top: 20px;
+  text-align: center;
+  color: rgb(100, 100, 100);
+`
