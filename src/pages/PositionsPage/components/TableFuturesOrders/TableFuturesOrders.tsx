@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../../services/api";
-import { Actions, CloseButton, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, Wrapper } from "../tableSpotOrders.styles";
+import { Actions, CloseButton, NoOpened, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, Wrapper } from "../tableSpotOrders.styles";
 import { toast } from "react-toastify";
 
 interface IFuturesOrders{
@@ -104,6 +104,11 @@ const TableFuturesOrders: React.FC<ITableFuturesOrders> = ({prices}) => {
             })}
           </TBody>
         </Table>
+        {
+          futuresOrders.length == 0
+          ? <NoOpened>You don't have any open orders in the futures market</NoOpened>
+          : null
+        }
       </TableWrapper>
     </Wrapper>
   )

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../../services/api";
-import { Actions, CloseButton, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, Wrapper } from "../tableSpotOrders.styles";
+import { Actions, CloseButton, NoOpened, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, Wrapper } from "../tableSpotOrders.styles";
 import { toast } from "react-toastify";
 
 interface ISpotOrders{
@@ -58,8 +58,6 @@ const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
     }
   }
 
-  console.log(prices)
-
   useEffect(() => {
     getSpotOrders();
   }, [])
@@ -97,8 +95,14 @@ const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
               </Tr>
               )
             })}
+            
           </TBody>
         </Table>
+        {
+          spotOrders.length == 0
+          ? <NoOpened>You don't have any open orders in the spot market</NoOpened>
+          : null
+        }
       </TableWrapper>
     </Wrapper>
   )

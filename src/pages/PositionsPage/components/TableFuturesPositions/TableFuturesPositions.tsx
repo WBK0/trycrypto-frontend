@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../../services/api";
-import { Actions, CloseButton, Pnl, PnlText, SubSwitch, SubTd, SubTh, SubTr, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, UpdateButton, Wrapper } from "../tableSpotOrders.styles";
+import { Actions, CloseButton, NoOpened, Pnl, PnlText, SubSwitch, SubTd, SubTh, SubTr, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, UpdateButton, Wrapper } from "../tableSpotOrders.styles";
 import CloseModal from "./Modals/CloseModal";
 import UpdateModal from "./Modals/UpdateModal";
 
@@ -156,6 +156,11 @@ const TableFuturesPositions: React.FC<ITableFuturesPositions> = ({prices}) => {
             })}
           </TBody>
         </Table>
+        {
+          futuresPositions.length == 0
+          ? <NoOpened>You don't have any open positions in the futures market</NoOpened>
+          : null
+        }
       </TableWrapper>
       {showCloseModal && modalItem && (
         <CloseModal onClose={handleCloseModal} fetchPositions={getFuturesPositions} modalItem={modalItem} pairPrice={prices[modalItem.pair.toUpperCase()]?.lastPrice} />

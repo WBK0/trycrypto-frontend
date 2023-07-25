@@ -135,3 +135,10 @@ export const SubSwitch = styled.td`
   text-overflow: ellipsis;
   cursor: pointer;
 `
+
+export const NoOpened = styled.div`
+  width: 100%;
+  text-align: center;
+  color: rgb(132, 142, 156);
+  padding-top: 30px;
+`
