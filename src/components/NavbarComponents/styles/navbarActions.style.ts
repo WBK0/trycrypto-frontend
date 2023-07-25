@@ -56,3 +56,14 @@ export const LoginLink = styled(Link)`
   align-items: center;
   text-decoration: none;
 `
+
+export const ProfileButton = styled.button`
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  &:hover{
+    transition: 0.3s;
+    color: var(--font-yellow);
+  }
+`

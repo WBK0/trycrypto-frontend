@@ -7,7 +7,8 @@ const UserInfo = () => {
   const [user, setUser] = useState({
     email: '',
     firstname: '',
-    lastname: ''
+    lastname: '',
+    username: ''
   })
 
   const fetchUser = async () => {
@@ -34,6 +35,14 @@ const UserInfo = () => {
             Email
           </DetailsHeader>
           <DetailsContent>{user.email}</DetailsContent>
+          </FlexWrapper>
+        </DetailsWrapper>
+        <DetailsWrapper>
+          <FlexWrapper>
+          <DetailsHeader>
+            Username
+          </DetailsHeader>
+          <DetailsContent>{user.username}</DetailsContent>
           </FlexWrapper>
         </DetailsWrapper>
         <DetailsWrapper>

@@ -13,6 +13,7 @@ import FuturesPage from "./pages/TradingPages/FuturesPage/FuturesPage";
 import WalletPage from "./pages/WalletPage/WalletPage";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PositionsPage from "./pages/PositionsPage/PositionsPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
   const { loading, setLastLocation } = useContext(AuthContext);
@@ -46,6 +47,7 @@ function App() {
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/history/:type" element={<HistoryPage />} />
           <Route path="/positions/*" element={<PositionsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       ) : (
         <Loading />
