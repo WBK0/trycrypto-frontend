@@ -14,6 +14,8 @@ export const Wrapper = styled.div`
 
 export const ProfilePicture = styled.div`
   margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
 `
 
 export const Avatar = styled.img`
@@ -84,3 +86,7 @@ export const ButtonsWrapper = styled.div`
     flex-direction: column;
   } 
 `
+
+export const HiddenInput = styled.input`
+  display: none;
+`;
