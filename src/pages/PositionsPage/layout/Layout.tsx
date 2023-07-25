@@ -1,17 +1,23 @@
+import { useState } from "react";
 import Navbar from "../../../layout/Navbar/Navbar";
 import Navigation from "../Navigation/Navigation";
-import { ContainerFluid, Content, NavbarLeft, Wrapper } from "./layout.styles";
+import { ContainerFluid, Content, NavbarLeft, NavbarSwitch, Wrapper } from "./layout.styles";
 
 interface IPositionsLayout{
   children: React.ReactNode;
 }
 
 const PositionsLayout: React.FC<IPositionsLayout> = ({ children }) => {
+  const [showNavigation, setShowNavigation] = useState(false)
+
   return(
     <Wrapper>
       <Navbar />
       <ContainerFluid>
-        <NavbarLeft>
+        <NavbarSwitch onClick={() => setShowNavigation(!showNavigation)}>
+          <i className="bi bi-arrow-right-short"></i>
+        </NavbarSwitch>
+        <NavbarLeft show={showNavigation} onClick={() => setShowNavigation(!showNavigation)}>
           <Navigation />
         </NavbarLeft>
         <Content>

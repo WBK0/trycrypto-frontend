@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin-top: 8px;
-  
+  @media screen and (min-width: 800px){
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 `
 
 export const TableWrapper = styled.div`
@@ -68,6 +71,7 @@ export const Actions = styled.td`
   height: 50px;
   border: solid rgb(66, 66, 66);
   border-width: 0px 0px 1px 0px;
+  min-width: ${props => props.width};
 `
 
 export const Th = styled.th`

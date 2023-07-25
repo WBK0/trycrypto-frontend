@@ -13,8 +13,12 @@ export const ItemWrapper = styled(Link)`
   height: 50px;
   display: flex;
   align-items: center;
+  justify-content: center;
   &:hover{
     background-color: rgb(38, 38, 38);
+  }
+  @media screen and (min-width: 800px){
+    justify-content: flex-start;
   }
 `
 
