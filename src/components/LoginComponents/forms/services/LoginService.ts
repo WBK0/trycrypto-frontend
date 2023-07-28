@@ -10,7 +10,7 @@ const LoginService: ILoginService = {
     try {
       const response = await axios({
         method: 'post',
-        url: 'https://api.trycrypto.pl/user/check/email',
+        url: 'https://api.trycrypto.pl/user/check/email/login',
         data: {
           email: email
         },

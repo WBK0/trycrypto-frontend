@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Layout from "../../layout/Layout/Layout";
 import api from "../../services/api";
-import avatar from './img/avatar.png'
 import { Avatar, Button, ButtonsWrapper, Header, HiddenInput, Input, ProfilePicture, ResetPassword, Wrapper } from "./profilePage.styles";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";

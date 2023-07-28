@@ -14,6 +14,7 @@ import WalletPage from "./pages/WalletPage/WalletPage";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PositionsPage from "./pages/PositionsPage/PositionsPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 function App() {
   const { loading, setLastLocation } = useContext(AuthContext);
@@ -38,6 +39,14 @@ function App() {
             element={
               <LoginGuard>
                 <LoginPage />
+              </LoginGuard>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <LoginGuard>
+                <RegisterPage />
               </LoginGuard>
             }
           />

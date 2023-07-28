@@ -1,10 +1,10 @@
-import { SignupLink, SignupText, Wrapper } from './styles/signupArrow.styles';
+import { SignupLink, SignupText, Wrapper } from './styles/loginArrow.styles';
 
 const SignUpButton = () => {
   return(
     <Wrapper>
       <SignupLink to="/signup">
-        <SignupText>Signup</SignupText>
+        <SignupText>Register</SignupText>
         <i className="bi bi-arrow-right"></i>
       </SignupLink>
     </Wrapper>

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import EmailForm from '../../components/LoginComponents/forms/EmailForm';
 import PasswordForm from '../../components/LoginComponents/forms/PasswordForm';
-import LoginLayout from '../../components/LoginComponents/layout/LoginLayout';
+import LoginLayout from '../../layout/Login/LoginLayout';
 import ResetPasswordButton from '../../components/LoginComponents/links/ResetPasswordButton';
 import SignUpButton from '../../components/LoginComponents/links/SignUpButton';
 import AuthContext from '../../contexts/AuthContext';
