@@ -15,6 +15,7 @@ import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PositionsPage from "./pages/PositionsPage/PositionsPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
 
 function App() {
   const { loading, setLastLocation } = useContext(AuthContext);
@@ -57,6 +58,7 @@ function App() {
           <Route path="/history/:type" element={<HistoryPage />} />
           <Route path="/positions/*" element={<PositionsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/password/reset" element={<PasswordResetPage />} />
         </Routes>
       ) : (
         <Loading />

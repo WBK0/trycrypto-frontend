@@ -24,12 +24,9 @@ const RegisterPage = () => {
   }, [])
   
   // Initialize state variables for the login page
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState<number>(1);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("")
-  const [firstname, setFirstname] = useState<string>("");
-  const [lastname, setLastname] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
 
   // Function to handle clicking the "login" button on email page
   const nextStep = () => {
@@ -73,7 +70,7 @@ const RegisterPage = () => {
                   key="names-input"
                 />
               )
-            case 0:
+            case 4:
               return(
                 <ConfirmAccount 
                   email={email}
@@ -91,7 +88,7 @@ const RegisterPage = () => {
         step == 1
         ? <LoginText>Do you have an account?</LoginText>
         : 
-        step !== 0 && <PreviousStep previousStep={previousStep}/>
+        step !== 4 && <PreviousStep previousStep={previousStep}/>
       }
       
       <LoginArrow />
