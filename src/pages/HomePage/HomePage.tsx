@@ -1,28 +1,25 @@
-import { useContext, useEffect } from 'react';
 import Layout from '../../layout/Layout/Layout';
-import api from '../../services/api';
-import AuthContext from '../../contexts/AuthContext';
+import { Col } from '../../shared/col';
+import { Row } from '../../shared/row';
+import CryptoDataHeader from './components/CryptoDataHeader/CryptoDataHeader';
+import Heading from './components/Heading/Heading';
+import HeadingTiles from './components/HeadingTiles/HeadingTiles';
 
 const HomePage: React.FC = () => {
 
-  const { isLoggedIn, setLoggedIn } = useContext(AuthContext);
-
-  useEffect(() => {
-    api.get("https://api.trycrypto.pl/api/wallet/balance", {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      console.log(response)
-    })
-    console.log(isLoggedIn)
-  }, [])
-
   return (
     <Layout>
-      Home component
+      <Row alignItems='center' height='50vh'>
+        <Col xs={45}>
+          <Heading />
+        </Col>
+        <Col xs={55}>
+          <HeadingTiles />
+        </Col>
+        <Col xs={100}>
+          <CryptoDataHeader />
+        </Col>
+      </Row>
     </Layout>
   )
 }
