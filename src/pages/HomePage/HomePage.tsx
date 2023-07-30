@@ -1,23 +1,22 @@
 import Layout from '../../layout/Layout/Layout';
 import { Col } from '../../shared/col';
 import { Row } from '../../shared/row';
-import CryptoDataHeader from './components/CryptoDataHeader/CryptoDataHeader';
+import AboutUs from './components/AboutUs/AboutUs';
+import CryptoDataHeader from './components/AboutUs/AboutUs';
 import Heading from './components/Heading/Heading';
-import HeadingTiles from './components/HeadingTiles/HeadingTiles';
 
 const HomePage: React.FC = () => {
 
   return (
     <Layout>
-      <Row alignItems='center' height='50vh'>
-        <Col xs={45}>
+      <Row alignItems='center'>
+        <Col xs={100}>
           <Heading />
         </Col>
-        <Col xs={55}>
-          <HeadingTiles />
+        <Col xs={50}>
         </Col>
         <Col xs={100}>
-          <CryptoDataHeader />
+          <AboutUs />
         </Col>
       </Row>
     </Layout>
