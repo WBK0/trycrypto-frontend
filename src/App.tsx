@@ -23,7 +23,7 @@ function App() {
   const [lastLocation, setAppLastLocation] = useState('/');
 
   useEffect(() => {
-    if (location.pathname !== '/login' && lastLocation !== location.pathname) {
+    if (location.pathname !== '/login' && lastLocation !== location.pathname && location.pathname !== '/password/reset') {
       setAppLastLocation(location.pathname);
       setLastLocation(location.pathname);
     }

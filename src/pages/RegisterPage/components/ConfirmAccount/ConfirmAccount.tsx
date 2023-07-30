@@ -19,8 +19,6 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
   const [countdown, setCountdown] = useState<number>(30);
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
 
-  
-
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (countdown > 0) {
@@ -33,8 +31,6 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
 
     return () => clearInterval(intervalId);
   }, [countdown]);
-
-
 
   const handleSubmit = async (codeArray: string[]) => {
     const code = codeArray.join('');
@@ -106,8 +102,6 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
     }
     
   }
-
-  
 
   return (
     <Wrapper>

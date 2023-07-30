@@ -7,13 +7,13 @@ interface IInputs{
 }
 
 const Inputs : React.FC<IInputs> = ({ handleSubmit, loading }) => {
-  useEffect(() => {
-    inputRefs.current[0]?.focus();
-  }, [loading]);
-
   const codeLength = 6;
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array.from({ length: codeLength }, () => null));
   const [confirmationCode, setConfirmationCode] = useState<string[]>(Array(codeLength).fill(''));
+
+  useEffect(() => {
+    inputRefs.current[0]?.focus();
+  }, [loading]);
 
   const handlePaste = async (event: React.ClipboardEvent<HTMLInputElement>) => {
     const pastedText = event.clipboardData.getData("text");
