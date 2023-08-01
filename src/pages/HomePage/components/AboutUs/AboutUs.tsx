@@ -1,35 +1,42 @@
 import { Col } from "../../../../shared/col";
 import { Row } from "../../../../shared/row";
-import { Header, ItemContent, ItemHeader, Wrapper } from "./aboutUs.styles"
+import { Column, Description, Header, HeaderBreak, ItemDescription, ItemHeader, ItemNumber, ItemWrapper, UpperHeader, Wrapper } from "./aboutUs.styles"
 
 const AboutUs = () => {
   return(
-    <Row mt="10vh">
-      <Col xs={100}>
-        <Header>Why us?</Header>
+    <Row mt="10vh" height="100vh" alignItems="center">
+      <Col xs={50}>
+        <UpperHeader>Our exchange</UpperHeader>
+        <HeaderBreak />
+        <Header>A ready-made solution to increase the efficiency of trading</Header>
+        <Description>Boost trading efficiency with our automated solution. Real-time data insights, easy start, and no risk. Streamline your success today</Description>
       </Col>
-      <Col xs={33.33} pr="20px" pl="20px">
-        <Wrapper special={true}>
-          <ItemHeader>Practice Risk-Free!</ItemHeader>
-          <ItemContent>
-            Explore risk-free crypto trading with $10,000 in demo funds! Learn, practice, and refine your skills in a simulated environment. Develop winning strategies and build confidence before trading live. Start your crypto journey now!           
-          </ItemContent>
-        </Wrapper>
-      </Col>
-      <Col xs={33.33} pr="20px" pl="20px">
-        <Wrapper >
-          <ItemHeader>Practice Risk-Free!</ItemHeader>
-          <ItemContent>
-            Explore risk-free crypto trading with $10,000 in demo funds! Learn, practice, and refine your skills in a simulated environment. Develop winning strategies and build confidence before trading live. Start your crypto journey now!           
-          </ItemContent>
-        </Wrapper>
-      </Col>
-      <Col xs={33.33} pr="20px" pl="20px">
-        <Wrapper special={true}>
-          <ItemHeader>Practice Risk-Free!</ItemHeader>
-          <ItemContent>
-            Explore risk-free crypto trading with $10,000 in demo funds! Learn, practice, and refine your skills in a simulated environment. Develop winning strategies and build confidence before trading live. Start your crypto journey now!           
-          </ItemContent>
+      <Col xs={50}>
+        <Wrapper>
+          <Column>
+            <ItemWrapper>
+              <ItemNumber>01</ItemNumber>
+              <ItemHeader>No risk</ItemHeader>
+              <ItemDescription>You receive 10,000 virtual USDT to start your adventure</ItemDescription>
+            </ItemWrapper>
+            <ItemWrapper>
+              <ItemNumber>03</ItemNumber>
+              <ItemHeader>Real-time data</ItemHeader>
+              <ItemDescription>Prices on the platform are taken live from Binance.com</ItemDescription>
+            </ItemWrapper>
+          </Column>
+          <Column style={{marginTop: '60px'}}>
+            <ItemWrapper>
+              <ItemNumber>02</ItemNumber>
+              <ItemHeader>Improve skills</ItemHeader>
+              <ItemDescription>Practice and create even better positions with our demo</ItemDescription>
+            </ItemWrapper>
+            <ItemWrapper>
+              <ItemNumber>04</ItemNumber>
+              <ItemHeader>Data analysis</ItemHeader>
+              <ItemDescription>Analyze data on charts taken from tradingview.com</ItemDescription>
+            </ItemWrapper>
+          </Column>
         </Wrapper>
       </Col>
     </Row>
