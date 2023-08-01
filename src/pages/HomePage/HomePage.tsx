@@ -9,6 +9,7 @@ import TopMovers from './components/OurSelection/OurSelection';
 import { MarketData } from '../../components/Markets/interfaces/interfaces';
 import getData from '../../components/Markets/services/getData';
 import OurSelection from './components/OurSelection/OurSelection';
+import Bar from './components/Bar/Bar';
 
 const HomePage: React.FC = () => {
   const [data, setData] = useState<MarketData[]>([])
@@ -37,6 +38,7 @@ const HomePage: React.FC = () => {
         <Col xs={100}>
           <AboutUs />
         </Col>
+        <Bar />
         <Col xs={100}>
           <OurSelection data={data} />
         </Col>

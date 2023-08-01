@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-
+  margin-top: 250px;
 `
 
 export const Header = styled.h4`

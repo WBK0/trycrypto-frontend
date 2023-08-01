@@ -4,7 +4,7 @@ import { Column, Description, Header, HeaderBreak, ItemDescription, ItemHeader, 
 
 const AboutUs = () => {
   return(
-    <Row mt="10vh" height="100vh" alignItems="center">
+    <Row mt="10vh" mb="250px" height="100vh" alignItems="center">
       <Col xs={50}>
         <UpperHeader>Our exchange</UpperHeader>
         <HeaderBreak />
