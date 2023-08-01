@@ -1,27 +1,16 @@
-import { useEffect, useState } from "react";
-import getData from "../../../../components/Markets/services/getData";
-import { Change, ChangeIcon, ChangeText, Content, CryptoName, Header, Icon, ItemWrapper, Price, Wrapper } from "./topMovers.styles";
+import { Change, ChangeIcon, ChangeText, Content, CryptoName, Header, Icon, ItemWrapper, Price, Wrapper } from "./ourSelection.styles";
 import { MarketData } from "../../../../components/Markets/interfaces/interfaces";
 
-const TopMovers = () => {
-  const [data, setData] = useState<MarketData[]>([])
+interface ITopMovers{
+  data: MarketData[]
+}
 
-  const fetchData = async () => {
-    const result = await getData('spot')
-    setData(result)
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  console.log(data)
-
+const OurSelection : React.FC<ITopMovers> = ({ data }) => {
   return(
     <Wrapper>
-      <Header>Top movers</Header>
+      <Header>Our selection</Header>
       <Content>
-        {data.sort((a, b) => Number(a.percentChange) - Number(b.percentChange)).slice(0, 5).map((item) => {
+        {data.sort((a, b) => Number(b.volume) - Number(a.volume)).slice(0, 10).map((item) => {
           return(
           <ItemWrapper>
             <Icon src={`https://api.trycrypto.pl/icon/${item.pair.toLowerCase().replace('usdt', '')}`}></Icon>
@@ -39,4 +28,4 @@ const TopMovers = () => {
   )
 }
 
-export default TopMovers;
+export default OurSelection;
