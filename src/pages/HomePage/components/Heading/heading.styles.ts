@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 `
 
 export const Header = styled.h1`
@@ -11,7 +12,13 @@ export const Header = styled.h1`
 
 export const SubHeader = styled.h2`
   font-size: 40px;
-  
+`
+
+export const Flex = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: column;
 `
 
 export const RiskHeader = styled.h3`
@@ -22,7 +29,7 @@ export const RiskHeader = styled.h3`
 
 export const RegisterButton = styled.button`
   border: none;
-  width: 300px;
+  width: 100%;
   height: 50px;
   font-size: 20px;
   background-color: var(--font-yellow);
@@ -32,5 +39,8 @@ export const RegisterButton = styled.button`
   border-radius: 7px;
   &:hover{
     opacity: 0.85;
+  }
+  @media screen and (min-width: 800px) {
+    width: 300px;
   }
 `

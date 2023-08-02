@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  margin-top: 250px;
+  margin-top: 100px;
+  @media screen and (min-width: 1000px){
+    margin-top: 400px;
+  }
 `
 
 export const Header = styled.h4`
@@ -18,8 +21,7 @@ export const Content = styled.div`
 `
 
 export const ItemWrapper = styled.div`
-  width: calc(20% - 20px);
-  min-width: 200px;
+  width: 100%;
   justify-content: center;
   min-height: 180px;
   border-radius: 15px;
@@ -27,6 +29,17 @@ export const ItemWrapper = styled.div`
   padding: 22px;
   display: flex;
   flex-wrap: wrap;
+  @media screen and (min-width: 600px){
+    width: calc(50% - 10px);
+  }
+  /* @media screen and (min-width: 800px) {
+    width: calc(33% - 10px);
+    min-width: 200px;
+  } */
+  @media screen and (min-width: 1110px){
+    min-width: 200px;
+    width: calc(20% - 20px);
+  }
 `
 
 export const Icon = styled.img`

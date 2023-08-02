@@ -8,19 +8,19 @@ const Bar = () => {
     <Wrapper>
       <Container>
         <Row>
-          <Col xs={33}>
+          <Col xs={100} md={33.33}>
             <ItemWrapper>
               <ItemHeader>17</ItemHeader>
               <ItemContent>Supported cryptocurrencies</ItemContent>
             </ItemWrapper>
           </Col>
-          <Col xs={33}>
+          <Col xs={100} md={33.33}>
             <ItemWrapper>
               <ItemHeader>2</ItemHeader>
               <ItemContent>Supported Markets</ItemContent>
             </ItemWrapper>
           </Col>
-          <Col xs={33}>
+          <Col xs={100} md={33.33}>
             <ItemWrapper>
               <ItemHeader>185</ItemHeader>
               <ItemContent>users logging into the platform every day</ItemContent>

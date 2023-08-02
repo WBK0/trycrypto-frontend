@@ -23,13 +23,14 @@ export const Description = styled.p`
 
 export const Wrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `
 
 export const ItemWrapper = styled.div`
   background-color: var(--font-yellow);
   color: white;
-  width: calc(100% - 30px);
   height: 320px;
+  width: 100%;
   border-radius: 20px;
   margin: 15px;
   display: flex;
@@ -37,14 +38,21 @@ export const ItemWrapper = styled.div`
   justify-content: center;
   align-items: start;
   flex-direction: column;
+  @media screen and (min-width: 800px){
+    width: calc(100% - 30px);
+  }
 `
 
 export const Column = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: start;
   flex-wrap: wrap;  
   flex-direction: column;
+  @media screen and (min-width: 800px){
+    width: 50%;
+    margin-top: ${props => props.second ? '60px' : '0px'};
+  }
 `
 
 export const ItemNumber = styled.h4`

@@ -3,10 +3,15 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   color: white;
   width: 100vw;
-  position: absolute;
-  left: 0;
+  margin: -12px;
   background-color: var(--theme-dark);
-  height: 250px;
+  height: 750px;
+  @media screen and (min-width: 800px){
+    height: 250px;
+    position: absolute;
+    left: 0;
+    margin: 0px;
+  }
 `
 
 export const ItemWrapper = styled.div`
@@ -21,7 +26,7 @@ export const ItemWrapper = styled.div`
 export const ItemHeader = styled.h5`
   text-align: center;
   font-size: 50px;
-  color: var(--font-yellow);
+  color: white;
   font-family: 'Gilroy-heavy';
   width: 100%;
 `
@@ -31,5 +36,5 @@ export const ItemContent = styled.p`
   font-size: 28px;
   font-family: 'Gilroy-bold';
   width: 100%;
-
+  color: rgb(180, 180, 180);
 `

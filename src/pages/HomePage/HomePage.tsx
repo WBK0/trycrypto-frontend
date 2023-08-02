@@ -32,20 +32,21 @@ const HomePage: React.FC = () => {
   return (
     <Layout>
       <Row alignItems='center'>
-        <Col xs={100}>
+        <Col xs={100} pr='0px'>
           <Heading />
         </Col>
         <Col xs={100}>
           <AboutUs />
         </Col>
-        <Bar />
         <Col xs={100}>
+          <Bar />
+        </Col>
+        <Col xs={100} pr='0px'>
           <OurSelection data={data} />
         </Col>
-        <Col xs={100}>
+        <Col xs={100} pr='0px'>
           <BuyCrypto />
         </Col>
-        
       </Row>
     </Layout>
   )

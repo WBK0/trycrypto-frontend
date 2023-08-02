@@ -4,14 +4,14 @@ import { Column, Description, Header, HeaderBreak, ItemDescription, ItemHeader, 
 
 const AboutUs = () => {
   return(
-    <Row mt="10vh" mb="250px" height="100vh" alignItems="center">
-      <Col xs={50}>
+    <Row mt="10vh" mb="100px" height="100vh" alignItems="center">
+      <Col xs={100} lg={50}>
         <UpperHeader>Our exchange</UpperHeader>
         <HeaderBreak />
         <Header>A ready-made solution to increase the efficiency of trading</Header>
         <Description>Boost trading efficiency with our automated solution. Real-time data insights, easy start, and no risk. Streamline your success today</Description>
       </Col>
-      <Col xs={50}>
+      <Col xs={100} lg={50}>
         <Wrapper>
           <Column>
             <ItemWrapper>
@@ -20,14 +20,14 @@ const AboutUs = () => {
               <ItemDescription>You receive 10,000 virtual USDT to start your adventure</ItemDescription>
             </ItemWrapper>
             <ItemWrapper>
-              <ItemNumber>03</ItemNumber>
+              <ItemNumber>02</ItemNumber>
               <ItemHeader>Real-time data</ItemHeader>
               <ItemDescription>Prices on the platform are taken live from Binance.com</ItemDescription>
             </ItemWrapper>
           </Column>
-          <Column style={{marginTop: '60px'}}>
+          <Column second={true}>
             <ItemWrapper>
-              <ItemNumber>02</ItemNumber>
+              <ItemNumber>03</ItemNumber>
               <ItemHeader>Improve skills</ItemHeader>
               <ItemDescription>Practice and create even better positions with our demo</ItemDescription>
             </ItemWrapper>

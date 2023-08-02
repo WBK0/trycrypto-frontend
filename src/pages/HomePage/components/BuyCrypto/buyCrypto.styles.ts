@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 40%;
   border-radius: 20px;
-  min-height: 500px; 
+  min-height: 500px;
+  width: 100%; 
   background-color: var(--theme-dark);
   margin: 0 auto;
   margin-top: 150px;
   padding: 30px;
   margin-bottom: 500px;
+  @media screen and (min-width: 1000px) {
+    width: 40%;
+  }
 `
 
 export const Header = styled.h5`
@@ -25,7 +28,7 @@ export const InputGroup = styled.div`
 `
 
 export const InputText = styled.input`
-  width: 55px;
+  width: 40px;
   background-color: transparent;
   color: white;
   border: solid var(--font-yellow);
@@ -33,13 +36,17 @@ export const InputText = styled.input`
   outline: none;
   text-align: left;
   height: 60px;
-  font-size: 22px;
+  font-size: 16px;
   padding-right: 10px;
   font-family: 'Gilroy-Bold';
+  @media screen and (min-width: 600px){
+    font-size: 22px;
+    width: 55px;
+  }
 `
 
 export const Input = styled.input`
-  width: calc(100% - 175px);
+  width: calc(100% - 130px);
   background-color: transparent;
   color: rgb(200, 200, 200);
   border: solid var(--font-yellow);
@@ -47,9 +54,14 @@ export const Input = styled.input`
   outline: none;
   text-align: right;
   height: 60px;
-  font-size: 32px;
-  padding-right: 20px;
+  font-size: 26px;
+  padding-right: 10px;
   font-family: 'Gilroy-Bold';
+  @media screen and (min-width: 600px){
+    width: calc(100% - 175px);
+    font-size: 32px;
+    padding-right: 20px;
+  }
 `
 
 export const SelectContainer = styled.div`
@@ -57,7 +69,7 @@ export const SelectContainer = styled.div`
 `
 
 export const Select = styled.div`
-  width: 120px;
+  width: 90px;
   background-color: transparent;
   color: rgb(141, 150, 158);
   border: solid var(--font-yellow);
@@ -65,11 +77,15 @@ export const Select = styled.div`
   outline: none;
   text-align: left;
   height: 60px;
-  font-size: 22px;
+  font-size: 15px;
   font-family: 'Gilroy-Bold';
   display: flex;
   align-items: center;
   justify-content: left;
+  @media screen and (min-width: 600px){
+    width: 120px;
+    font-size: 22px;
+  }
 `
 
 export const InputSelect = styled.select`
