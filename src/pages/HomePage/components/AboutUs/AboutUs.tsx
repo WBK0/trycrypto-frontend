@@ -5,13 +5,13 @@ import { Column, Description, Header, HeaderBreak, ItemDescription, ItemHeader, 
 const AboutUs = () => {
   return(
     <Row mt="10vh" mb="100px" height="100vh" alignItems="center">
-      <Col xs={100} lg={50}>
+      <Col xs={100} lg={50} pr="0px">
         <UpperHeader>Our exchange</UpperHeader>
         <HeaderBreak />
         <Header>A ready-made solution to increase the efficiency of trading</Header>
         <Description>Boost trading efficiency with our automated solution. Real-time data insights, easy start, and no risk. Streamline your success today</Description>
       </Col>
-      <Col xs={100} lg={50}>
+      <Col xs={100} lg={50} pr="0px" >
         <Wrapper>
           <Column>
             <ItemWrapper>

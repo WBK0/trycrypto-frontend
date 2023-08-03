@@ -16,6 +16,7 @@ import {
 } from "./buyCrypto.styles";
 import api from "../../../../services/api";
 import decimalPlaces from "../../../../services/decimalPlaces";
+import { toast } from "react-toastify";
 
 interface Data {
   [key: string]: {
@@ -63,6 +64,45 @@ const BuyCrypto: React.FC = () => {
     };
   }, []);
 
+  const handleBuy = async () => {
+    try {
+      await api.post('/api/spot/market/buy/' + selected + "USDT", {
+        quantity: Number(cryptoAmount)
+      })
+      toast.success('The purchase was carried out correctly', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        });
+    } catch (error : any) {
+      if(error.response.data.error_code == 110){
+        toast.error('You cannot afford to buy this amount of cryptocurrencies', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+      }else{
+        toast.error('An unknown error occurred', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+      }
+    }
+  }
+
   const handleSelect = () => {
     setShowOptions(!showOptions);
   };
@@ -98,7 +138,7 @@ const BuyCrypto: React.FC = () => {
           <Icon src="https://api.trycrypto.pl/icon/usdt"></Icon>USDT
         </Select>
       </InputGroup>
-      <Button>Buy now</Button>
+      <Button onClick={handleBuy}>Buy now</Button>
     </Wrapper>
   );
 };

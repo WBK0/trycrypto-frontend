@@ -10,6 +10,7 @@ import { MarketData } from '../../components/Markets/interfaces/interfaces';
 import getData from '../../components/Markets/services/getData';
 import OurSelection from './components/OurSelection/OurSelection';
 import Bar from './components/Bar/Bar';
+import Faq from './components/Faq/Faq';
 
 const HomePage: React.FC = () => {
   const [data, setData] = useState<MarketData[]>([])
@@ -35,7 +36,7 @@ const HomePage: React.FC = () => {
         <Col xs={100} pr='0px'>
           <Heading />
         </Col>
-        <Col xs={100}>
+        <Col xs={100} pr='0px'>
           <AboutUs />
         </Col>
         <Col xs={100}>
@@ -46,6 +47,9 @@ const HomePage: React.FC = () => {
         </Col>
         <Col xs={100} pr='0px'>
           <BuyCrypto />
+        </Col>
+        <Col xs={100}>
+          <Faq />
         </Col>
       </Row>
     </Layout>

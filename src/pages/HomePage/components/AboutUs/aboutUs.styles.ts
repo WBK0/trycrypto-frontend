@@ -33,6 +33,8 @@ export const ItemWrapper = styled.div`
   width: 100%;
   border-radius: 20px;
   margin: 15px;
+  margin-left: 0px;
+  margin-right: 0px;
   display: flex;
   padding: 25px;
   justify-content: center;
@@ -43,7 +45,11 @@ export const ItemWrapper = styled.div`
   }
 `
 
-export const Column = styled.div`
+interface IColumn{
+  second?: boolean;
+}
+
+export const Column = styled.div<IColumn>`
   width: 100%;
   display: flex;
   justify-content: start;

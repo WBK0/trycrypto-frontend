@@ -5,9 +5,9 @@ export const Wrapper = styled.div`
   width: 100vw;
   margin: -12px;
   background-color: var(--theme-dark);
-  height: 750px;
+  min-height: 750px;
   @media screen and (min-width: 800px){
-    height: 250px;
+    min-height: 250px;
     position: absolute;
     left: 0;
     margin: 0px;

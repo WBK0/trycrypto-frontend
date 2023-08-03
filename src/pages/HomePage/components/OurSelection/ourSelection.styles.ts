@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   margin-top: 100px;
-  @media screen and (min-width: 1000px){
-    margin-top: 400px;
+  @media screen and (min-width: 800px){
+    margin-top: 450px;
   }
 `
 
 export const Header = styled.h4`
-  font-family: 'Gilroy-Bold';
+  font-family: 'Gilroy-Heavy';
   font-size: 30px;
 `
 

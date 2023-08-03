@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   margin-top: 150px;
   padding: 30px;
-  margin-bottom: 500px;
   @media screen and (min-width: 1000px) {
     width: 40%;
   }
@@ -16,7 +15,7 @@ export const Wrapper = styled.div`
 
 export const Header = styled.h5`
   text-align: center;
-  font-family: 'Gilroy-bold';
+  font-family: 'Gilroy-Heavy';
   font-size: 40px;
   margin-bottom: 30px;
   margin-top: 30px;

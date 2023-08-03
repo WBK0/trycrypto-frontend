@@ -4,6 +4,10 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  flex-direction: column-reverse;
+  @media screen and (min-width: 800px){
+    flex-direction: row;
+  }
 `
 
 export const Header = styled.h1`
