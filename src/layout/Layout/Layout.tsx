@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer/Footer";
 import { Container } from "../../shared/container";
 import Navbar from "../Navbar/Navbar";
 import { Wrapper } from "./layout.style";
@@ -15,6 +16,7 @@ const Layout: React.FC<Props> = ({ children }) => {
           {children}
         </Container>
       </Wrapper>
+      <Footer />
     </>
   )
 }

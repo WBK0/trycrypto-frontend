@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   margin-top: 150px;
-  margin-bottom: 300px;
+  margin-bottom: 150px;
 `
 
 export const Header = styled.h4`
@@ -60,7 +60,7 @@ export const Answer = styled.div<IAnswer>`
   max-height: ${({ showAnswer, answerId }) => (showAnswer ? `${getScrollHeight(answerId) + 20}px` : "0")};
   opacity: ${({ showAnswer }) => (showAnswer ? "1" : "0")};
   overflow: hidden;
-  transition: max-height 1s, opacity 1s, padding 1s;
+  transition: max-height 0.75s, opacity 0.75s, padding 0.75s;
   @media screen and (min-width: 800px){
     padding: ${({ showAnswer }) => (showAnswer ? '30px' : "0px")};
     max-height: ${({ showAnswer, answerId }) => (showAnswer ? `${getScrollHeight(answerId) + 60}px` : "0")};

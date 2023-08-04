@@ -33,7 +33,7 @@ const WalletPage = () => {
         <UserInfo />
         <CurrentBalance balance={balance?.currentBalance}/>
         <BalanceChart />
-        <Row mt="25px">
+        <Row mt="25px" pb="150px">
           <Col xs={100} md={33.33} pr="0px" pl="0px" prMd="12px">
             <CryptoAssets 
               instrument="spot"
