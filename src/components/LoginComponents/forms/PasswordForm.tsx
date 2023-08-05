@@ -9,10 +9,12 @@ import { HelloHeader, Wrapper, EmailHeader } from './styles/forms.styles';
 
 // Defining the interface for the PasswordInput component
 interface IPasswordFormProps{
-  email: string
+  email: string,
+  nextStep: () => void,
+  setPassword: (passoword: string) => void
 }
 
-const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
+const PasswordForm: React.FC<IPasswordFormProps> = ({email, nextStep, setPassword}) => {
 
   const navigate = useNavigate()
   const {setLoggedIn, lastLocation} = useContext(AuthContext);
@@ -31,7 +33,7 @@ const PasswordForm: React.FC<IPasswordFormProps> = ({email}) => {
         validateOnBlur={false}
         validationSchema={passwordSchema}
         onSubmit={(values, formikHelpers) => 
-          handleSubmit(values, {...formikHelpers, navigate, setLoggedIn, lastLocation})
+          handleSubmit(values, {...formikHelpers, navigate, setLoggedIn, lastLocation, nextStep, setPassword})
         }
         >
           {PasswordInput}
