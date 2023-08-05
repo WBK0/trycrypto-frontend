@@ -8,6 +8,18 @@ export const Wrapper = styled.div`
   padding-top: 5px;
   padding-left: 5px;
   overflow-x: scroll;
+  border-bottom: 10px solid var(--theme-dark);
+  ::-webkit-scrollbar{
+    width: 2px;
+    height: 2px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--theme-primary);
+  }
   @media screen and (min-width: 1000px){
     border: 1px solid var(--border-dark);
   }

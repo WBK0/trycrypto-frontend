@@ -47,12 +47,12 @@ const Symbol: React.FC<ISymbol> = ({ symbol }) => {
                 <Name>
                   {item.pair}
                 </Name>
-                <Change>
-                  {Number(item.percentChange).toFixed(2)}%
-                </Change>
-                <Price>
+                <Price color={item.color}>
                   {Number(item.lastPrice).toFixed(4)}
                 </Price>
+                <Change color={Number(item.percentChange) > 0 ? 'rgb(7, 119, 3)' : 'rgb(119, 7, 3)'}>
+                  {Number(item.percentChange).toFixed(2)}%
+                </Change>
               </DataWrapper>
             )
           })}

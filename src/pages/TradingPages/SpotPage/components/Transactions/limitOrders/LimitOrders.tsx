@@ -55,6 +55,9 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol, fetchBalance }) =
 
   return(
     <Wrapper>
+      {Array.isArray(limitOrders) && limitOrders.length == 0 || !limitOrders 
+      ? <EmptyOrdersHeader>Currently nothing to display, trade the cryptocurrency pair with limit orders to add to the orders list</EmptyOrdersHeader>
+      :
       <TableWrapper>
         <Table>
           <THead>
@@ -80,17 +83,12 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol, fetchBalance }) =
           })}
           </TBody>
         </Table>
-      </TableWrapper>
-      <MoreOrders>
-        {Array.isArray(limitOrders) && limitOrders.length == 0 || !limitOrders ?
-          <EmptyOrdersHeader>Currently nothing to display, trade the cryptocurrency pair with limit orders to add to the orders list</EmptyOrdersHeader>
-        :
-        <>
+        <MoreOrders>
           <OrdersHeader>Wanna see all orders?</OrdersHeader>
-          <OrdersLink to='/wallet/history/spot'>See more</OrdersLink>
-        </>
-        }
-      </MoreOrders>
+          <OrdersLink to='/positions/spot/orders'>See more</OrdersLink>
+        </MoreOrders>
+      </TableWrapper>
+      }
     </Wrapper>
   )
 }

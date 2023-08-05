@@ -13,9 +13,10 @@ interface IPositionsView{
   positions: IPositions[];
   fetchPositions: () => void;
   fetchBalance: () => void;
+  symbol?: string
 }
 
-const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fetchBalance}) => {
+const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fetchBalance, symbol }) => {
   const [pairPrice, setPairPrice] = useState<IPairPrice>({})
   const [loading, setLoading] = useState(true)
 
@@ -37,6 +38,7 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
     setLoading(false)
   }
   
+
   return(
     <>
       {
@@ -44,7 +46,7 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
         ?
           <LoadingTable />
         :
-        positions.length >= 1 
+        symbol && positions.filter((item) => item.pair.includes(symbol?.toUpperCase())).length >= 1 
         ? 
           <Table>
             <THead>
@@ -67,6 +69,7 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
               pairPrice={pairPrice} 
               fetchPositions={fetchPositions} 
               fetchBalance={fetchBalance}
+              symbol={symbol}
             />
           </Table>
         :

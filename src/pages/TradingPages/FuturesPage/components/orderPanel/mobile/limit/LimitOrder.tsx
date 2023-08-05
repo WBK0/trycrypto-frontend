@@ -17,11 +17,11 @@ interface ILimitOrder{
   leverage: number;
   orderQuantity: string;
   setOrderQuantity: (quantity: string) => void;
-  takeProfit: number;
-  stopLoss: number;
+  takeProfit: string;
+  stopLoss: string;
   price: string;
-  setTakeProfit: (takeProfit: number) => void;
-  setStopLoss: (stopLoss: number) => void;
+  setTakeProfit: (takeProfit: string) => void;
+  setStopLoss: (stopLoss: string) => void;
   setPrice: (price: string) => void;
 }
 
@@ -116,13 +116,13 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
       if(Number(orderQuantity) == 0 || balance?.currentBalance && Number(price) * Number(orderQuantity) > balance?.currentBalance){
         setQuantityError(true);
       }
-      if(takeProfit != 0 && (
+      if(Number(takeProfit) != 0 && (
         (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
         (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
       )){
         setTakeProfitError(true);
       }
-      if(stopLoss != 0 && 
+      if(Number(stopLoss) != 0 && 
         (type == 'LONG' && (Number(stopLoss) >= Number(price) || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
         (type == 'SHORT') && (Number(stopLoss) <= Number(price) || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
       ))){
@@ -176,7 +176,7 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
         ?
           <InputWrapper onBlur={handleChangeView}>
             <InputText>Quantity</InputText>
-            <Input value={orderQuantity} onChange={handleChangeQuantity} ref={inputRefQuantity}/>
+            <Input value={orderQuantity == '0' ? '' : orderQuantity} onChange={handleChangeQuantity} ref={inputRefQuantity}/>
             <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
           </InputWrapper>
         :  

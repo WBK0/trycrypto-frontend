@@ -7,10 +7,11 @@ import SelectTick from "./components/SelectTick";
 
 interface IOrderBook{
   price: number,
-  symbol?: string
+  symbol?: string,
+  loading: boolean
 }
 
-const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
+const OrderBook: React.FC<IOrderBook> = ({ price, symbol, loading }) => {
   const [asksView, setAsksView] = useState(10);
   const [bidsView, setBidsView] = useState(10);
   const [tickSize, setTickSize] = useState(0.0001);
@@ -28,6 +29,15 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol }) => {
     setAsksView(asks)
     setBidsView(bids)
   }
+
+  useEffect(() => {
+    setTickSize(
+      price <= 5 ? 0.0001
+      : price <= 10 ? 0.001
+      : price <= 5000 ? 0.01
+      : 0.1
+    )
+  }, [loading])
 
   const onMessage = (event : any) => {
     setAsks(prevState => {

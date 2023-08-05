@@ -5,7 +5,6 @@ import { Row } from '../../shared/row';
 import AboutUs from './components/AboutUs/AboutUs';
 import BuyCrypto from './components/BuyCrypto/BuyCrypto';
 import Heading from './components/Heading/Heading';
-import TopMovers from './components/OurSelection/OurSelection';
 import { MarketData } from '../../components/Markets/interfaces/interfaces';
 import getData from '../../components/Markets/services/getData';
 import OurSelection from './components/OurSelection/OurSelection';
@@ -16,11 +15,8 @@ const HomePage: React.FC = () => {
   const [data, setData] = useState<MarketData[]>([])
 
   const fetchData = async () => {
-   
-      const result = await getData('spot')
-      setData(result)
-    
-    
+    const result = await getData('spot')
+    setData(result)
   }
 
   useEffect(() => {

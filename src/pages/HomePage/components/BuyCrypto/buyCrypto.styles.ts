@@ -27,7 +27,7 @@ export const InputGroup = styled.div`
 `
 
 export const InputText = styled.input`
-  width: 40px;
+  width: 50px;
   background-color: transparent;
   color: white;
   border: solid var(--font-yellow);
@@ -37,15 +37,19 @@ export const InputText = styled.input`
   height: 60px;
   font-size: 16px;
   padding-right: 10px;
+  border-radius: 0px;
   font-family: 'Gilroy-Bold';
   @media screen and (min-width: 600px){
     font-size: 22px;
     width: 55px;
   }
+  &:disabled{
+    opacity: 1;
+  }
 `
 
 export const Input = styled.input`
-  width: calc(100% - 130px);
+  width: calc(100% - 140px);
   background-color: transparent;
   color: rgb(200, 200, 200);
   border: solid var(--font-yellow);
@@ -56,10 +60,14 @@ export const Input = styled.input`
   font-size: 26px;
   padding-right: 10px;
   font-family: 'Gilroy-Bold';
+  border-radius: 0px;
   @media screen and (min-width: 600px){
     width: calc(100% - 175px);
     font-size: 32px;
     padding-right: 20px;
+  }
+  &:disabled{
+    opacity: 1;
   }
 `
 

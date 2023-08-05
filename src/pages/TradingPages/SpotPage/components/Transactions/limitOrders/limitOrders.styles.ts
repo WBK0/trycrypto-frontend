@@ -36,7 +36,7 @@ export const OrdersLink = styled(Link)`
   margin-bottom: 20px;
 `
 
-export const EmptyOrdersHeader = styled.span`
+export const EmptyOrdersHeader = styled.p`
   width: 100%;
   text-align: center;
   margin-top: 20px;

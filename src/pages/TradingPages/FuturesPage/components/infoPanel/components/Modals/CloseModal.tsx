@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Close, ModalContent, ModalWrapper } from "../../../../../../../shared/modal.styles";
-import { CloseButton, Info, InfoPNL, Quantity, RangeInput } from "./modal.styles";
+import { CloseButton, Header, Info, InfoPNL, Quantity, RangeInput } from "./modal.styles";
 import { IPositions } from "../../../../FuturesPage";
 import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
@@ -62,6 +62,7 @@ const CloseModal: React.FC<ICloseModal> = ({ onClose, fetchPositions, modalItem,
     <ModalWrapper onClick={onClose}>
       <ModalContent onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
         <Close onClick={onClose}>X</Close>
+        <Header>Close position</Header>
         <Quantity>{toSold}/{modalItem.quantity}</Quantity>
         <RangeInput type="range" min={0} max={modalItem.quantity} step={0.1} onChange={handleChange} value={toSold}/>
         <Info>Your predicted PNL from closing this amount of positions will be: 

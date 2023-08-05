@@ -25,9 +25,18 @@ const Transactions: React.FC<ITransaction> = ({ wallet, symbol, fetchBalance }) 
   return(
     <Wrapper>
       <HeadingSelect>
-        <SelectButton active={transactionView == 0 ? true : false} onClick={() => HandleChangeView(0)}>Transaction History</SelectButton>
-        <SelectButton active={transactionView == 1 ? true : false} onClick={() => HandleChangeView(1)}>Active Orders</SelectButton>
-        <SelectButton active={transactionView == 2 ? true : false} onClick={() => HandleChangeView(2)}>Orders History</SelectButton>
+        <SelectButton active={transactionView == 0 ? true : false} onClick={() => HandleChangeView(0)}>       
+          <span>Transaction </span>
+          <span>History</span>
+        </SelectButton>
+        <SelectButton active={transactionView == 1 ? true : false} onClick={() => HandleChangeView(1)}>
+          <span>Active </span>
+          <span>Orders</span>
+        </SelectButton>
+        <SelectButton active={transactionView == 2 ? true : false} onClick={() => HandleChangeView(2)}>
+          <span>Orders </span>
+          <span>History</span>
+        </SelectButton>
       </HeadingSelect>
       {
         isLoggedIn ?

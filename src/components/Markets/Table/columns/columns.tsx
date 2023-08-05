@@ -61,7 +61,7 @@ export const columns: ColumnDef<Cryptocurrencies>[] = [
       return 0;
     },
     enableGlobalFilter: false,
-    size: 100
+    size: 130
   },
   {
     accessorKey: 'highPrice',

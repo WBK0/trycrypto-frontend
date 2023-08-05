@@ -38,6 +38,9 @@ const OrdersHistory: React.FC<IOrdersHistory> = ({ wallet, symbol }) => {
 
   return(
     <Wrapper>
+      {Array.isArray(ordersHistory) && ordersHistory.length == 0 || !ordersHistory
+      ? <EmptyHistoryHeader>Currently nothing to display, trade the cryptocurrency pair with limit orders to add to the history</EmptyHistoryHeader>
+      : 
       <TableWrapper>
         <Table>
           <THead>
@@ -80,15 +83,13 @@ const OrdersHistory: React.FC<IOrdersHistory> = ({ wallet, symbol }) => {
           })}
           </TBody>
         </Table>
+        <MoreHistory>
+          <HistoryHeader>Wanna see more history?</HistoryHeader>
+          <HistoryLink to='/history/orders'>See more</HistoryLink>
+        </MoreHistory>
       </TableWrapper>
-      <MoreHistory>
-        {Array.isArray(ordersHistory) && ordersHistory.length == 0 || !ordersHistory ?
-          <EmptyHistoryHeader>Currently nothing to display, trade the cryptocurrency pair with limit orders to add to the history</EmptyHistoryHeader>
-        :<>
-        <HistoryHeader>Wanna see more history?</HistoryHeader>
-        <HistoryLink to='/wallet/history/spot'>See more</HistoryLink></>
-        }
-      </MoreHistory>
+      }
+   
     </Wrapper>
   )
 }

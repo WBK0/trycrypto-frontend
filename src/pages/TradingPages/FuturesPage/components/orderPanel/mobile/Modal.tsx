@@ -24,8 +24,8 @@ const Modal: React.FC<IModal> = ({ onClose, balance, symbol, pairPrice, type, fe
   const [view, setView] = useState(0);
   const [orderType, setOrderType] = useState(0);
   const [orderQuantity, setOrderQuantity] = useState("");
-  const [takeProfit, setTakeProfit] = useState(0);
-  const [stopLoss, setStopLoss] = useState(0);
+  const [takeProfit, setTakeProfit] = useState("");
+  const [stopLoss, setStopLoss] = useState("");
   const [price, setPrice] = useState("");
 
   const handleChangeView = () => {

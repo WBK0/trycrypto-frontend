@@ -16,13 +16,13 @@ interface IBuyPanel {
 }
 
 const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
-  const [orderQuantity, setOrderQuantity] = useState("");
+  const [orderQuantity, setOrderQuantity] = useState("0");
 
   const handleChange = (e : {target: {value: string}}) => {
     if(balance){
       const decimalNumber = decimalPlaces(e.target.value);
       
-      if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)) && decimalNumber <= 1){
+      if((Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)) && decimalNumber <= 1)){
         setOrderQuantity(e.target.value);
       }else if(Number(e.target.value) && decimalNumber <= 1){
         setOrderQuantity((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1))
@@ -83,10 +83,10 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
       </InputWrapper>
       <InputWrapper>
         <InputText>Ilość</InputText>
-        <Input value={orderQuantity || 0} onChange={handleChange}/>
+        <Input value={orderQuantity} onChange={handleChange}/>
         <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
       </InputWrapper>
-      <RangeInput type="range" min="0" step={0.1} max={balance && (Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)} onChange={handleChange} value={orderQuantity}></RangeInput>
+      <RangeInput type="range" min="0" step={0.1} max={balance && (Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)} onChange={handleChange} value={Number(orderQuantity)}></RangeInput>
       <InputWrapper>
         <InputText>Suma</InputText>
         <Input value={(Number(orderQuantity) * pairPrice).toFixed(4)} readOnly/>

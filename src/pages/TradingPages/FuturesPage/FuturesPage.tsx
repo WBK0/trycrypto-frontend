@@ -106,7 +106,7 @@ const FuturesPage = () => {
           <Row>
             <Col xs={100} lg={45} pr="0px" pb="0px" dXs={showResponsive == 'orderBook' || showResponsive == 'trades' ? 'block' : 'none'} dLg="block">
               <Col xs={100} pr="0px" pb="0px" dXs={showResponsive == 'orderBook' ? 'block' : 'none'} dLg="block">
-                <OrderBook price={data.c} symbol={symbol}/>
+                <OrderBook price={data.c} symbol={symbol} loading={loading}/>
               </Col>
               <Col xs={100} pr="0px" pb="0px" dXs={showResponsive == 'trades' ? 'block' : 'none'} dLg="block">
                 <LastTrades symbol={symbol}/>

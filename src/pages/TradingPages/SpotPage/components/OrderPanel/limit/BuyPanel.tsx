@@ -66,6 +66,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
         theme: "dark",
         });
         setOrderQuantity("")
+        setIsSubmitted(false);
     })
     .catch((error: Error) => {
       console.error(error);
@@ -120,7 +121,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
         </InputText>
         <Input 
           isError={isSubmitted && Number(orderQuantity) <= 0 ? true : false} 
-          value={orderQuantity || 0} 
+          value={orderQuantity} 
           onChange={handleChange}
           ref={inputRefQuantity}
           disabled={Number(price) <= 0 ? true : false}
@@ -132,7 +133,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
           {symbol?.toUpperCase().replace('USDT', '')}
         </InputSymbol>
       </InputWrapper>
-      <RangeInput type="range" min="0" step={0.1} max={balance && Number(price) > 0 ? (Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1) : 0} onChange={handleChange} value={orderQuantity}></RangeInput>
+      <RangeInput type="range" min="0" step={0.1} max={balance && Number(price) > 0 ? (Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1) : 0} onChange={handleChange} value={Number(orderQuantity)}></RangeInput>
       <InputWrapper>
         <InputText>Suma</InputText>
         <Input value={(Number(orderQuantity) * Number(price)).toFixed(4)} readOnly/>

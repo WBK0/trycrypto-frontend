@@ -17,11 +17,11 @@ interface IOrderView{
   setOrderType: (type: number) => void;
   orderQuantity: string;
   setOrderQuantity: (quantity: string) => void;
-  takeProfit: number;
-  stopLoss: number;
+  takeProfit: string;
+  stopLoss: string;
   price: string;
-  setTakeProfit: (takeProfit: number) => void;
-  setStopLoss: (stopLoss: number) => void;
+  setTakeProfit: (takeProfit: string) => void;
+  setStopLoss: (stopLoss: string) => void;
   setPrice: (price: string) => void;
 }
 
@@ -48,6 +48,12 @@ const OrderView: React.FC<IOrderView> = ({ symbol, fetchBalance, fetchPositions,
                   leverage={leverage}
                   onClose={onClose}
                   type={type}
+                  orderQuantity={orderQuantity}
+                  setOrderQuantity={setOrderQuantity}
+                  takeProfit={takeProfit}
+                  setTakeProfit={setTakeProfit}
+                  stopLoss={stopLoss}
+                  setStopLoss={setStopLoss}
                 />
               )
             case 1:

@@ -11,13 +11,16 @@ interface ITableBody{
   },
   fetchPositions: () => void;
   fetchBalance: () => void;
+  symbol?: string;
 }
 
 
-const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions, fetchBalance }) => {
+const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions, fetchBalance, symbol }) => {
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [modalItem, setModalItem] = useState<IPositions>()
+
+  console.log(symbol)
 
   const handleShowCloseModal = (item: IPositions) => {
     setModalItem(item);
@@ -39,7 +42,7 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
 
   return(
     <TBody>
-      {positions.sort((a, b) => a.id - b.id).map((item) => {
+      {symbol && positions.filter((item) => item.pair.includes(symbol?.toUpperCase())).sort((a, b) => a.id - b.id).slice().reverse().map((item) => {
         return(
           <Tr>
             <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3);'}>{item.type}</Type>

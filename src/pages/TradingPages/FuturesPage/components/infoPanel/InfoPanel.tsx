@@ -46,6 +46,7 @@ const InfoPanel: React.FC<IInfoPanel> = ({ fetchBalance, positions, fetchPositio
                     positions={positions} 
                     fetchBalance={fetchBalance} 
                     fetchPositions={fetchPositions}
+                    symbol={symbol}
                   />
                 )
               case 1:

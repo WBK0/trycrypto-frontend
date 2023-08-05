@@ -85,8 +85,8 @@ export const Item = styled.div.attrs(({color}) => ({
 }))`
   color: white; 
   display: flex;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   justify-content: space-between;
   height: 20px;
   font-size: 15px;

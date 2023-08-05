@@ -48,9 +48,13 @@ export const Input = styled.input<IisError>`
   line-height: 28px;
   width: 1%;
   z-index: 1;
+  border-radius: 0px;
   ${InputWrapper}:focus-within & {
     outline: none;
     border-color: ${props => props.isError ? '' : 'rgb(90, 90, 90)'};
+  }
+  &:disabled{
+    opacity: 1;
   }
 `
 

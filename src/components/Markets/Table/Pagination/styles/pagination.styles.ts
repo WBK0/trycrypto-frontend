@@ -16,12 +16,17 @@ export const PaginationButton = styled.button<IPaginationButton>`
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
-  background-color: ${props => props.isActive ? 'rgb(90, 90, 90)' : 'transparent'};
+  background-color: ${props => props.isActive ? 'rgb(90, 90, 90)' : 'transparent'} !important;
   border: none;
   color: white;
   &:hover{
     background-color: rgb(90, 90, 90); 
     color: white;
+  }
+  @media (hover: none){
+    &:hover{
+      background-color: transparent;
+    }
   }
   &:focus{
     box-shadow: none;

@@ -15,8 +15,8 @@ interface IMarketOrderPanel{
 }
 
 const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance, fetchBalance, fetchPositions, leverage }) => {
-  const [takeProfit, setTakeProfit] = useState(0);
-  const [stopLoss, setStopLoss] = useState(0);
+  const [takeProfit, setTakeProfit] = useState("");
+  const [stopLoss, setStopLoss] = useState("");
   const [orderQuantity, setOrderQuantity] = useState("");
   const [quantityError, setQuantityError] = useState(false);
   const [takeProfitError, setTakeProfitError] = useState(false);
@@ -97,13 +97,13 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
         if(Number(orderQuantity) == 0 || (balance?.currentBalance && Number(orderQuantity) >= balance?.currentBalance / price)){
           setQuantityError(true);
         }
-        if(takeProfit != 0 && (
+        if(Number(takeProfit) != 0 && (
           (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
           (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
         )){
           setTakeProfitError(true);
         }
-        if(stopLoss != 0 && 
+        if(Number(stopLoss) != 0 && 
           (type == 'LONG' && (Number(stopLoss) >= price || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
           (type == 'SHORT') && (Number(stopLoss) <= price || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
         ))){
@@ -122,6 +122,8 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
       } 
   }
 
+  console.log(orderQuantity)
+
   return(
     <>
       <Wallet>
@@ -133,7 +135,7 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
         ?
           <InputWrapper onClick={handleChangeView} onBlur={handleChangeView}>
             <InputText>Quantity</InputText>
-            <Input value={orderQuantity} onChange={handleChangeQuantity} ref={inputRefQuantity}/>
+            <Input value={orderQuantity == '0' ? '' : orderQuantity} onChange={handleChangeQuantity} ref={inputRefQuantity}/>
             <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
           </InputWrapper>
         :

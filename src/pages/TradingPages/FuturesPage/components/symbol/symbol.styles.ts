@@ -62,22 +62,34 @@ export const DataWrapper = styled(Link)`
   font-size: 14px;
   padding: 2px 5px 2px 5px;
   &:hover{
-    color: var(--font-yellow)
+    color: var(--font-yellow);
   }
 `
 
 export const Name = styled.span`
   width: 37.5%;
+  color: rgb(210, 210, 210);
+  ${DataWrapper}:hover & {
+    color: var(--font-yellow);
+  }
 `
 
 export const Change = styled.span`
- width: 25%;
- text-align: center;
+  width: 37.5%;
+  text-align: right;
+  color: ${props => props.color};
+  ${DataWrapper}:hover & {
+    color: var(--font-yellow);
+  }
 `
 
 export const Price = styled.span`
- width: 37.5%;
- text-align: right;
+ width: 25%;
+ text-align: center;
+ color: ${props => props.color};
+ ${DataWrapper}:hover & {
+    color: var(--font-yellow);
+  }
 `
 
 export const SearchBar = styled.input`

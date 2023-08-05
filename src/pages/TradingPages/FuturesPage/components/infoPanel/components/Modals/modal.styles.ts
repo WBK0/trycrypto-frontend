@@ -54,6 +54,7 @@ export const Quantity = styled.h1`
 export const InputLabel = styled.span`
   margin-top: 15px;
   font-size: 13px;
+  font-family: 'Gilroy-Medium';
 `
 
 export const Input = styled.input`
@@ -80,4 +81,13 @@ export const UpdateButton = styled.button`
   font-weight: 700;
   font-size: 15px;
   margin-top: 20px;
+`
+
+export const Header = styled.h1`
+  color: white;
+  position: absolute;
+  top: 9px;
+  font-size: 18px;
+  left: 50%;
+  transform: translateX(-50%);
 `

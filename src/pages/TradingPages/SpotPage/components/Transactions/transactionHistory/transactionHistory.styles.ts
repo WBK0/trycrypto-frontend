@@ -96,7 +96,7 @@ export const HistoryLink = styled(Link)`
   margin-bottom: 20px;
 `
 
-export const EmptyHistoryHeader = styled.span`
+export const EmptyHistoryHeader = styled.p`
   width: 100%;
   text-align: center;
   margin-top: 20px;

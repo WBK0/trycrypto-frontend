@@ -15,12 +15,15 @@ interface IMarketOrder{
   fetchBalance: () => void;
   fetchPositions: () => void;
   leverage: number;
+  orderQuantity: string;
+  setOrderQuantity: (quantity: string) => void;
+  takeProfit: string;
+  stopLoss: string;
+  setTakeProfit: (takeProfit: string) => void;
+  setStopLoss: (stopLoss: string) => void;
 }
 
-const MarketOrder: React.FC<IMarketOrder> = ({symbol, fetchBalance, fetchPositions, onClose, leverage, balance, price, type }) => {
-  const [orderQuantity, setOrderQuantity] = useState("");
-  const [takeProfit, setTakeProfit] = useState(0);
-  const [stopLoss, setStopLoss] = useState(0);
+const MarketOrder: React.FC<IMarketOrder> = ({symbol, fetchBalance, fetchPositions, onClose, leverage, balance, price, type, orderQuantity, setOrderQuantity, takeProfit, setTakeProfit, stopLoss, setStopLoss }) => {
   const [quantityError, setQuantityError] = useState(false);
   const [takeProfitError, setTakeProfitError] = useState(false);
   const [stopLossError, setStopLossError] = useState(false);
@@ -101,13 +104,13 @@ const MarketOrder: React.FC<IMarketOrder> = ({symbol, fetchBalance, fetchPositio
       if(Number(orderQuantity) == 0 || (balance?.currentBalance && Number(orderQuantity) >= balance?.currentBalance / price)){
         setQuantityError(true);
       }
-      if(takeProfit != 0 && (
+      if(Number(takeProfit) != 0 && (
         (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
         (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
       )){
         setTakeProfitError(true);
       }
-      if(stopLoss != 0 && 
+      if(Number(stopLoss) != 0 && 
         (type == 'LONG' && (Number(stopLoss) >= price || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
         (type == 'SHORT') && (Number(stopLoss) <= price || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
       ))){
@@ -137,7 +140,7 @@ const MarketOrder: React.FC<IMarketOrder> = ({symbol, fetchBalance, fetchPositio
         ?
           <InputWrapper onClick={handleChangeView} onBlur={handleChangeView}>
             <InputText>Quantity</InputText>
-            <Input value={orderQuantity} onChange={handleChangeQuantity} ref={inputRefQuantity}/>
+            <Input value={orderQuantity == '0' ? '' : orderQuantity} onChange={handleChangeQuantity} ref={inputRefQuantity}/>
             <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
           </InputWrapper>
         :

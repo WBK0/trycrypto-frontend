@@ -30,10 +30,17 @@ export const SelectButton = styled.button<ISelectButton>`
   font-size: 14px;
   font-weight: 500;
   margin-left: 3px;
-  margin-right: 15px;
+  margin-right: 0px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   flex: 1;
   @media screen and (min-width: 1000px) {
     flex: none;
+    display: block;
+    margin-right: 15px;
   }
 `

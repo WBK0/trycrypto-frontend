@@ -117,7 +117,7 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
           Ilość
         </InputText>
         <Input 
-          value={orderQuantity || 0} 
+          value={orderQuantity} 
           onChange={handleChange}
           isError={isSubmitted && Number(orderQuantity) <= 0 ? true : false} 
           ref={inputRefQuantity}
@@ -129,7 +129,7 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
           {symbol?.toUpperCase().replace('USDT', '')}
         </InputSymbol>
       </InputWrapper>
-      <RangeInput type="range" min="0" step={0.1} max={balance?.spotBalance && symbol && balance?.spotBalance[symbol.toUpperCase()]} onChange={handleChange} value={orderQuantity}></RangeInput>
+      <RangeInput type="range" min="0" step={0.1} max={balance?.spotBalance && symbol && balance?.spotBalance[symbol.toUpperCase()]} onChange={handleChange} value={Number(orderQuantity)}></RangeInput>
       <InputWrapper>
         <InputText>Suma</InputText>
         <Input value={(Number(orderQuantity) * Number(price)).toFixed(4)} readOnly/>

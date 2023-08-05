@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Close, ModalContent, ModalWrapper } from "../../../../../../../shared/modal.styles";
-import { Input, InputLabel, UpdateButton } from "./modal.styles";
+import { Header, Input, InputLabel, UpdateButton } from "./modal.styles";
 import { IPositions } from "../../../../FuturesPage";
 import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
@@ -70,6 +70,7 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, fetchPosition
   return(
     <ModalWrapper onClick={onClose}>
       <ModalContent onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
+        <Header>Update TP/SL</Header>
         <Close onClick={onClose}>X</Close>
         <InputLabel>Take Profit</InputLabel>
         <Input value={takeProfit} onChange={handleChangeTP}/>

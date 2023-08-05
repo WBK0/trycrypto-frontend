@@ -15,8 +15,8 @@ interface ILimitOrderPanel{
 }
 
 const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balance, fetchBalance, fetchPositions, leverage }) => {
-  const [takeProfit, setTakeProfit] = useState(0);
-  const [stopLoss, setStopLoss] = useState(0);
+  const [takeProfit, setTakeProfit] = useState("");
+  const [stopLoss, setStopLoss] = useState("");
   const [orderQuantity, setOrderQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [priceError, setPriceError] = useState(false)
@@ -119,13 +119,13 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
       if(Number(orderQuantity) == 0 || balance?.currentBalance && Number(price) * Number(orderQuantity) > balance?.currentBalance){
         setQuantityError(true);
       }
-      if(takeProfit != 0 && (
+      if(Number(takeProfit) != 0 && (
         (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
         (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
       )){
         setTakeProfitError(true);
       }
-      if(stopLoss != 0 && 
+      if(Number(stopLoss) != 0 && 
         (type == 'LONG' && (Number(stopLoss) >= Number(price) || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
         (type == 'SHORT') && (Number(stopLoss) <= Number(price) || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
       ))){
@@ -180,7 +180,7 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
           Quantity
         </InputText>
         <Input 
-          value={orderQuantity} 
+          value={orderQuantity == '0' ? '' : orderQuantity} 
           onChange={handleChangeQuantity}
           error={quantityError}
           ref={inputRefQuantity}
@@ -193,13 +193,11 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
           {symbol?.toUpperCase().replace('USDT', '')}
         </InputSymbol>
       </InputWrapper>
-      : null
-      }
+      : 
       <InputWrapper
         onClick={handleQuantityInput}>
         <InputText
           error={quantityError}
-          
         >
           Total
         </InputText>
@@ -214,6 +212,8 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
           {symbol?.toUpperCase().replace('USDT', '')}
         </InputSymbol>
       </InputWrapper>
+      }
+      
       <RangeWrapper>
         <RangeInput type="range" min={0} step={0.1} max={balance && Number(price) && (balance.currentBalance / Number(price)).toFixed(1)} onChange={handleChangeOrder} value={orderQuantity}/>
       </RangeWrapper>
