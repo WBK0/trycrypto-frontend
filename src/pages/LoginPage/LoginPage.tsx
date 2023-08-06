@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import EmailForm from '../../components/LoginComponents/forms/EmailForm';
-import PasswordForm from '../../components/LoginComponents/forms/PasswordForm';
+import EmailForm from './components/EmailForm/EmailForm';
+import PasswordForm from './components/PasswordForm/PasswordForm';
 import LoginLayout from '../../layout/Login/LoginLayout';
-import ResetPasswordButton from '../../components/LoginComponents/links/ResetPasswordButton';
-import SignUpButton from '../../components/LoginComponents/links/SignUpButton';
+import ResetPasswordButton from './components/ResetPassword/ResetPasswordButton';
+import SignUpButton from './components/SignUp/SignUpButton';
 import AuthContext from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import ConfirmAccount from '../RegisterPage/components/ConfirmAccount/ConfirmAccount';

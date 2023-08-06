@@ -1,4 +1,4 @@
-import { SignupLink, SignupText, Wrapper } from './styles/loginArrow.styles';
+import { SignupLink, SignupText, Wrapper } from './loginArrow.styles';
 
 const SignUpButton = () => {
   return(

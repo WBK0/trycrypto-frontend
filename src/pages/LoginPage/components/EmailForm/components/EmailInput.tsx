@@ -1,5 +1,5 @@
-import { Form, Field } from "formik";
-import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "./styles/inputs.styles";
+import { Form } from "formik";
+import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "../../forms.styles";
 
 const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
   return(
@@ -12,7 +12,6 @@ const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         type="email"
         id="email"
         error={errors.email && touched.email ? true : false}
-        //className={`form-control form-control-lg mx-auto ${styles.loginInput} ${errors.email && touched.email ? "is-invalid" : null}`} 
         aria-describedby="validationEmail"
       />
 

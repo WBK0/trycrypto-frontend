@@ -1,5 +1,5 @@
-import { Row } from '../../../shared/row';
-import { ResetPasswordLink } from './styles/resetButton.style';
+import { Row } from '../../../../shared/row';
+import { ResetPasswordLink } from './resetButton.styles';
 
 const ResetPasswordButton = () => {
   return(

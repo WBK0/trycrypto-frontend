@@ -1,5 +1,17 @@
-import { Field } from "formik";
 import styled, { css } from "styled-components";
+
+export const Wrapper = styled.div`
+  margin-top: 30px;
+`
+
+export const HelloHeader = styled.h4`
+    font-family: 'Poppins', sans-serif;
+`
+
+export const EmailHeader = styled.h5`
+  margin-bottom: 20px;
+`
+import { Field } from "formik";
 
 export const Label = styled.label`
   margin-bottom: 6px;

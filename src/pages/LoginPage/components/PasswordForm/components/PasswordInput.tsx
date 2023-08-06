@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Form } from "formik";
-import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "./styles/inputs.styles";
+import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "../../forms.styles";
 
 const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
 
