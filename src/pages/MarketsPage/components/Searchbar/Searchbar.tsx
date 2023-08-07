@@ -1,6 +1,6 @@
 import { Col } from '../../../../shared/col';
 import { Row } from '../../../../shared/row';
-import { SearchInput } from './styles/searchbar.styles';
+import { SearchInput } from './searchbar.styles';
 
 // Define interface
 interface ISearchbar{

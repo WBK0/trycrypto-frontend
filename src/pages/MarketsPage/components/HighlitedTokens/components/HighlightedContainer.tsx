@@ -1,7 +1,7 @@
 import HighlitedItem from './HighlightedItem';
-import { MarketData } from '../../interfaces/interfaces';
-import { Col } from '../../../../shared/col';
-import { Heading, HighlitedLink, ItemWrapper } from './styles/highlited.styles';
+import { MarketData } from '../interfaces/marketData';
+import { Col } from '../../../../../shared/col'
+import { Heading, HighlitedLink, ItemWrapper } from '../highlited.styles';
 
 // Define the interface
 interface IHighlitedContainer{

@@ -1,6 +1,6 @@
 import { flexRender } from "@tanstack/react-table";
 import styles from './table.module.css';
-import { HeaderRow } from "./styles/table.styles";
+import { HeaderRow } from "./table.styles";
 
 interface IThead{
   table: any;

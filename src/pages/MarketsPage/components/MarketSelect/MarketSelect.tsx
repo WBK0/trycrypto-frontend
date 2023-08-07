@@ -1,5 +1,5 @@
-import { Row } from '../../../shared/row';
-import { SelectButton } from './styles/marketSelect.styles';
+import { Row } from '../../../../shared/row';
+import { SelectButton } from './marketSelect.styles';
 
 // Define interface
 interface IMarketSelect{

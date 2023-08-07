@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Layout from "../../layout/Layout/Layout";
-import Pagination from "../../components/Markets/Table/Pagination/Pagination";
 import {
   SortingState,
   getCoreRowModel,
@@ -13,19 +11,22 @@ import {
 import {
   RankingInfo,
 } from '@tanstack/match-sorter-utils'
-import Thead from "../../components/Markets/Table/Table/Thead";
-import Tbody from "../../components/Markets/Table/Table/Tbody";
-import { columns } from '../../components/Markets/Table/columns/columns';
+import Layout from "../../layout/Layout/Layout";
+import Pagination from "./components/Pagination/Pagination";
+import Thead from "./components/Table/components/Thead";
+import Tbody from "./components/Table/components/Tbody";
+import { columns } from './components/Table/columns/columns';
 import getData from "../../components/Markets/services/getData";
-import Searchbar from "../../components/Markets/Table/Searchbar/Searchbar";
-import { fuzzyFilter } from './../../components/Markets/Table/filters/fuzzyFilter';
-import MarketSelect from "../../components/Markets/MarketSelect/MarketSelect";
+import Searchbar from "./components/Searchbar/Searchbar";
+import { fuzzyFilter } from './components/Table/filters/fuzzyFilter';
+import MarketSelect from "./components/MarketSelect/MarketSelect";
 import LoadingTable from "../../components/Loading/LoadingTable";
-import HighlightedTokens from "../../components/Markets/Highlited/HighlightedTokens";
-import { MarketData } from "../../components/Markets/interfaces/interfaces";
+import HighlightedTokens from "./components/HighlitedTokens/HighlightedTokens";
+import { MarketData } from "./components/HighlitedTokens/interfaces/marketData";
 import { Row } from "../../shared/row";
 import { Col } from "../../shared/col";
-import { MarketHeader, ResponsiveTable, Table } from "./styles/marketPage.styles";
+import { MarketHeader, ResponsiveTable, Table, TableWrapper } from "./marketPage.styles";
+import TableMarket from "./components/Table/Table";
 
 // Extending the filterFns interface of react-table to include a fuzzy filter function
 declare module '@tanstack/table-core' {
@@ -48,11 +49,6 @@ const MarketsPage: React.FC = () => {
     // Setting initial page size and fetching data using the getData function
     table.setPageSize(5);
   
-    const fetchData = async (market : string) => {
-      const data = await getData(market);
-      setData(data);
-    };
-  
     fetchData(market);
     // Setting up an interval to fetch data
     const interval = setInterval(() => fetchData(market), 6000);
@@ -60,6 +56,11 @@ const MarketsPage: React.FC = () => {
     // Clearing the interval when the component unmounts
     return () => clearInterval(interval);
   }, [market]);
+
+  const fetchData = async (market : string) => {
+    const data = await getData(market);
+    setData(data);
+  };
   
    // Creating the react-table instance with specified configurations
   const table = useReactTable({
@@ -89,25 +90,14 @@ const MarketsPage: React.FC = () => {
       <MarketSelect market={market} setMarket={setMarket} />
       <HighlightedTokens data={data} market={market} />
       <Searchbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
-      <Row>
         {data.length > 0 ?
-          <>
-          <Col xs={100}>
-            <ResponsiveTable>
-              <Table>
-                <Thead table={table} />
-                <Tbody table={table} market={market}/>
-              </Table>
-            </ResponsiveTable>
-          </Col>
-          <Col xs={100}>
-            <Pagination table={table} /> 
-          </Col> 
-          </>
+          <TableWrapper>
+            <TableMarket table={table} market={market} />
+            <Pagination table={table} />
+          </TableWrapper>
           :
           <LoadingTable />  
         }
-      </Row>
     </Layout>
   )
 }

@@ -1,6 +1,6 @@
 import { flexRender } from "@tanstack/react-table";
 import { Key } from "react";
-import { TableRow } from "./styles/table.styles";
+import { TableRow } from "./table.styles";
 import { useNavigate } from "react-router-dom";
 
 interface ITbody{

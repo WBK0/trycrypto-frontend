@@ -1,5 +1,5 @@
 import { Change, ChangeIcon, ChangeText, Content, CryptoName, Header, Icon, ItemWrapper, Price, Wrapper } from "./ourSelection.styles";
-import { MarketData } from "../../../../components/Markets/interfaces/interfaces";
+import { MarketData } from "../../../MarketsPage/components/HighlitedTokens/interfaces/marketData";
 
 interface ITopMovers{
   data: MarketData[]

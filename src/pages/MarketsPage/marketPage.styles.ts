@@ -15,3 +15,7 @@ export const Table = styled.table`
     border-bottom: 1px solid rgb(122, 122, 122);
   }
 `
+
+export const TableWrapper = styled.div`
+  padding-right: 12px;
+`

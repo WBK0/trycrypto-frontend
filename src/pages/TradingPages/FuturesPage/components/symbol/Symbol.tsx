@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Change, CurrenciesWrapper, DataWrapper, Name, Price, SearchBar, Wrapper } from "./symbol.styles";
 import getData from "../../../../../components/Markets/services/getData";
-import { MarketData } from "../../../../../components/Markets/interfaces/interfaces";
+import { MarketData } from "../../../../MarketsPage/components/HighlitedTokens/interfaces/marketData";
 
 interface ISymbol{
   symbol?: string;

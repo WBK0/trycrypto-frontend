@@ -1,6 +1,6 @@
 import HighlitedContainer from './components/HighlightedContainer';
-import { MarketData } from '../interfaces/interfaces';
-import { Row } from '../../../shared/row';
+import { MarketData } from './interfaces/marketData';
+import { Row } from '../../../../shared/row';
 
 // Define the interface
 interface IHighlightedTokens{

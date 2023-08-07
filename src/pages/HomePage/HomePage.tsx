@@ -5,7 +5,7 @@ import { Row } from '../../shared/row';
 import AboutUs from './components/AboutUs/AboutUs';
 import BuyCrypto from './components/BuyCrypto/BuyCrypto';
 import Heading from './components/Heading/Heading';
-import { MarketData } from '../../components/Markets/interfaces/interfaces';
+import { MarketData } from '../MarketsPage/components/HighlitedTokens/interfaces/marketData';
 import getData from '../../components/Markets/services/getData';
 import OurSelection from './components/OurSelection/OurSelection';
 import Bar from './components/Bar/Bar';
