@@ -2,9 +2,12 @@ import { Form } from "formik";
 import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "../emailForm.styles";
 import { useEffect, useRef } from "react";
 
+// EmailInput component - renders the email input field
 const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
+  // Ref for the input field
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // Focusing on the input field on mount
   useEffect(() => {
     inputRef.current?.focus()
   }, [])
@@ -34,7 +37,7 @@ const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         type="submit" 
        
       >
-        {isSubmitting 
+        {isSubmitting
           ? <InputSpinner />
           : <ButtonText>Next</ButtonText>
         }

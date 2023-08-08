@@ -7,18 +7,26 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from "../../../../contexts/AuthContext";
 import Inputs from "./components/Inputs";
 
+// ConfirmAccount interface
 interface IConfirmAccount{
   email: string,
   password: string
 }
 
+// ConfirmAccount component - the component that renders account confirmation form on the register page
 const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
-  const navigate = useNavigate();
-  const { setLoggedIn }= useContext(AuthContext)
+  // State variables
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState<number>(30);
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
 
+  // Get the setLoggedIn function from the AuthContext
+  const { setLoggedIn }= useContext(AuthContext);
+
+  // Get the navigate function from the react-router-dom
+  const navigate = useNavigate();
+
+  // useEffect hook to start the countdown timer to resend the verification code
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (countdown > 0) {
@@ -32,19 +40,24 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
     return () => clearInterval(intervalId);
   }, [countdown]);
 
+  // Function to handle the form submit
   const handleSubmit = async (codeArray: string[]) => {
+    // Joining the code array into a string
     const code = codeArray.join('');
     if(code.length !== 6){
       return;
     }
+    // Setting the loading to true
     setLoading(true);
 
     try {
+      // Sending the request to the server to confirm the account 
       await api.post('/user/confirm/email', {
         'email': email,
         'password': password,
         'code': code
       })
+      // Toasting a success message
       toast.success('Your account has been successfully confirmed', {
         position: "bottom-right",
         autoClose: 5000,
@@ -53,10 +66,12 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-      });      
+      });   
+      // Setting the logged in state to true and navigating to the home page   
       setLoggedIn(true);
       navigate('/');
     } catch (error) {
+      // Toasting an error message and logging the error
       toast.error('Incorrect verification code provided', {
         position: "bottom-right",
         autoClose: 5000,
@@ -68,17 +83,22 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
       }); 
       console.log(error)
     }
+    // Setting the loading to false
     setLoading(false)
   }
 
+  // Function to handle the send again verification code
   const handleSendAgain = async () => {
     try {
+      // setting the countdown to 30 seconds and disabling the button
       setCountdown(30);
       setIsButtonActive(false);
+      // Sending the request to the server to resend the verification code
       await api.post('/user/confirm/resend', {
         email: email,
         password: password
       })
+      // Toasting a success message
       toast.success('Verification code resent', {
         position: "bottom-right",
         autoClose: 5000,
@@ -89,6 +109,7 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
         theme: "dark",
       });  
     } catch (error) {
+      // Toasting an error message and logging the error
       console.log(error);
       toast.error('Error on sending verification code', {
         position: "bottom-right",
@@ -100,7 +121,6 @@ const ConfirmAccount: React.FC<IConfirmAccount> = ({ email, password }) => {
         theme: "dark",
       }); 
     }
-    
   }
 
   return (

@@ -2,10 +2,13 @@ import { useEffect, useRef } from "react";
 import { Form } from "formik";
 import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "../namesForm.styles";
 
+// NamesInput component - renders the names input fields
 const NamesInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
 
+  // Ref for the input field
   const usernameRef = useRef<HTMLInputElement>(null);
 
+  // Focusing on the input field on mount
   useEffect(() => {
     usernameRef.current?.focus();
   }, []);

@@ -2,10 +2,13 @@ import { useEffect, useRef } from "react";
 import { Form } from "formik";
 import { ButtonText, Input, InputSpinner, InvalidMessage, Label, LoginButton } from "../passwordForm.styles";
 
+// PasswordInput component - renders the password input field
 const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
 
+  // Ref for the input field
   const passwordRef = useRef<HTMLInputElement>(null);
 
+  // Focusing on the input field on mount
   useEffect(() => {
     passwordRef.current?.focus();
   }, []);

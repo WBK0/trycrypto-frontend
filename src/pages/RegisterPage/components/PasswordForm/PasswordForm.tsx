@@ -3,14 +3,14 @@ import * as Yup from 'yup';
 import PasswordInput from './components/PasswordInput';
 import { Wrapper } from './passwordForm.styles';
 
-// Defining the interface for the PasswordInput component
+// PasswordForm interface
 interface IPasswordFormProps{
   setPassword: (password: string) => void,
   nextStep: () => void,
   password: string
 }
 
-// Validating the password field using the Yup library
+// PasswordForm validation schema
 const passwordSchema = Yup.object().shape({
   password: Yup.string()
     .min(8, 'Password must be at least 8 characters long')
@@ -23,16 +23,18 @@ const passwordSchema = Yup.object().shape({
     .required('This field is required')
 });
 
+// PasswordForm component - renders the password form on the register page
 const PasswordForm: React.FC<IPasswordFormProps> = ({ setPassword, nextStep, password }) => {
-
+  
+  // Handling the form submission 
   const handleSubmit = async (formValues: {password: string}) => {
+    // Setting the password and moving to the next step
     setPassword(formValues.password);
     nextStep();
   }
 
   return(
     <Wrapper>
-      {/* Greeting the user */}
       <Formik
         initialValues={{
           password: password,

@@ -4,12 +4,14 @@ import { Wrapper } from "./namesForm.styles";
 import NamesInput from './components/NamesInput';
 import api from '../../../../services/api';
 
+// NamesForm interface
 interface INamesForm{
   email: string;
   password: string;
   nextStep: () => void;
 }
 
+// NamesForm validation schema
 const namesSchema = Yup.object().shape({
   username: Yup.string()
     .required('First name is required')
@@ -27,11 +29,12 @@ const namesSchema = Yup.object().shape({
     .max(50, 'Last name must not exceed 50 characters'),
 });
 
-
+// NamesForm component - renders the names form on the register page
 const NamesForm : React.FC<INamesForm> = ({ email, password, nextStep }) => {
+  // Handling the form submission
   const handleSubmit = async(formValues: {username: string, firstname: string, lastname: string}, {setFieldError, setSubmitting}: FormikHelpers<{username: string, firstname: string, lastname: string}>) => {
     try {
-      console.log(email)
+      // Sending the request to the server to register the user and moving to the next step
       await api.post('/user/register', {
         email: email,
         password: password,
@@ -41,11 +44,13 @@ const NamesForm : React.FC<INamesForm> = ({ email, password, nextStep }) => {
       })
       nextStep();
     } catch (error : any) {
+      // Handling the error - checking if the username is already taken
       if(error.response.data.error_code == 121){
         setFieldError("username", "Username is arleady taken")
       }
       console.log(error);
     }
+    // Enabling the submit button
     setSubmitting(false)
   }
 

@@ -4,11 +4,12 @@ import { Wrapper, Image } from './Login.style';
 import { Row } from '../../shared/row';
 import { Col } from '../../shared/col';
 
-// Defining the interface for the component props
+// LoginLayout interface
 interface Props {
   children: React.ReactNode;
 }
 
+// LoginLayout component - renders the login page layout
 const LoginLayout: React.FC<Props> = ({children}) => {
   return(
     <Wrapper>

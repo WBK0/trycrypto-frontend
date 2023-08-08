@@ -10,38 +10,41 @@ import PreviousStep from './components/PreviousStepText/PreviousStep';
 import NamesForm from './components/NamesForm/NamesForm';
 import ConfirmAccount from './components/ConfirmAccount/ConfirmAccount';
 
-// This component renders the login page with multiple steps.
+// Register Page component - the main component of the register page
 const RegisterPage = () => {
-
+  // Getting the isLoggedIn state variable from the AuthContext
   const { isLoggedIn } = useContext(AuthContext)
+  // Getting the navigate function from the react-router-dom
   const navigate = useNavigate()
+  
+  // State variables
+  const [step, setStep] = useState<number>(1);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("")
 
+  // If the user is logged in, redirect to the home pages
   useEffect(() => {
     console.log(isLoggedIn)
     if(isLoggedIn == true){
       navigate("/")
     }
   }, [])
-  
-  // Initialize state variables for the login page
-  const [step, setStep] = useState<number>(1);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("")
 
-  // Function to handle clicking the "login" button on email page
+  // Function to go to the next step
   const nextStep = () => {
     setStep(step + 1);
   }
 
+  // Function to go to the previous step
   const previousStep = () => {
     setStep(step - 1);
   }
 
   return(
     <LoginLayout>
-      {/* Function that renders a given step in the login process */}
       <>
         {(() => {
+          // Rendering the correct component based on the step value
           switch (step) {
             case 1:
               return(
@@ -78,6 +81,7 @@ const RegisterPage = () => {
                   key="confirm-account"
                 />
               )
+              // If the step value is not 1, 2, 3 or 4, return null
             default:
               console.warn(`Unexpected step value: ${step}`);
               return null
@@ -85,12 +89,12 @@ const RegisterPage = () => {
         })()}      
       </>
       {
+        // Render the login text if the step value is 1, otherwise render the previous step component with exception of the step 4
         step == 1
         ? <LoginText>Do you have an account?</LoginText>
         : 
         step !== 4 && <PreviousStep previousStep={previousStep}/>
       }
-      
       <LoginArrow />
     </LoginLayout>
   )

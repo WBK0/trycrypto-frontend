@@ -30,7 +30,7 @@ const BuyCrypto: React.FC = () => {
   // State variables
   const [data, setData] = useState<IData>({})
   const [selected, setSelected] = useState('BTC');
-  const [cryptoAmount, setCryptoAmount] = useState("0");
+  const [cryptoAmount, setCryptoAmount] = useState("");
   const [usdtAmount, setUsdtAmount] = useState("0");
   
   // Fetching data from the API
@@ -41,7 +41,7 @@ const BuyCrypto: React.FC = () => {
 
   // Handling the selection of a crypto
   useEffect(() => {
-    setCryptoAmount("0");
+    setCryptoAmount("");
     setUsdtAmount("0");
   }, [selected])
 

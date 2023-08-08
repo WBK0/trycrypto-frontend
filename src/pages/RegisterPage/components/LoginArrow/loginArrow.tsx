@@ -1,5 +1,6 @@
 import { SignupLink, SignupText, Wrapper } from './loginArrow.styles';
 
+// LoginArrow component - renders the redirect to login page arrow
 const LoginArrow = () => {
   return(
     <Wrapper>

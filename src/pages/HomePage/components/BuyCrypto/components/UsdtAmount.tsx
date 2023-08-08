@@ -1,4 +1,4 @@
-const { InputGroup, InputText, Input, Select, Icon } = require("../buyCrypto.styles");
+import { InputGroup, InputText, Input, Select, Icon } from '../buyCrypto.styles';
 
 interface IUsdtAmount {
   usdtAmount: string;
