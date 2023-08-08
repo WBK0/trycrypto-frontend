@@ -1,9 +1,12 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Header, Question, Wrapper, Text, ShowAnswer, Answer } from "./faq.styles";
 
+// Faq component - renders the FAQ section on the home page
 const Faq = () => {
+  // State variables
   const [showAnswer, setShowAnswer] = useState(0);
 
+  // Handling the show/hide of the answer
   const handleShowAnswer = (questionId : number) => {
     if(showAnswer !== questionId){
       setShowAnswer(questionId)

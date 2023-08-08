@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   margin-top: 100px;
   @media screen and (min-width: 800px){
-    margin-top: 450px;
+    margin-top: 550px;
   }
 `
 

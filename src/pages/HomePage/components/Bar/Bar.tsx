@@ -3,6 +3,7 @@ import { Container } from "../../../../shared/container";
 import { Row } from "../../../../shared/row";
 import { ItemContent, ItemHeader, ItemWrapper, Wrapper } from "./bar.styles";
 
+// Bar component - renders the bar section of the home page
 const Bar = () => {
   return(
     <Wrapper>

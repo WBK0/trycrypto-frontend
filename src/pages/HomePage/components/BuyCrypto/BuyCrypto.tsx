@@ -3,7 +3,6 @@ import {
   Header,
   Input,
   InputGroup,
-  InputSelect,
   InputText,
   Wrapper,
   SelectContainer,
@@ -17,58 +16,57 @@ import {
 import api from "../../../../services/api";
 import decimalPlaces from "../../../../services/decimalPlaces";
 import { toast } from "react-toastify";
+import CryptoAmount from "./components/CryptoAmount";
+import UsdtAmount from "./components/UsdtAmount";
 
-interface Data {
+export interface IData {
   [key: string]: {
     lastPrice: number;
   };
 }
 
+// BuyCrypto component - renders the buy crypto section on the home page
 const BuyCrypto: React.FC = () => {
-  const [data, setData] = useState<Data>({})
+  // State variables
+  const [data, setData] = useState<IData>({})
   const [selected, setSelected] = useState('BTC');
-  const [showOptions, setShowOptions] = useState(false);
   const [cryptoAmount, setCryptoAmount] = useState("0");
   const [usdtAmount, setUsdtAmount] = useState("0");
-
+  
+  // Fetching data from the API
   const fetchData = async () => {
     const result = await api.get('/data');
     setData(result.data.spot)
   }
 
-  const selectRef = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-      setShowOptions(false);
-    }
-  };
-
+  // Handling the selection of a crypto
   useEffect(() => {
     setCryptoAmount("0");
     setUsdtAmount("0");
   }, [selected])
 
+  // Handling the change of the crypto amount
   const handleChangeCrypto = (e: {target: {value: string}}) => {
-    if((Number(e.target.value) || Number(e.target.value) == 0) && decimalPlaces(e.target.value) <= 1){
+    // Checking if the input is a number and has only one decimal place 
+    if((Number(e.target.value) || Number(e.target.value) == 0) && decimalPlaces(e.target.value) <= 1){ 
       setCryptoAmount(e.target.value);
       setUsdtAmount((Number(e.target.value) * (data?.[selected + 'USDT']?.lastPrice ?? 0)).toString());
     }
   }
 
+  // Handling the change of the USDT amount
   useEffect(() => {
-    fetchData()
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
+    fetchData();
   }, []);
 
+  // handling the buying of the crypto
   const handleBuy = async () => {
     try {
+      // Sending the request to the API
       await api.post('/api/spot/market/buy/' + selected + "USDT", {
         quantity: Number(cryptoAmount)
       })
+      // Showing the success toast 
       toast.success('The purchase was carried out correctly', {
         position: "bottom-right",
         autoClose: 5000,
@@ -80,6 +78,7 @@ const BuyCrypto: React.FC = () => {
         });
     } catch (error : any) {
       if(error.response.data.error_code == 110){
+        // Showing the error toast if the error is known
         toast.error('You cannot afford to buy this amount of cryptocurrencies', {
           position: "bottom-right",
           autoClose: 5000,
@@ -90,6 +89,7 @@ const BuyCrypto: React.FC = () => {
           theme: "dark",
         });
       }else{
+        // Showing the error toast if the error is unknown
         toast.error('An unknown error occurred', {
           position: "bottom-right",
           autoClose: 5000,
@@ -103,41 +103,19 @@ const BuyCrypto: React.FC = () => {
     }
   }
 
-  const handleSelect = () => {
-    setShowOptions(!showOptions);
-  };
-
   return (
     <Wrapper>
       <Header>FAST BUY</Header>
-      <InputGroup>
-        <InputText value="Buy" disabled />
-        <Input type="text" value={cryptoAmount} onChange={handleChangeCrypto}/>
-        <SelectContainer onClick={handleSelect} ref={selectRef}>
-          <Select>
-            <Icon src={`https://api.trycrypto.pl/icon/${selected.toLowerCase()}`} />
-            {selected}<I className="bi bi-arrow-down-short"></I>
-          </Select>
-          {showOptions ? (
-            <OptionsContainer>
-              {Object.entries(data).map(([key, item]) => { 
-                return(
-                <OptionsItem key={key} onClick={() => setSelected(key.toUpperCase().replace("USDT", ""))}>
-                  <Icon src={`https://api.trycrypto.pl/icon/${key.toLowerCase().replace("usdt", "")}`} />
-                  {key.toUpperCase().replace("USDT", "")}
-                </OptionsItem>
-              )})}
-            </OptionsContainer>
-          ) : null}
-        </SelectContainer>
-      </InputGroup>
-      <InputGroup style={{ marginTop: "50px" }}>
-        <InputText value="For" disabled />
-        <Input type="text" value={usdtAmount} disabled/>
-        <Select>
-          <Icon src="https://api.trycrypto.pl/icon/usdt"></Icon>USDT
-        </Select>
-      </InputGroup>
+      <CryptoAmount 
+        cryptoAmount={cryptoAmount} 
+        data={data} 
+        handleChangeCrypto={handleChangeCrypto} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <UsdtAmount 
+        usdtAmount={usdtAmount} 
+      />
       <Button onClick={handleBuy}>Buy now</Button>
     </Wrapper>
   );

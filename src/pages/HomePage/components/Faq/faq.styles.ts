@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   margin-top: 150px;
-  margin-bottom: 150px;
+  padding-bottom: 150px;
 `
 
 export const Header = styled.h4`

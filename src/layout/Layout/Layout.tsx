@@ -3,17 +3,19 @@ import { Container } from "../../shared/container";
 import Navbar from "../Navbar/Navbar";
 import { Wrapper } from "./layout.style";
 
-interface Props {
+// Layout interface
+interface ILayout {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<Props> = ({ children }) => {
+// Layout component
+const Layout: React.FC<ILayout> = ({ children }) => {
   return (
     <>
       <Navbar />
       <Wrapper>
         <Container>
-          {children}
+          {children} {/* Rendering children components */}
         </Container>
       </Wrapper>
       <Footer />
