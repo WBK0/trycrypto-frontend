@@ -15,13 +15,16 @@ interface IPasswordFormProps{
   setPassword: (passoword: string) => void
 }
 
+// Password form component - renders a form that asks for the user's password
 const PasswordForm: React.FC<IPasswordFormProps> = ({ nextStep, email, setPassword}) => {
 
+  // Getting the navigate function from react-router-dom
   const navigate = useNavigate()
+  // Getting the setLoggedIn and lastLocation functions from the AuthContext
   const { setLoggedIn, lastLocation } = useContext(AuthContext);
 
+  // Function that handles the form submission
   const handleSubmit = async(formValues: {password: string}, {setFieldError, setSubmitting}: FormikHelpers<{password: string}>): Promise<void> => {
-  
     try {
       // sending a query to the login server using the LoginService
       await api.post('/user/login', {
@@ -44,6 +47,7 @@ const PasswordForm: React.FC<IPasswordFormProps> = ({ nextStep, email, setPasswo
       setSubmitting(false);
     } catch (error : any) {
       console.log(error)
+      // if the user hasn't confirmed their email, resend the confirmation email and go to the confirmation page
       if(error.response.data.error_code == 201){
         api.post('/user/confirm/resend', {
           email: email,

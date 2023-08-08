@@ -8,12 +8,19 @@ import AuthContext from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import ConfirmAccount from '../RegisterPage/components/ConfirmAccount/ConfirmAccount';
 
-// This component renders the login page with multiple steps.
+// Login Page component - the main component of the login page
 const LoginPage = () => {
+  // State variables
+  const [step, setStep] = useState<number>(1);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("")
 
+  // Getting the isLoggedIn state variable from the AuthContext
   const { isLoggedIn } = useContext(AuthContext)
+  // Getting the navigate function from the react-router-dom
   const navigate = useNavigate()
 
+  // If the user is logged in, redirect to the home pages
   useEffect(() => {
     console.log(isLoggedIn)
     if(isLoggedIn == true){
@@ -21,14 +28,9 @@ const LoginPage = () => {
     }
   }, [])
   
-  // Initialize state variables for the login page
-  const [step, setStep] = useState<number>(1);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("")
-
-  // Function to handle clicking the "login" button on email page
+  // Function to go to the next step
   const nextStep = () => {
-    setStep(step+1);
+    setStep(step + 1);
   }
 
   return(
@@ -55,13 +57,16 @@ const LoginPage = () => {
               )
             case 3:
               return(
-                <ConfirmAccount email={email} password={password}/>
+                <ConfirmAccount 
+                  email={email} 
+                  password={password}
+                />
               )
             default:
               console.warn(`Unexpected step value: ${step}`);
               return null
           }
-        })()}      
+        })()}
       <ResetPasswordButton />
       <SignUpButton />
     </LoginLayout>

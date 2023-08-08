@@ -1,5 +1,6 @@
 import { SignupLink, SignupText, Wrapper } from './loginArrow.styles';
 
+// Sign up button component - renders a button that redirects to the sign up page
 const SignUpButton = () => {
   return(
     <Wrapper>
