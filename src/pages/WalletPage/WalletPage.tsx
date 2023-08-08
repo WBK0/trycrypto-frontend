@@ -9,11 +9,15 @@ import CurrentBalance from "./components/CurrentBalance/CurrentBalance";
 import UserInfo from "./components/UserInfo/UserInfo";
 import Loading from "../../components/Loading/Loading";
 
+// WalletPage component - the main component of the wallet page
 const WalletPage = () => {
-
-  const { balance } = useWallet();
+  // Initializing state variables
   const [loading, setLoading] = useState(true)
 
+  // Fetching data using useWallet hook
+  const { balance } = useWallet();
+
+  // Setting loading to false when balance is fetched
   useEffect(() => {
     if(balance){
       setLoading(false)
@@ -21,11 +25,9 @@ const WalletPage = () => {
     }
   }, [balance])
 
-  console.log(loading)
-
   return(
     <>
-    {loading 
+    {loading // Rendering loading component if loading is true
       ? <Loading withNavbar={true} />
       : null
     }

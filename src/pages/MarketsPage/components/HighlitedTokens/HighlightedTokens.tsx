@@ -8,11 +8,11 @@ interface IHighlightedTokens{
   market: string;
 }
 
+// The highlighted tokens component - renders 4 Highlited tokens containers
 const HighlightedTokens: React.FC<IHighlightedTokens> = ({ data, market }) => {
   return(
     <Row mt='20px'>
       {data.length > 0 ?
-        // Render four HighlitedContainer components with different prop values
         <>
           <HighlitedContainer 
             data={data} 

@@ -4,19 +4,27 @@ import { Col } from "../../../../shared/col";
 import { Row } from "../../../../shared/row";
 import { BalanceWrapper, ContentBalance, HeaderBalance, Wrapper } from "./currentBalance.styles";
 
+// Interface for the current balance component
 interface ICurrentBalance {
   balance?: number;
 }
 
+// The current balance component - renders the current balance and the predicted balance
 const CurrentBalance : React.FC<ICurrentBalance> = ({ balance }) => {
+  // Creating a state for the predicted balance
   const [predictedBalance, setPredictedBalance] = useState(0)
 
+  // Function to fetch the predicted balance
   const getPredictedBalance = async () => {
-    const response = await api.get("/api/wallet/predicted/balance");
-    console.log(response)
-    setPredictedBalance(response.data.predictedBalance)
+    try {
+      const response = await api.get("/api/wallet/predicted/balance");
+      setPredictedBalance(response.data.predictedBalance)
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  // Fetching the predicted balance on component mount
   useEffect(() => {
     getPredictedBalance()
   }, [])

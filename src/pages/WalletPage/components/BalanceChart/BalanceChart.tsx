@@ -3,18 +3,20 @@ import { Icon, NoDataError, SelectButton, SelectInterval, Wrapper } from "./bala
 import { useEffect, useState } from "react";
 import api from "../../../../services/api";
 
+// The balance chart component - renders the balance chart
 const BalanceChart = () => {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [rightSide, setRightSide] = useState(0);
-  const [leftSide, setLeftSide] = useState(0);
-  const [interval, setInterval] = useState(7);
-  const [data, setData] = useState([["Day", "Balance"]])
+  // Initializing the states variables
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth); // The screen width
+  const [rightSide, setRightSide] = useState(0); // The right side of the chart
+  const [leftSide, setLeftSide] = useState(0); // The left side of the chart
+  const [interval, setInterval] = useState(7); // The interval of the chart
+  const [data, setData] = useState([["Day", "Balance"]]) // The data of the chart
 
+  // Function to handle resize of the screen
   useEffect(() => {
     const handleResize = async() => {
       const width = await window.innerWidth;
       setScreenWidth(width);
-      console.log(width)
       if (width <= 1000 && width > 450) {
         setRightSide(10);
         setLeftSide(70);
@@ -27,6 +29,7 @@ const BalanceChart = () => {
       }
     };
 
+    // Adding the event listener
     window.addEventListener('resize', handleResize);
     handleResize();
     return () => {
@@ -34,27 +37,32 @@ const BalanceChart = () => {
     };
   }, []);
 
+  // Function to get the predicted balance
   const getPredictedBalance = async () => {
     try {
+      // Fetching the data from the api
       const response = await api.get('/api/wallet/predicted/last/' + interval);
       const responseData = response.data;
+      // Creating an array of the data
       const dataArray = responseData.sort((a: {date: string}, b: {date: string}) => new Date(a.date).getTime() - new Date(b.date).getTime()).map((item: {date: string, balance: number}) => {
         const formattedDate = new Date(item.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
         return [formattedDate.replace("/", "."), Number(item.balance.toFixed(2))];
       });
-      
+
+      // Setting the data of the chart
       setData(([["Day", "Balance"], ...dataArray]));
-    
     } catch (error) {
+      // Handling the error
       console.error(error)
     }
   }
 
-  
+  // Fetching the predicted balance on component mount
   useEffect(() => {
     getPredictedBalance()
   }, [])
   
+  // Setting the options of the chart
   const options = {
     title: "Predicted balance",
     curveType: "function",
@@ -73,17 +81,11 @@ const BalanceChart = () => {
       color: 'white'
     },
     chartArea: {'left': leftSide, 'width': '100%', 'right': rightSide},
-    // legendTextStyle: {
-    //   color: 'white'
-    // },
     colors: [
       'ecbe04',
     ],
     legend: { position: "none" },
-    
-    
-  };        console.log(data)
-
+  };
 
   return(
     <Wrapper>
@@ -108,7 +110,6 @@ const BalanceChart = () => {
         height="400px"
       />
       }
-     
     </Wrapper>
   )
 }

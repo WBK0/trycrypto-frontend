@@ -1,14 +1,15 @@
 import IWallet from "../../../../interfaces/Wallet.interface";
 import { ContentRow, ContentWrapper, Header, HeaderWrapper, NoAssets, Pair, Quantity, Type, Wrapper } from "./cryptoAssets.styles";
 
+// Interface crypto assets
 interface ICryptoAssets{
   instrument: string;
   type?: 'long' | 'short';
   balance?: IWallet;
 }
 
+// The CryptoAssets component - renders the user's crypto assets
 const CryptoAssets : React.FC<ICryptoAssets> = ({ instrument, type, balance }) => {
-  console.log(balance?.futureBalance ? '1' : '0')
   return(
     <Wrapper>
       <HeaderWrapper>
@@ -21,6 +22,7 @@ const CryptoAssets : React.FC<ICryptoAssets> = ({ instrument, type, balance }) =
       </HeaderWrapper>
       {balance && (
         <ContentWrapper>
+          {/* Map through the user's assets and display them */}
           {Object.entries(instrument === 'spot' && balance.spotBalance ? balance.spotBalance : type && balance.futureBalance && balance.futureBalance[type] ? balance.futureBalance[type] : {}).map(([key, value]) => (
             value > 0 ?
             <ContentRow key={key}>
@@ -31,6 +33,7 @@ const CryptoAssets : React.FC<ICryptoAssets> = ({ instrument, type, balance }) =
             null
           ))}
           {
+            // If the user doesn't have any assets on the spot market, display a message
             instrument == 'spot' && !balance.spotBalance 
             ? <NoAssets>You don't have any cryptocurrencies on the spot market</NoAssets>
             : 

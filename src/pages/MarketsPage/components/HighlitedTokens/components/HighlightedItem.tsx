@@ -1,5 +1,5 @@
 import { MarketData } from '../interfaces/marketData';
-import { ChangeWrapper, IconWrapper, PriceWrapper, Wrapper } from '../highlited.styles';
+import { ChangeWrapper, Icon, IconWrapper, PriceWrapper, Wrapper } from '../highlited.styles';
 
 // Define the interface
 interface IHighlightedToken{
@@ -11,7 +11,7 @@ const HighlitedItem : React.FC<IHighlightedToken> = ({ item }) => {
   return(
     <Wrapper>
       <IconWrapper>
-        <img src={"https://api.trycrypto.pl/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon"/> 
+        <Icon src={"https://api.trycrypto.pl/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" /> 
           {item.pair.replace(/usdt/gi, "")}
       </IconWrapper>
       <PriceWrapper>

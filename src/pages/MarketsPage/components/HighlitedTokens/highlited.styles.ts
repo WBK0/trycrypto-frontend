@@ -32,6 +32,10 @@ export const IconWrapper = styled.div`
   flex: 1;
 `
 
+export const Icon = styled.img`
+  padding-right: 7px;
+`
+
 export const PriceWrapper = styled.div`
   flex: 1;
   text-align: center;
