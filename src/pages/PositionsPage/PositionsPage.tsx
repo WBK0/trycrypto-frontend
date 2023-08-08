@@ -8,15 +8,20 @@ import TableFuturesOrders from "./components/TableFuturesOrders/TableFuturesOrde
 import TableFuturesPositions from "./components/TableFuturesPositions/TableFuturesPositions";
 import PathError from "./components/PathError/PathError";
 
+// PositionsPage component - renders the positions page
 const PositionsPage = () => {
-  const [data, setData] = useState({spot: {}, futures: {}})
-  const params = useParams()
+  // Initialising the state
+  const [data, setData] = useState({spot: {}, futures: {}});
+  // Getting the params from the url
+  const params = useParams();
 
+  // Function to get the prices from the api
   const getPrices = async () => {
     const response = await api.get('/data')
     setData(response.data)
   }
 
+  // Fetching the prices on component mount and setting an interval to fetch the prices every 5 seconds
   useEffect(() => {
     getPrices();
     setInterval(() => {
@@ -24,19 +29,22 @@ const PositionsPage = () => {
     }, 5000)
   }, [])
 
-  console.log(params['*'])
-
+  // Function to check if the route is matched
   const isRouteMatched = (path: string) => {
     return params['*'] == path;
   };
 
   return(
     <PositionsLayout>
-      {isRouteMatched("spot/orders") ||
-      isRouteMatched("futures/orders") ||
-      isRouteMatched("futures/positions") ? (
+      {
+        isRouteMatched("spot/orders") ||
+        isRouteMatched("futures/orders") ||
+        isRouteMatched("futures/positions") 
+      ? (
         <Header params={params['*']!} />
-      ) : null}
+      ) 
+      : null
+      }
       <Routes>
         <Route path="/spot/orders" element={<TableSpotOrders prices={data['spot']} />} />
         <Route path="/futures/orders" element={<TableFuturesOrders prices={data['futures']} />} />

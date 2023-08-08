@@ -1,5 +1,6 @@
 import { Icon, Wrapper, Text } from "./pathError.styles";
 
+// PathError component - renders the path error
 const PathError = () => {
   return(
     <Wrapper>

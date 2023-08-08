@@ -5,6 +5,7 @@ import api from "../../../../../services/api";
 import { toast } from "react-toastify";
 import { IFuturesPositions } from "../TableFuturesPositions";
 
+// Close Modal interface
 interface ICloseModal{
   onClose: () => void;
   fetchPositions: () => void;
@@ -12,36 +13,38 @@ interface ICloseModal{
   pairPrice: number;
 }
 
+// CloseModal component - renders the close modal
 const CloseModal: React.FC<ICloseModal> = ({ onClose, fetchPositions, modalItem, pairPrice }) => {
+  // Initialising the state
   const [toSold, setToSold] = useState(0)
-  console.log(pairPrice);
 
+  // Function to handle the change in the range input
   const handleChange = (e : {target: {value: string}}) => {
     setToSold(Number(e.target.value))
   }
 
+  // Function to handle closing the position
   const handleClose = async () => {
     try {
+      // Make a post request to the api to close the position
       await api.post('/api/derivatives/market/close/' + modalItem.id, {
         quantity: toSold
-      },{
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-        }})
-        fetchPositions();
-        onClose();
-        toast.success(`${toSold}/${modalItem.quantity} of this position has been successfully closed`, {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "dark",
-          });
+      })
+      // Fetch the positions and close the modal
+      fetchPositions();
+      onClose();
+      // Show a success toast message
+      toast.success(`${toSold}/${modalItem.quantity} of this position has been successfully closed`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
     } catch (error) {
+      // Show a error toast message
       toast.error('The position cannot be closed for some unknown reason', {
         position: "bottom-right",
         autoClose: 5000,

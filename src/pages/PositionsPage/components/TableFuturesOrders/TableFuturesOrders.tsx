@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import api from "../../../../services/api";
-import { Actions, CloseButton, NoOpened, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, Wrapper } from "../tableSpotOrders.styles";
+import { NoOpened, Table, TableWrapper, Wrapper } from "../tableSpotOrders.styles";
 import { toast } from "react-toastify";
+import TableHead from "./components/TableHead";
+import TableBody from "./components/TableBody";
 
-interface IFuturesOrders{
+// Interface for the futures orders
+export interface IFuturesOrders{
   id: number;
   type: string;
   pair: string;
@@ -14,6 +17,7 @@ interface IFuturesOrders{
   leverage: number;
 }
 
+// Table Futures Orders interface
 interface ITableFuturesOrders {
   prices: {
     [pair: string]: {
@@ -22,9 +26,12 @@ interface ITableFuturesOrders {
   };
 }
 
+// TableFuturesOrders component - renders the futures orders table
 const TableFuturesOrders: React.FC<ITableFuturesOrders> = ({prices}) => {
+  // Initialising the state
   const [futuresOrders, setFuturesOrders] = useState<IFuturesOrders[]>([])
 
+  // Function to get the futures orders from the api
   const getFuturesOrders = async () => {
     try {
       const response = await api.get('/api/derivatives/limit/orders');
@@ -34,9 +41,12 @@ const TableFuturesOrders: React.FC<ITableFuturesOrders> = ({prices}) => {
     }
   }
 
+  // Function to close an order by id 
   const closeOrder = async (id: number) => {
     try {
-      const response = await api.get('/api/derivatives/limit/close/' + id);
+      // Sending a request to the api to close the order
+      await api.get('/api/derivatives/limit/close/' + id);
+      // Showing a success toast
       toast.success('Successfully closed order', {
         position: "bottom-right",
         autoClose: 5000,
@@ -46,8 +56,10 @@ const TableFuturesOrders: React.FC<ITableFuturesOrders> = ({prices}) => {
         draggable: true,
         theme: "dark",
       });      
+      // Refreshing the futures orders
       getFuturesOrders()
     } catch (error) {
+      // Showing an error toast if the request failed and logging the error
       toast.error('The order has not been closed', {
         position: "bottom-right",
         autoClose: 5000,
@@ -61,6 +73,7 @@ const TableFuturesOrders: React.FC<ITableFuturesOrders> = ({prices}) => {
     }
   }
 
+  // Function to get the futures orders on component mount
   useEffect(() => {
     getFuturesOrders();
   }, [])
@@ -69,40 +82,12 @@ const TableFuturesOrders: React.FC<ITableFuturesOrders> = ({prices}) => {
     <Wrapper>
       <TableWrapper>
         <Table>
-          <THead>
-            <Tr>
-              <Th>Type</Th>
-              <Th>Pair</Th>
-              <Th>Quantity</Th>
-              <Th>Order price</Th>
-              <Th>Pair price</Th>
-              <Th>Leverage</Th>
-              <Th>Take profit</Th>
-              <Th>Stop loss</Th>
-              <ThActions>Actions</ThActions>
-            </Tr>
-          </THead>
-          <TBody>
-            {futuresOrders.map((item) => {
-              return(
-              <Tr>
-                <Td width="60px" color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type.toUpperCase()}</Td>
-                <Td width="100px">{item.pair}</Td>
-                <Td width="140px">{item.quantity} {item.pair.replace("USDT", "")}</Td>
-                <Td width="160px">{Number(item.price).toFixed(4)} USDT</Td>
-                <Td width="150px">{Number(prices[item.pair.toUpperCase()]?.lastPrice).toFixed(4)} USDT</Td>
-                <Td width="70px">{item.leverage}</Td>
-                <Td width="140px">{item.takeProfit || 0} USDT</Td>
-                <Td width="140px">{item.stopLoss || 0} USDT</Td>
-                <Actions width="100px">
-                  <CloseButton onClick={() => closeOrder(item.id)}>
-                    Close
-                  </CloseButton>
-                </Actions>
-              </Tr>
-              )
-            })}
-          </TBody>
+          <TableHead />
+          <TableBody 
+            prices={prices}
+            futuresOrders={futuresOrders}
+            closeOrder={closeOrder}
+          />
         </Table>
         {
           futuresOrders.length == 0

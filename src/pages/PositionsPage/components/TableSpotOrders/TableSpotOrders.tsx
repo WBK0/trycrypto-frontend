@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import api from "../../../../services/api";
-import { Actions, CloseButton, NoOpened, TBody, THead, Table, TableWrapper, Td, Th, ThActions, Tr, Wrapper } from "../tableSpotOrders.styles";
+import { NoOpened, Table, TableWrapper, Wrapper } from "../tableSpotOrders.styles";
 import { toast } from "react-toastify";
+import TableHead from "./components/TableHead";
+import TableBody from "./components/TableBody";
 
-interface ISpotOrders{
+// Interface for the spot orders
+export interface ISpotOrders{
   id: number;
   type: string;
   pair: string;
@@ -11,6 +14,7 @@ interface ISpotOrders{
   quantity: number;
 }
 
+// Interface for component props
 interface ITableSpotOrders {
   prices: {
     [pair: string]: {
@@ -19,9 +23,12 @@ interface ITableSpotOrders {
   };
 }
 
+// TableSpotOrders component - renders the spot orders table
 const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
+  // Initialising the state
   const [spotOrders, setSpotOrders] = useState<ISpotOrders[]>([])
 
+  // Function to get the spot orders from the api
   const getSpotOrders = async () => {
     try {
       const response = await api.get('/api/spot/limit/orders');
@@ -31,9 +38,12 @@ const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
     }
   }
 
+  // Function to close an order by id 
   const closeOrder = async (id: number) => {
     try {
-      const response = await api.get('/api/spot/limit/close/' + id);
+      // Sending a request to the api to close the order
+      await api.get('/api/spot/limit/close/' + id);
+      // Showing a success toast 
       toast.success('Successfully closed order', {
         position: "bottom-right",
         autoClose: 5000,
@@ -43,8 +53,10 @@ const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
         draggable: true,
         theme: "dark",
       });      
+      // Refreshing the spot orders
       getSpotOrders()
     } catch (error) {
+      // Showing an error toast if the request failed and logging the error
       toast.error('The order has not been closed', {
         position: "bottom-right",
         autoClose: 5000,
@@ -58,6 +70,7 @@ const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
     }
   }
 
+  // Function to get the spot orders on component mount
   useEffect(() => {
     getSpotOrders();
   }, [])
@@ -66,39 +79,14 @@ const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
     <Wrapper>
       <TableWrapper>
         <Table>
-          <THead>
-            <Tr>
-              <Th>Type</Th>
-              <Th>Pair</Th>
-              <Th>Quantity</Th>
-              <Th>Order price</Th>
-              <Th>Pair price</Th>
-              <Th>Order cost</Th>
-              <ThActions>Actions</ThActions>
-            </Tr>
-          </THead>
-          <TBody>
-            {spotOrders.map((item) => {
-              return(
-              <Tr>
-                <Td width="60px" color={item.type == 'buy' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type.toUpperCase()}</Td>
-                <Td width="130px">{item.pair}</Td>
-                <Td width="150px">{item.quantity} {item.pair.replace("USDT", "")}</Td>
-                <Td width="160px">{Number(item.price).toFixed(4)} USDT</Td>
-                <Td width="150px">{Number(prices[item.pair.toUpperCase()]?.lastPrice).toFixed(4)} USDT</Td>
-                <Td width="160px">{Number(item.price * item.quantity).toFixed(4)} USDT</Td>
-                <Actions width="100px">
-                  <CloseButton onClick={() => closeOrder(item.id)}>
-                    Close
-                  </CloseButton>
-                </Actions>
-              </Tr>
-              )
-            })}
-            
-          </TBody>
+          <TableHead />
+          <TableBody
+            spotOrders={spotOrders}
+            prices={prices}
+            closeOrder={closeOrder} 
+          />
         </Table>
-        {
+        { // If there are no spot orders, display a message
           spotOrders.length == 0
           ? <NoOpened>You don't have any open orders in the spot market</NoOpened>
           : null

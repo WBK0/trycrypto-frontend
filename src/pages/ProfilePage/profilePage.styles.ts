@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   align-items: center;
 `
 
-export const ProfilePicture = styled.div`
+export const ProfilePictureWrapper = styled.div`
   margin-bottom: 30px;
   position: relative;
   display: inline-block;
