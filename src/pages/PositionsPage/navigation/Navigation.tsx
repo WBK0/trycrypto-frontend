@@ -1,5 +1,6 @@
 import { Item, ItemWrapper, Wrapper, Text } from "./navigation.styles";
 
+// Navigation component - renders the navigation
 const Navigation = () => {
   return(
     <Wrapper>

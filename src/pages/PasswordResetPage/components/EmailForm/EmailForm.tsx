@@ -4,7 +4,7 @@ import EmailInput from './components/EmailInput';
 import { Wrapper } from './emailForm.styles';
 import api from '../../../../services/api';
 
-// Defining the interface for the EmailInput component
+// Defining the interface for the EmailForm component
 interface IEmailForm {
   nextStep: () => void,
   setEmail: (value: string) => void,
@@ -19,8 +19,10 @@ export const emailSchema = Yup.object().shape({
   .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'You have entered an incorrect email')
 });
 
+// EmailForm component - renders the email form
 const EmailForm: React.FC<IEmailForm> = ({nextStep, setEmail, email}) => {
 
+  // Function to handle submitting the form
   const handleSubmit = async(formValues: {email: string}, {setFieldError, setSubmitting}: FormikHelpers<{email: string}>) => {
     try {
       await api.post('/user/check/email/login', {

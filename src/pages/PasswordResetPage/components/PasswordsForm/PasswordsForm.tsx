@@ -28,18 +28,25 @@ const passwordSchema = Yup.object().shape({
     .required('This field is required')
 });
 
-const PasswordsForm: React.FC<IPasswordFormProps> = ({ email, code, previousStep }) => {
 
+// PasswordsForm component - renders the password form
+const PasswordsForm: React.FC<IPasswordFormProps> = ({ email, code, previousStep }) => {
+  // Getting the navigate function from the react-router-dom library
   const navigate = useNavigate()
+
+  // Getting the setLoggedIn function from the AuthContext
   const { setLoggedIn } = useContext(AuthContext)
 
+  // Function to handle submitting the form
   const handleSubmit = async (formValues: {password: string}) => {
     try {
+      // Sending a request to the server to change the password
       await api.post('/user/reset/password', {
         email: email,
         code: code,
         password: formValues.password
       })  
+      // Displaying a success toast
       toast.success('Password change, please log in', {
         position: "bottom-right",
         autoClose: 5000,
@@ -49,10 +56,12 @@ const PasswordsForm: React.FC<IPasswordFormProps> = ({ email, code, previousStep
         draggable: true,
         theme: "dark",
       });  
+      // Setting the logged in state to false and navigating to the login page
       setLoggedIn(false);
       navigate('/login');
     } catch (error : any) {
       console.log(error)
+      // Displaying an error toast if the confirmation code is expired
       if(error.response.data.error_code == 362){
         toast.error('Confirmation code expired', {
           position: "bottom-right",
@@ -63,8 +72,10 @@ const PasswordsForm: React.FC<IPasswordFormProps> = ({ email, code, previousStep
           draggable: true,
           theme: "dark",
         });  
+        // Bringing the user back to the previous step
         previousStep();
-      }else{
+      }else if(error.response.data.error_code == 111){
+        // Displaying an error toast if the previous password is the same as the new password
         toast.error('The previous password cannot be the same as the new password', {
           position: "bottom-right",
           autoClose: 5000,
@@ -74,6 +85,17 @@ const PasswordsForm: React.FC<IPasswordFormProps> = ({ email, code, previousStep
           draggable: true,
           theme: "dark",
         });  
+      }else{
+        // Displaying an error toast if the request failed
+        toast.error('Password change failed, please try again later', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
       }
     }
   }

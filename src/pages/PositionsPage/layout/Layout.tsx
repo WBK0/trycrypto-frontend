@@ -7,6 +7,7 @@ interface IPositionsLayout{
   children: React.ReactNode;
 }
 
+// Layout component - renders the layout for the positions page
 const PositionsLayout: React.FC<IPositionsLayout> = ({ children }) => {
   const [showNavigation, setShowNavigation] = useState(false)
 

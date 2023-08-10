@@ -36,7 +36,7 @@ const PositionsPage = () => {
 
   return(
     <PositionsLayout>
-      {
+      { // Rendering the header if the route is matched with the following paths
         isRouteMatched("spot/orders") ||
         isRouteMatched("futures/orders") ||
         isRouteMatched("futures/positions") 
