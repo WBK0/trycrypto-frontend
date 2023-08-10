@@ -3,8 +3,11 @@ import api from "../../../../../../services/api";
 import { EmptyHistoryHeader, HistoryHeader, HistoryLink, MoreHistory, TBody, THead, Table, TableWrapper, Td, Th, Tr, Wrapper } from "./transactionHistory.styles";
 import IWallet from "../../../../../../interfaces/Wallet.interface";
 import AuthContext from "../../../../../../contexts/AuthContext";
+import TableHead from "./components/TableHead/TableHead";
+import TableBody from "./components/TableBody/TableBody";
 
-interface IHistory{
+// Interface for the history
+export interface IHistory{
   id: number;
   type: string;
   pair: string;
@@ -13,16 +16,21 @@ interface IHistory{
   date: string;
 }
 
+// TransactionHistory interface
 interface ITransactionHistory{
   wallet?: IWallet;
   symbol?: string;
 }
 
+// TransactionHistory component - renders the transaction history table
 const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) => {
-  const [history, setHistory] = useState<IHistory>()
+  // Initialising the state
+  const [history, setHistory] = useState<IHistory[]>()
 
+  // Getting the isLoggedIn state from the AuthContext
   const { isLoggedIn } = useContext(AuthContext);
 
+  // Function to get the history from the api
   const getHistory = async () => {
     if(isLoggedIn == false)
       setHistory(undefined)
@@ -36,6 +44,7 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) 
     }
   }
  
+  // Use effect to get the history when the wallet or symbol or login status changes and on mount
   useEffect(() => {
     getHistory()
   }, [wallet, symbol, isLoggedIn])
@@ -47,54 +56,10 @@ const TransactionHistory : React.FC<ITransactionHistory> = ({ wallet, symbol }) 
       :
       <TableWrapper>
         <Table>
-          <THead>
-            <Tr>
-              <Th width={16.66}>
-                Type
-              </Th>
-              <Th width={16.66}>
-                Pair
-              </Th>
-              <Th width={16.66}>
-                Quantity
-              </Th>
-              <Th width={16.66}>
-                Price
-              </Th>
-              <Th width={16.66}>
-                Total price
-              </Th>
-              <Th width={16.66}>
-                Date
-              </Th>
-            </Tr>
-          </THead>
-          <TBody>
-          {Array.isArray(history) && history.map((item) => {
-            const date = new Date(item.date).toLocaleString();
-            return(
-            <Tr key={item.id}>
-              <Td color={item.type} width="50px" weight='600'>
-                {item.type.toUpperCase()}
-              </Td>
-              <Td width="120px" weight='400'>
-                {item.pair}
-              </Td>
-              <Td width="120px" weight='400'>
-                {item.quantity} {item.pair.replace('USDT', '')}
-              </Td>
-              <Td width="140px" weight='400'>
-                {item.price.toFixed(4)} USDT
-              </Td>
-              <Td width="140px" weight='400'>
-                {(item.price * item.quantity).toFixed(4)} USDT
-              </Td>
-              <Td width="160px" weight='400'>
-                {date}
-              </Td>
-            </Tr>)
-            })}
-          </TBody>
+          <TableHead />
+          <TableBody 
+            history={history} 
+          />
         </Table>
         <MoreHistory>
           <HistoryHeader>Wanna see more history?</HistoryHeader>

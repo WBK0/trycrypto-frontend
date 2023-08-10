@@ -1,17 +1,19 @@
 import IWallet from "../../../../../interfaces/Wallet.interface";
 import { Header, Wrapper, Flex, AssetContainer, CryptoSymbol, Quantity, LoginLink, LinkContainer } from "./assets.styles";
 
+// Assets interface
 interface IAssets{
   wallet?: IWallet;
 }
 
+// Assets component - renders the assets
 const Assets: React.FC<IAssets> = ({ wallet }) => {
   return(
     <Wrapper>
       <Flex>
         <Header>SPOT Assets</Header>
         {wallet ? Object.entries(wallet.spotBalance || {}).map(([symbol, quantity]) => {
-          if(quantity != 0){
+          if(quantity !== 0){
             return (
               <AssetContainer key={symbol}>
                 <CryptoSymbol>{symbol.replace('USDT', '')}</CryptoSymbol>

@@ -1,4 +1,6 @@
 import { useParams } from "react-router-dom";
+import useWebSocket from "../../../hooks/useWebSocket";
+import useWallet from "../../../hooks/useWallet";
 import TradingLayout from "../../../layout/TradingLayout/TradingLayout";
 import { useEffect, useState } from "react";
 import Chart from "./components/Chart/Chart";
@@ -14,25 +16,25 @@ import LastTrades from "./components/LastTrades/LastTrades";
 import Assets from "./components/SpotAssets/Assets";
 import Market from "./components/Markets/Market";
 import ResponsiveSelect from "./components/ResponsiveSelect/ResponsiveSelect";
-import useWebSocket from "../../../hooks/useWebSocket";
-import useWallet from "../../../hooks/useWallet";
 import Transactions from "./components/Transactions/Transactions";
 
+// TradingView interface
 interface TradingView {
   widget: (options: any) => any;
 }
 
+// Declaring the TradingView interface globally
 declare global {
   interface Window {
     TradingView: TradingView;
   }
 }
 
+// SpotPage component - the main component of the spot trading page
 const SpotPage: React.FC = () => {
+  // Initializing state variables
   const [loading, setLoading] = useState(true);
   const [showResponsive, setShowResponsive] = useState('chart');
-
-  const { symbol } = useParams<{ symbol: string }>()
   const [data, setData] = useState({
     c: 0,
     p: 0,
@@ -43,23 +45,36 @@ const SpotPage: React.FC = () => {
     q: 0
   });
 
+  // Getting the symbol from the url
+  const { symbol } = useParams<{ symbol: string }>()
+
+  // Use useWallet hook to get the balance and fetchBalance function
+  const { balance, fetchBalance } = useWallet(); 
+
+  // Declaring the onMessage function
   const onMessage = (event: MessageEvent) => {
     setLoading(false)
     setData(JSON.parse(event.data))
   }
+
+  // Using useWebSocket hook to connect to the binance websocket
   useWebSocket({
     url: 'wss://stream.binance.com/ws/' + symbol + '@ticker',
     onMessage
   });
 
-  const { balance, fetchBalance } = useWallet(); 
 
+  // Using useEffect hook to fetch the balance every 2 seconds
   useEffect(() => {
-    setInterval(() => {
+    const id = setInterval(() => {
       fetchBalance();
-    }, 2000)  
+    }, 2000) 
+    return () => {
+      clearInterval(id)
+    } 
   }, [])
  
+  // Using useEffect hook to set the loading state to true when the symbol changes
   useEffect(() => {
     setLoading(true);
   }, [symbol])

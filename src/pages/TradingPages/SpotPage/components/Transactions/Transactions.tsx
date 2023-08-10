@@ -7,17 +7,22 @@ import LoginView from "./loginView/loginView";
 import LimitOrders from "./limitOrders/LimitOrders";
 import OrdersHistory from "./ordersHistory/OrdersHistory";
 
+// Transactions interface
 interface ITransaction{
   wallet?: IWallet;
   symbol?: string;
   fetchBalance: () => void;
 }
 
+// Transactions component - renders the transactions component
 const Transactions: React.FC<ITransaction> = ({ wallet, symbol, fetchBalance }) => {
+  // Set the transaction view
   const [transactionView, setTransactionView] = useState<Number>(0);
 
+  // Get the logged in state
   const { isLoggedIn } = useContext(AuthContext);
 
+  // Handle change value of the transaction view
   const HandleChangeView = (view: Number) => {
     setTransactionView(view);
   }

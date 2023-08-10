@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import IWallet from "../../../../../../interfaces/Wallet.interface";
-import { Col } from "../../../../../../shared/col";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../orderPanel.styles";
-import useWallet from "../../../../../../hooks/useWallet";
-import decimalPlaces from "../../../../../../services/decimalPlaces";
-import api from "../../../../../../services/api";
-import { AxiosResponse } from "axios";
+import IWallet from "../../../../../../../interfaces/Wallet.interface";
+import { Col } from "../../../../../../../shared/col";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../../orderPanel.styles";
+import decimalPlaces from "../../../../../../../services/decimalPlaces";
+import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
 
+// SellPanel interface
 interface ISellPanel {
   balance?: IWallet;
   isLoggedIn: boolean;
@@ -16,16 +15,21 @@ interface ISellPanel {
   fetchBalance: () => void;
 }
 
+// SellPanel component - renders the sell limit panel
 const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
+  // Initialising the state
   const [orderQuantity, setOrderQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [isIncorrectPrice, setIsIncorrectPrice] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false)
+  // Refs
   const inputRefPrice = useRef<HTMLInputElement>(null);
   const inputRefQuantity = useRef<HTMLInputElement>(null);
 
+  // Handle change function - handles the change of the price input value
   const handleChangePrice = (e : {target: {value: string}}) => {
     if(balance){
+      // Get the decimal number of the input value
       const decimalNumber = decimalPlaces(e.target.value);
       setPrice(e.target.value)
       if(Number(e.target.value) >= pairPrice && decimalNumber <= 5){
@@ -36,8 +40,10 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
     }
   }
 
+  // Handle change function - handles the change of the quantity input value
   const handleChange = (e : {target: {value: string}}) => {
     if(balance && symbol){
+      // Get the decimal number of the input value
       const decimalNumber = decimalPlaces(e.target.value);
 
       if(balance && symbol && Number(e.target.value) <= Number(balance?.spotBalance[symbol.toUpperCase()]) && decimalNumber <= 1){
@@ -48,11 +54,15 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
     }
   }
 
+  // Handle submit function - handles the submit of the order
   const handleSubmit = () => {
-    api.post('/api/spot/limit/sell/' + symbol?.toUpperCase(), {
-      'quantity': Number(orderQuantity),
-      'price': Number(price)
-    }).then((response: AxiosResponse) => {
+    try {
+      // Make a post request to the api to create the order
+      api.post('/api/spot/limit/sell/' + symbol?.toUpperCase(), {
+        'quantity': Number(orderQuantity),
+        'price': Number(price)
+      })
+      // If the request is successful, fetch the balance and display the success toast
       fetchBalance();
       toast.success('Successfully ordered ' + orderQuantity + ' ' + symbol?.replace('usdt', '').toUpperCase() + ' at price ' + price + ' USDT to sold', {
         position: "bottom-right",
@@ -62,11 +72,12 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
-        setOrderQuantity("")
-        setIsSubmitted(false);
-    })
-    .catch((error: Error) => {
+      }); 
+      // Reset the state
+      setOrderQuantity("")
+      setIsSubmitted(false);
+    } catch (error) {
+      // If the request is unsuccessful, display the error toast
       setIsSubmitted(true);
       toast.error('Order creation failed', {
         position: "bottom-right",
@@ -76,10 +87,11 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
-    });
+      });
+    }    
   }
 
+  // set the order quantity to empty string when the symbol changes
   useEffect(() => {
     setOrderQuantity("")
   }, [symbol, isLoggedIn])

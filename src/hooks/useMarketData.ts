@@ -3,7 +3,7 @@ import api from "../services/api";
 
 // use Market Data Hook
 const useMarketData = (market: string) => {
-  const [marketData, setMarketData] = useState([]); // Market Data State
+  const [data, setData] = useState([]); // Market Data State
 
   // Get Market Data from API and make it an array of objects sorted by volume
   const getData = async (market: string) => {
@@ -36,7 +36,7 @@ const useMarketData = (market: string) => {
   // Fetch and update data function
   const fetchAndUpdateData = async () => {
     const data = await getData(market);
-    setMarketData(data);
+    setData(data);
   };
 
   // Fetch and update data on mount and every 5 seconds
@@ -51,7 +51,7 @@ const useMarketData = (market: string) => {
   }, [market]);
 
   // Return market data
-  return marketData;
+  return { data , getData};
 };
 
 export default useMarketData;

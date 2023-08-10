@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import IWallet from "../../../../../../interfaces/Wallet.interface";
-import { Col } from "../../../../../../shared/col";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../orderPanel.styles";
-import useWallet from "../../../../../../hooks/useWallet";
-import decimalPlaces from "../../../../../../services/decimalPlaces";
-import api from "../../../../../../services/api";
-import { AxiosResponse } from "axios";
+import IWallet from "../../../../../../../interfaces/Wallet.interface";
+import { Col } from "../../../../../../../shared/col";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../../orderPanel.styles";
+import decimalPlaces from "../../../../../../../services/decimalPlaces";
+import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
 
+// SellPanel interface
 interface ISellPanel {
   balance?: IWallet;
   isLoggedIn: boolean;
@@ -16,11 +15,15 @@ interface ISellPanel {
   fetchBalance: () => void;
 }
 
+// SellPanel component - renders the sell market panel
 const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
+  // Initialising the state
   const [orderQuantity, setOrderQuantity] = useState("");
 
+  // Handle change function - handles the change of the input value
   const handleChange = (e : {target: {value: string}}) => {
     if(balance && symbol){
+      // Getting the decimal number of the input value
       const decimalNumber = decimalPlaces(e.target.value);
 
       if(balance && symbol && Number(e.target.value) <= Number(balance?.spotBalance[symbol.toUpperCase()]) && decimalNumber <= 1){
@@ -31,17 +34,14 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
     }
   }
 
+  // Handle submit function - handles the submit of the order
   const handleSubmit = () => {
-    api.post('/api/spot/market/sell/' + symbol?.toUpperCase(), {
-      'quantity': Number(orderQuantity)
-    },{
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json', // nagłówek typu treści
-        'X-Requested-With': 'XMLHttpRequest', // dodatkowy nagłówek
-      },
-    }).then((response: AxiosResponse) => {
-      console.log(response.data);
+    try {
+      // Sending the request to the API to sell the cryptocurrency
+      api.post('/api/spot/market/sell/' + symbol?.toUpperCase(), {
+        'quantity': Number(orderQuantity)
+      })
+      // If the request is successful, fetch the balance and display the success toast
       fetchBalance();
       toast.success('Successfully sold ' + orderQuantity + ' ' + symbol?.replace('usdt', '').toUpperCase(), {
         position: "bottom-right",
@@ -51,11 +51,11 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
-        setOrderQuantity("")
-    })
-    .catch((error: Error) => {
-      console.error(error);
+      });
+      // Reset the order quantity
+      setOrderQuantity("")
+    } catch (error) {
+      // If the request is unsuccessful, display the error toast
       toast.error('Sold failed', {
         position: "bottom-right",
         autoClose: 5000,
@@ -64,10 +64,11 @@ const SellPanel: React.FC<ISellPanel> = ({ balance, isLoggedIn, symbol, pairPric
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
-    });
+      });
+    } 
   }
 
+  // Use effect to reset the order quantity when the symbol or the logged in state changes
   useEffect(() => {
     setOrderQuantity("")
   }, [symbol, isLoggedIn])

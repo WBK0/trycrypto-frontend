@@ -1,12 +1,12 @@
-import { Col } from "../../../../../../shared/col";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../orderPanel.styles";
-import IWallet from '../../../../../../interfaces/Wallet.interface';
+import { Col } from "../../../../../../../shared/col";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../../orderPanel.styles";
+import IWallet from '../../../../../../../interfaces/Wallet.interface';
 import { useEffect, useRef, useState } from "react";
-import decimalPlaces from "../../../../../../services/decimalPlaces";
-import api from "../../../../../../services/api";
-import { AxiosResponse } from "axios";
+import decimalPlaces from "../../../../../../../services/decimalPlaces";
+import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
 
+// BuyPanel interface
 interface IBuyPanel {
   balance?: IWallet;
   isLoggedIn: boolean;
@@ -15,16 +15,21 @@ interface IBuyPanel {
   fetchBalance: () => void;
 }
 
+// BuyPanel component - renders the buy limit panel
 const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
+  // Initialising the state
   const [orderQuantity, setOrderQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [isIncorrectPrice, setIsIncorrectPrice] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false)
+  // Refs
   const inputRefPrice = useRef<HTMLInputElement>(null);
   const inputRefQuantity = useRef<HTMLInputElement>(null);
 
+  // Handle change function - handles the change of the price input value
   const handleChangePrice = (e : {target: {value: string}}) => {
     if(balance){
+      // Get the decimal number of the input value
       const decimalNumber = decimalPlaces(e.target.value);
       
       if(Number(e.target.value) <= pairPrice && decimalNumber <= 5){
@@ -37,8 +42,11 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
     }
   }
 
+
+  // Handle change function - handles the change of the quantity input value
   const handleChange = (e : {target: {value: string}}) => {
     if(balance){
+      // Get the decimal number of the input value
       const decimalNumber = decimalPlaces(e.target.value);
       
       if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1)) && decimalNumber <= 1){
@@ -49,12 +57,15 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
     }
   }
 
+  // Handle submit function - handles the submit of the order
   const handleSubmit = () => {
-    api.post('/api/spot/limit/buy/' + symbol?.toUpperCase(), {
-      'quantity': orderQuantity,
-      'price': price
-    }).then((response: AxiosResponse) => {
-      console.log(response.data);
+    try {
+      // Post the order to the API
+      api.post('/api/spot/limit/buy/' + symbol?.toUpperCase(), {
+        'quantity': orderQuantity,
+        'price': price
+      })
+      // If the order is successful, fetch the balance and display the toast
       fetchBalance();
       toast.success('Successfully ordered ' + orderQuantity + ' ' + symbol?.replace('usdt', '').toUpperCase() + ' at a price of ' + price + ' USDT' + ' to buy', {
         position: "bottom-right",
@@ -64,12 +75,12 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
-        setOrderQuantity("")
-        setIsSubmitted(false);
-    })
-    .catch((error: Error) => {
-      console.error(error);
+      });
+      // Reset the input values and the isSubmitted state
+      setOrderQuantity("")
+      setIsSubmitted(false);
+    } catch (error) {
+      // If the order is unsuccessful, display the toast and set the isSubmitted state
       setIsSubmitted(true);
       toast.error('Order creation failed', {
         position: "bottom-right",
@@ -79,10 +90,11 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
-    });
+      });
+    }
   }
 
+  // Use effect - resets the input values when the symbol changes
   useEffect(() => {
     setOrderQuantity("");
   }, [symbol, isLoggedIn])

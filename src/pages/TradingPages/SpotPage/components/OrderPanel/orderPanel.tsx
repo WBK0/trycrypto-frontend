@@ -3,11 +3,12 @@ import { Row } from "../../../../../shared/row";
 import { OrderWrapper, SwitchButton, SwitchOrderType } from "./orderPanel.styles";
 import AuthContext from "../../../../../contexts/AuthContext";
 import IWallet from "../../../../../interfaces/Wallet.interface";
-import BuyPanelMarket from "./market/BuyPanel";
-import SellPanelMarket from "./market/SellPanel";
-import BuyPanelLimit from './limit/BuyPanel';
-import SellPanelLimit from './limit/SellPanel';
+import BuyPanelMarket from "./components/market/BuyPanel";
+import SellPanelMarket from "./components/market/SellPanel";
+import BuyPanelLimit from './components/limit/BuyPanel';
+import SellPanelLimit from './components/limit/SellPanel';
 
+// OrderPanel interface
 interface IOrderPanel{
   symbol: string | undefined;
   balance?: IWallet;
@@ -15,17 +16,20 @@ interface IOrderPanel{
   fetchBalance: () => void;
 }
 
+// OrderPanel component - renders the order panel
 const OrderPanel: React.FC<IOrderPanel> = ({ symbol, balance, pairPrice, fetchBalance }) => {
-  const { isLoggedIn } = useContext(AuthContext)
+  // Initialising the state
   const [orderType, setOrderType] = useState(0);
+  // Getting the isLoggedIn state from the AuthContext
+  const { isLoggedIn } = useContext(AuthContext)
 
   return(
     <OrderWrapper>
       <SwitchOrderType>
-        <SwitchButton selected={orderType == 0 ? true : false} onClick={() => setOrderType(0)}>Market</SwitchButton>
-        <SwitchButton selected={orderType == 1 ? true : false} onClick={() => setOrderType(1)}>Limit</SwitchButton>
+        <SwitchButton selected={orderType == 0} onClick={() => setOrderType(0)}>Market</SwitchButton>
+        <SwitchButton selected={orderType == 1} onClick={() => setOrderType(1)}>Limit</SwitchButton>
       </SwitchOrderType>
-      {
+      { // If the order type is 0, render the market order panel, else render the limit order panel
         orderType == 0
         ? 
         <Row>

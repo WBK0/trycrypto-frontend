@@ -2,6 +2,7 @@ import { Info, Title, Wrapper } from './pairInfo.styles';
 import { Row } from '../../../../../shared/row';
 import { Col } from '../../../../../shared/col';
 
+// PairInfo interface
 interface IPairInfo{
   data: {
     c: number;
@@ -14,6 +15,7 @@ interface IPairInfo{
   }
 }
 
+// PairInfo component - renders the pair info
 const PairInfo: React.FC<IPairInfo> = ({ data }) => {
   return(
     <Wrapper>

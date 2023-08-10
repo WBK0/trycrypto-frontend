@@ -1,5 +1,6 @@
 import { LoginLink, Text, Wrapper } from "./loginView.styles";
 
+// LoginView component - renders the login view
 const LoginView = () => {
   return(
     <Wrapper>

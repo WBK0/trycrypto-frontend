@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import { Change, InputWrapper, ItemWrapper, ItemsWrapper, Loupe, MarketWrapper, Pair, Price, SearchBar, SpotLink } from "./market.styles";
-import getData from "../../../../../components/Markets/services/getData";
 import { MarketData } from "../../../../MarketsPage/components/HighlitedTokens/interfaces/marketData";
+import useMarketData from "../../../../../hooks/useMarketData";
 
+// Market component - the main component of the spot page
 const Market = () => {
+  // Initializing state variables
   const [search, setSearch] = useState('');
-  const [data, setData] = useState<MarketData[] | []>([]);
+  const [displayData, setDisplayData] = useState<MarketData[]>([]);
+  // Fetching data using useMarketData hook
+  const { getData } = useMarketData('spot');
 
+  // Fetching data and updating the displayData state variable 
   useEffect(() => {
-    const fetchData = async (market : string) => {
-      const data = await getData(market);
-      setData(prevData => {
-        const updatedData = data.map((item: {lastPrice: string}, index) => ({
+    const fetchData = async () => {
+      const data = await getData('spot');
+      console.log(data)
+      setDisplayData(prevData => {
+        const updatedData = data.map((item: {lastPrice: string}, index : number) => ({
           ...item,
           color: item.lastPrice > prevData[index]?.lastPrice ? 'rgb(7, 119, 3)' :  item.lastPrice < prevData[index]?.lastPrice ? 'rgb(119, 3, 3)' : prevData[index]?.color || 'rgb(200, 200, 200)',
         }));
@@ -19,15 +25,14 @@ const Market = () => {
       });
     };
 
-    fetchData('spot');
+    fetchData();
     // Setting up an interval to fetch data
-    const interval = setInterval(() => fetchData('spot'), 6000);
+    const interval = setInterval(() => fetchData(), 6000);
 
     // Clearing the interval when the component unmounts
     return () => clearInterval(interval);
   }, []);
   
-  // console.log(data)
   return(
     <MarketWrapper>
       <InputWrapper>
@@ -38,7 +43,7 @@ const Market = () => {
       </InputWrapper>
       
       <ItemsWrapper>
-        {data.filter(obj => obj.pair.includes(search.toUpperCase())).map((item) => {
+        {displayData.filter(obj => obj.pair.includes(search.toUpperCase())).map((item) => {
           return(
             <SpotLink key={item.pair} to={`/market/spot/${item.pair.toLowerCase()}`}>
               <ItemWrapper>

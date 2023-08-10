@@ -4,8 +4,11 @@ import { TBody, THead, Table, TableWrapper, Td, Th, Tr, Wrapper } from "../trans
 import { CancelButton, EmptyOrdersHeader, MoreOrders, OrdersHeader, OrdersLink } from "./limitOrders.styles";
 import { toast } from "react-toastify";
 import IWallet from "../../../../../../interfaces/Wallet.interface";
+import TableHead from "./components/TableHead/TableHead";
+import TableBody from "./components/TableBody/TableBody";
 
-interface IOrders{
+// Interface for the limit orders
+export interface IOrders{
   id: number;
   type: string;
   pair: string;
@@ -13,15 +16,19 @@ interface IOrders{
   price: number;
 }
 
+// LimitOrders interface
 interface ILimitOrders{
   wallet?: IWallet;
   symbol?: string;
   fetchBalance: () => void;
 }
 
+// LimitOrders component - renders the limit orders table
 const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol, fetchBalance }) => {
+  // Initialising the state
   const [limitOrders, setLimitOrders] = useState<IOrders[]>([])
 
+  // Function to get the limit orders from the api
   const getOrders = async () => {
     try {
       const result = await api.get('/api/spot/limit/orders/pair/' + symbol?.toUpperCase())
@@ -31,24 +38,7 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol, fetchBalance }) =
     }
   }
 
-  const closeOrder = async (id : number) => {
-    try {
-      await api.get('/api/spot/limit/close/' + id)
-      toast.success('Limit order canceled successfully', {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-      });
-      fetchBalance();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
+  // UseEffect to get the limit orders on component mount
   useEffect(() => {
     getOrders();
   }, [wallet, symbol])
@@ -60,28 +50,11 @@ const LimitOrders: React.FC<ILimitOrders> = ({ wallet, symbol, fetchBalance }) =
       :
       <TableWrapper>
         <Table>
-          <THead>
-            <Tr>
-              <Th width={4}>Type</Th>
-              <Th width={4}>Pair</Th>
-              <Th width={4}>Quantity</Th>
-              <Th width={4}>Price</Th>
-              <Th width={1}>Actions</Th>
-            </Tr>
-          </THead>
-          <TBody>
-          {Array.isArray(limitOrders) && limitOrders.map((item) => {
-            return(
-              <Tr key={item.id}>
-                <Td color={item.type} weight="500" width="50px">{item.type.toUpperCase()}</Td>
-                <Td width="100px">{item.pair}</Td>
-                <Td width="100px">{item.quantity} {item.pair.replace("USDT", "")}</Td>
-                <Td width="100px">{item.price} USDT</Td>
-                <Td width="100px"><CancelButton onClick={() => closeOrder(item.id)}>Cancel</CancelButton></Td>
-              </Tr>
-            )
-          })}
-          </TBody>
+          <TableHead />
+          <TableBody 
+            limitOrders={limitOrders}
+            fetchBalance={fetchBalance}
+          />
         </Table>
         <MoreOrders>
           <OrdersHeader>Wanna see all orders?</OrdersHeader>

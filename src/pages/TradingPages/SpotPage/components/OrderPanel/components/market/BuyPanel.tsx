@@ -1,12 +1,12 @@
-import { Col } from "../../../../../../shared/col";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../orderPanel.styles";
-import IWallet from '../../../../../../interfaces/Wallet.interface';
+import { Col } from "../../../../../../../shared/col";
+import { Balance, Input, InputSymbol, InputText, InputWrapper, LoginButton, LoginLink, OrderButton, RangeInput } from "../../orderPanel.styles";
+import IWallet from '../../../../../../../interfaces/Wallet.interface';
 import { useEffect, useState } from "react";
-import decimalPlaces from "../../../../../../services/decimalPlaces";
-import api from "../../../../../../services/api";
-import { AxiosResponse } from "axios";
+import decimalPlaces from "../../../../../../../services/decimalPlaces";
+import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
 
+// BuyPanel interface
 interface IBuyPanel {
   balance?: IWallet;
   isLoggedIn: boolean;
@@ -15,11 +15,15 @@ interface IBuyPanel {
   fetchBalance: () => void;
 }
 
+// BuyPanel component - renders the buy market panel
 const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice, fetchBalance }) => {
+  // Initialising the state
   const [orderQuantity, setOrderQuantity] = useState("0");
 
+  // Handle change function - handles the change of the input value
   const handleChange = (e : {target: {value: string}}) => {
     if(balance){
+      // Getting the decimal number of the input value
       const decimalNumber = decimalPlaces(e.target.value);
       
       if((Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / pairPrice * 10) / 10).toFixed(1)) && decimalNumber <= 1)){
@@ -30,17 +34,14 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
     }
   }
 
+  // Handle submit function - handles the submit of the order
   const handleSubmit = () => {
-    api.post('/api/spot/market/buy/' + symbol?.toUpperCase(), {
-      'quantity': orderQuantity
-    },{
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    }).then((response: AxiosResponse) => {
-      console.log(response.data);
+    try {
+      // Sending the request to the API to buy the cryptocurrency
+      api.post('/api/spot/market/buy/' + symbol?.toUpperCase(),{
+        'quantity': orderQuantity
+      })
+      // If the request is successful, fetch the balance and display the success toast
       fetchBalance();
       toast.success('Successfully purchased ' + orderQuantity + ' ' + symbol?.replace('usdt', '').toUpperCase(), {
         position: "bottom-right",
@@ -51,10 +52,9 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
         draggable: true,
         theme: "dark",
         });
-        setOrderQuantity("")
-    })
-    .catch((error: Error) => {
-      console.error(error);
+        setOrderQuantity("");
+    } catch (error) {
+      // If the request is unsuccessful, display the error toast
       toast.error('Purchase failed', {
         position: "bottom-right",
         autoClose: 5000,
@@ -63,10 +63,11 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
-    });
+      });
+    }
   }
 
+  // Sets the order quantity to empty string when the symbol and the login status changes
   useEffect(() => {
     setOrderQuantity("");
   }, [symbol, isLoggedIn])

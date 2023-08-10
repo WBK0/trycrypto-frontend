@@ -41,7 +41,7 @@ const MarketsPage: React.FC = () => {
   const [market, setMarket] = useState('spot');
 
   // Fetching data using useMarketData hook
-  const data = useMarketData(market)
+  const { data } = useMarketData(market)
 
   useEffect(() => {
     // Setting initial page size and fetching data using the getData function

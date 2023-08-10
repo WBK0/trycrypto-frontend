@@ -1,10 +1,12 @@
 import { SelectButton, Wrapper } from "./responsiveSelect.styles";
 
+// ResponsiveSelect interface
 interface IResponsiveSelect{
   showResponsive: string;
   setShowResponsive: (value: string) => void;
 }
 
+// ResponsiveSelect component - renders the responsive select
 const ResponsiveSelect: React.FC<IResponsiveSelect> = ({ showResponsive, setShowResponsive }) => {
   return(
     <Wrapper>
