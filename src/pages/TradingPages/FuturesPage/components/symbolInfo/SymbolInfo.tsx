@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Col } from "../../../../../shared/col";
 import { InfoData, InfoHeader, InfoWrapper, Price, Wrapper } from "./symbolInfo.style";
 
+// SymbolInfo interface
 interface ISymbolInfo{
   data: {
     c: number;
@@ -14,13 +15,15 @@ interface ISymbolInfo{
   }
 }
 
+// SymbolInfo component - renders the symbol info
 const SymbolInfo: React.FC<ISymbolInfo> = ({ data }) => {
+  // Initialising the state
   const [prevPrice, setPrevPrice] = useState<number>(0);
   const [color, setColor] = useState('rgb(7, 119, 3)')
 
+  // Use effect hook for setting the previous price and the color of the price
   useEffect(() => {
     setPrevPrice(data.c);
-
     if(data.c < prevPrice){
       setColor('rgb(119, 3, 3)')
     }else if(data.c > prevPrice){

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../../../../../../../services/api";
-import { THead, Table, Text, Th, Tr } from "../../infoPanel.styles";
-import TableBody from "./TableBody";
+import { Table, Text } from "../../infoPanel.styles";
+import TableBody from "./components/TableBody/TableBody";
 import LoadingTable from "../../../../../../../components/Loading/LoadingTable";
 
+// Interface for the history
 export interface IHistory{
   type: string;
   pair: string;
@@ -15,10 +16,13 @@ export interface IHistory{
   leverage: number;
 }
 
+// TransactionHistoryView component - renders the transaction history table
 const TransactionHistoryView = () => {
+  // Initialising the state
   const [history, setHistory] = useState<IHistory[]>([])
   const [loading, setLoading] = useState(true);
 
+  // Function to get the history from the api
   const getHistory = async () => {
     try {
       const response = await api.get('/api/history/futures/last', {
@@ -28,7 +32,6 @@ const TransactionHistoryView = () => {
           'X-Requested-With': 'XMLHttpRequest',
         },
       })
-
       setHistory(response.data)
       setLoading(false);
     } catch (error) {
@@ -36,6 +39,7 @@ const TransactionHistoryView = () => {
     }
   }
 
+  // Use effect to get the history on component mount
   useEffect(() => {
     getHistory()
   }, [])
@@ -53,19 +57,7 @@ const TransactionHistoryView = () => {
         </Text>
       : 
         <Table>
-          <THead>
-            <Tr>
-              <Th>Type</Th>
-              <Th>Pair</Th>
-              <Th>Quantity</Th>
-              <Th>Sold</Th>
-              <Th>Leverage</Th>
-              <Th>PurchasePrice</Th>
-              <Th>SellingPrice</Th>
-              <Th>PNL</Th>
-              <Th>Date</Th>
-            </Tr>
-          </THead>
+          
           <TableBody history={history}/>
         </Table>
     }

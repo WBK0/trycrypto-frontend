@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { LeverageLevel, RangeInput, SaveButton, Warning } from "../orderPanel.styles";
-import { Close, ModalContent, ModalWrapper } from "../../../../../../shared/modal.styles";
+import { LeverageLevel, RangeInput, SaveButton, Warning } from "../../orderPanel.styles";
+import { Close, ModalContent, ModalWrapper } from "../../../../../../../shared/modal.styles";
 
+// Modal interface
 interface IModal{
   onClose: () => void;
   mainLeverage: number;
   onSave: (lever: number) => void;
 }
 
+// Modal component - renders the modal
 const Modal: React.FC<IModal> = ({ onClose, mainLeverage, onSave }) => {
+  // Initialising the state
   const [leverage, setLeverage] = useState(mainLeverage)
 
+  // Function for handling the change of the range input
   const handleChange = (e: any) => {
     setLeverage(e.target.value)
   }

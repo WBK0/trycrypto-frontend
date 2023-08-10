@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { Close } from "../../../../../../shared/modal.styles";
-import { Balance, Input, InputSymbol, InputText, InputWrapper, LeverageButton, LeverageWrapper, OrderTypeLink, OrderTypeWrapper, Price, PriceInfo, PriceText, PriceWrapper, RangeInput, RangeWrapper, Wallet, WalletText } from "../orderPanel.styles";
-import { ModalContent, ModalWrapper, OrderButton } from "./orderPanel.styles";
-import decimalPlaces from "../../../../../../services/decimalPlaces";
+import { ModalContent, ModalWrapper,  } from "./orderPanel.styles";
 import IWallet from "../../../../../../interfaces/Wallet.interface";
-import api from "../../../../../../services/api";
-import { toast } from "react-toastify";
 import LeverageSelect from "./LeverageSelect";
 import OrderView from "./OrderView";
 
+// Modal interface
 interface IModal{
   onClose: () => void;
   balance?: IWallet;
@@ -19,7 +16,9 @@ interface IModal{
   fetchPositions: () => void;
 }
 
+// Modal component - renders the modal
 const Modal: React.FC<IModal> = ({ onClose, balance, symbol, pairPrice, type, fetchBalance, fetchPositions }) => {
+  // Initialising the state
   const [leverage, setLeverage] = useState(10);
   const [view, setView] = useState(0);
   const [orderType, setOrderType] = useState(0);
@@ -28,10 +27,12 @@ const Modal: React.FC<IModal> = ({ onClose, balance, symbol, pairPrice, type, fe
   const [stopLoss, setStopLoss] = useState("");
   const [price, setPrice] = useState("");
 
+  // Function to handle the change of view
   const handleChangeView = () => {
     setView(1)
   }
 
+  // Function to handle the change of leverage
   const onChangeLeverage = (value : number) => {
     setLeverage(value);
     setView(0);

@@ -1,15 +1,20 @@
-import { Pnl, PnlText, TBody, Td, Tr, Type } from "../../infoPanel.styles";
-import { IHistory } from "./TransactionHistory";
+import { Pnl, PnlText, TBody, Td, Tr, Type } from "../../../../infoPanel.styles";
+import { IHistory } from "../../TransactionHistory";
 
+// TableBody interface
 interface ITableBody{
   history?: IHistory[]
 }
 
+// TableBody component - renders the table body for TransactionHistory 
 const TableBody: React.FC<ITableBody> = ({ history }) => {
   return(
     <TBody>
       {history && history.map((item) => {
-        const date = new Date(item.date).toLocaleString();
+        // date of the transaction in local time zone
+        const date = new Date(item.date).toLocaleString(); 
+        
+        // Calculate pnl amount and percent for each transaction
         const pnlAmount = Number(item.type == 'LONG' ? (item.quantitySold * item.sellingPrice - item.quantitySold * item.purchasePrice) * item.leverage : (item.quantitySold * item.purchasePrice - item.quantitySold * item.sellingPrice) * item.leverage).toFixed(2)
         const pnlPercent = item.type == 'LONG' ? ((item.sellingPrice / item.purchasePrice * 100 - 100) * item.leverage).toFixed(2) : -((item.sellingPrice / item.purchasePrice * 100 - 100) * item.leverage ).toFixed(2)
         

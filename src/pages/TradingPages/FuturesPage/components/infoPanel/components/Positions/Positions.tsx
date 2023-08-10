@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { THead, Table, Th, Tr, Text } from "../../infoPanel.styles";
-import TableBody from "./TableBody";
-import getData from "../../../../../../../components/Markets/services/getData";
+import { Table, Text } from "../../infoPanel.styles";
+import TableBody from "./components/TableBody/TableBody";
 import { IPositions } from "../../../../FuturesPage";
 import LoadingTable from "../../../../../../../components/Loading/LoadingTable";
+import TableHead from "./components/TableHead/TableHead";
+import useMarketData from "../../../../../../../hooks/useMarketData";
 
+// PairPrice interface
 interface IPairPrice{
   [x: string]: number;
 }
 
+// PositionsView interface
 interface IPositionsView{
   positions: IPositions[];
   fetchPositions: () => void;
@@ -16,10 +19,16 @@ interface IPositionsView{
   symbol?: string
 }
 
+// PositionsView component - renders the positions table
 const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fetchBalance, symbol }) => {
+  // Initialising the state
   const [pairPrice, setPairPrice] = useState<IPairPrice>({})
   const [loading, setLoading] = useState(true)
 
+  // Custom hook to get the getData function
+  const { getData } = useMarketData('futures')
+
+  // Use effect to get the pair price on component mount and every 4 seconds by interval
   useEffect(() => {
     getPairPrice();
     setInterval(async () => {
@@ -27,10 +36,11 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
     }, 4000);
   }, [])
 
+  // Function to get the pair price from the api and set the state with the response data
   const getPairPrice = async () => {
     const response: IPairPrice[] = await getData('futures')
     let temp: Record<string, number> = {};
-    for (let i = 0; i < response.length; i++) {
+    for (let i = 0; i < response.length; i++) { 
       const currentObject = response[i];
       temp[currentObject.pair] = currentObject.lastPrice
     }
@@ -38,7 +48,6 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
     setLoading(false)
   }
   
-
   return(
     <>
       {
@@ -49,21 +58,7 @@ const PositionsView: React.FC<IPositionsView> = ({ positions, fetchPositions, fe
         symbol && positions.filter((item) => item.pair.includes(symbol?.toUpperCase())).length >= 1 
         ? 
           <Table>
-            <THead>
-              <Tr>
-                <Th>Type</Th>
-                <Th>Pair</Th>
-                <Th>Leverage</Th>
-                <Th>Quantity</Th>
-                <Th>Purchase Price</Th>
-                <Th>Price</Th>
-                <Th>PNL</Th>
-                <Th>Take Profit</Th>
-                <Th>Stop Loss</Th>
-                <Th>Liquidation Price</Th>
-                <Th>Actions</Th>
-              </Tr>
-            </THead>
+            <TableHead />
             <TableBody 
               positions={positions} 
               pairPrice={pairPrice} 

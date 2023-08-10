@@ -3,6 +3,7 @@ import IWallet from "../../../../../../interfaces/Wallet.interface";
 import MarketOrder from "./market/MarketOrder";
 import LimitOrder from "./limit/LimitOrder";
 
+// OrderView interface
 interface IOrderView{
   onClose: () => void;
   balance?: IWallet;
@@ -25,6 +26,7 @@ interface IOrderView{
   setPrice: (price: string) => void;
 }
 
+// OrderView component - renders the order panel for mobile devices
 const OrderView: React.FC<IOrderView> = ({ symbol, fetchBalance, fetchPositions, onClose, leverage, balance, handleChangeView, pairPrice, type, orderType, setOrderType, orderQuantity, setOrderQuantity, takeProfit, setTakeProfit, stopLoss, setStopLoss, price, setPrice }) => {
   return(
     <>
@@ -35,7 +37,7 @@ const OrderView: React.FC<IOrderView> = ({ symbol, fetchBalance, fetchPositions,
         <OrderTypeLink onClick={() => setOrderType(0)} active={orderType == 0 ? true : false}>Market</OrderTypeLink>
         <OrderTypeLink onClick={() => setOrderType(1)} active={orderType == 1 ? true : false}>Limit</OrderTypeLink>
       </OrderTypeWrapper>
-      {(() => {
+      {(() => { // Switch statement for rendering the order panel based on the order type
           switch (orderType) {
             case 0:
               return(

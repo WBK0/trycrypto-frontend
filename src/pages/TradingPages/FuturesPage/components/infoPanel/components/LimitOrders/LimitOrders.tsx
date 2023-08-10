@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react"
-import { Buttons, CloseButton, TBody, THead, Table, Td, Text, Th, Tr, Type } from "../../infoPanel.styles"
+import { Table, Text } from "../../infoPanel.styles"
 import api from "../../../../../../../services/api";
-import { toast } from "react-toastify";
 import IWallet from "../../../../../../../interfaces/Wallet.interface";
 import LoadingTable from "../../../../../../../components/Loading/LoadingTable";
+import TableHead from "./components/TableHead/TableHead";
+import TableBody from "./components/TableBody/TableBody";
 
+// LimitOrders interface
 interface ILimitOrders{
   symbol?: string;
   balance?: IWallet;
   fetchBalance: () => void;
 }
 
-interface IOrders{
+// Interface for the orders
+export interface IOrders{
   id: number;
   type: string;
   pair: string;
@@ -22,28 +25,13 @@ interface IOrders{
   stopLoss: number;
 }
 
+// LimitOrders component - renders the limit orders table
 const LimitOrders : React.FC<ILimitOrders> = ({ symbol, balance, fetchBalance }) => {
+  // Initialising the state
   const [orders, setOrders] = useState<IOrders[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const handleCloseOrder = async (id: number) => {
-    try {
-      const response = await api.get('/api/derivatives/limit/close/' + id);
-      toast.success('Limit order canceled successfully', {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-      });
-      fetchBalance();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
+  // Function to get the limit orders from the api
   const getOrders = async () => {
     try {
       const response = await api.get('/api/derivatives/limit/orders/pair/' + symbol?.toUpperCase());
@@ -54,6 +42,7 @@ const LimitOrders : React.FC<ILimitOrders> = ({ symbol, balance, fetchBalance })
     }
   }
 
+  // Use effect to get the limit orders on balance and symbol change
   useEffect(() => {
     getOrders();
   }, [balance, symbol])
@@ -68,37 +57,11 @@ const LimitOrders : React.FC<ILimitOrders> = ({ symbol, balance, fetchBalance })
           orders.length >= 1 
         ?
           <Table>
-            <THead>
-              <Tr>
-                <Th>Type</Th>
-                <Th>Pair</Th>
-                <Th>Quantity</Th>
-                <Th>Price</Th>
-                <Th>Leverage</Th>
-                <Th>Take Profit</Th>
-                <Th>Stop Loss</Th>
-                <Th>Actions</Th>
-              </Tr>
-            </THead>
-            <TBody>
-              {orders.slice().reverse().map((item) => {
-                return(
-                <Tr>
-                  <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3);'}>{item.type}</Type>
-                  <Td>{item.pair}</Td>
-                  <Td>{item.quantity}</Td>
-                  <Td>{item.price}</Td>
-                  <Td>{item.leverage}</Td>
-                  <Td>{item.takeProfit || 0}</Td>
-                  <Td>{item.stopLoss || 0}</Td>
-                  <Buttons>
-                    <CloseButton onClick={() => handleCloseOrder(item.id)}>Close</CloseButton>
-                  </Buttons>
-                </Tr>
-                )
-              })}
-              
-            </TBody>
+            <TableHead />
+            <TableBody 
+              orders={orders} 
+              fetchBalance={fetchBalance} 
+            />
           </Table>
         :
           <Text>

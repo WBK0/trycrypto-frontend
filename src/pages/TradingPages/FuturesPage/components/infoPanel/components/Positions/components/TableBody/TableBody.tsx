@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { IPositions } from "../../../../FuturesPage";
-import { Buttons, CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../../infoPanel.styles";
-import CloseModal from "../Modals/CloseModal";
-import UpdateModal from "../Modals/UpdateModal";
+import { IPositions } from "../../../../../../FuturesPage";
+import { Buttons, CloseButton, Pnl, PnlText, TBody, Td, Tr, Type, UpdateButton } from "../../../../infoPanel.styles";
+import CloseModal from "../../../Modals/CloseModal";
+import UpdateModal from "../../../Modals/UpdateModal";
 
+// TableBody interface
 interface ITableBody{
   positions: IPositions[],
   pairPrice: {
@@ -14,28 +15,31 @@ interface ITableBody{
   symbol?: string;
 }
 
-
+// TableBody component - renders the table body
 const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions, fetchBalance, symbol }) => {
+  // Initialising the state
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [modalItem, setModalItem] = useState<IPositions>()
 
-  console.log(symbol)
-
+  // Function to handle showing the close modal
   const handleShowCloseModal = (item: IPositions) => {
     setModalItem(item);
     setShowCloseModal(true);
   };
 
+  // Function to handle showing the update modal
   const handleShowUpdateModal = (item: IPositions) => {
     setModalItem(item);
     setShowUpdateModal(true);
   };
 
+  // Function to handle closing the close modal
   const handleCloseModal = () => {
     setShowCloseModal(false);
   };
 
+  // Function to handle closing the update modal
   const handleCloseUpdateModal = () => {
     setShowUpdateModal(false);
   };

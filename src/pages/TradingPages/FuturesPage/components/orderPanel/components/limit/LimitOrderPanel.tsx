@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Balance, Button, Hr, Input, InputSymbol, InputText, InputWrapper, OrderButtons, Price, PriceInfo, PriceText, PriceWrapper, RangeInput, RangeWrapper, Wallet, WalletText } from "../orderPanel.styles";
-import decimalPlaces from "../../../../../../services/decimalPlaces";
-import api from "../../../../../../services/api";
+import { Balance, Button, Hr, Input, InputSymbol, InputText, InputWrapper, OrderButtons, Price, PriceInfo, PriceText, PriceWrapper, RangeInput, RangeWrapper, Wallet, WalletText } from "../../orderPanel.styles";
+import decimalPlaces from "../../../../../../../services/decimalPlaces";
+import api from "../../../../../../../services/api";
 import { toast } from "react-toastify";
-import IWallet from "../../../../../../interfaces/Wallet.interface";
+import IWallet from "../../../../../../../interfaces/Wallet.interface";
 
+// Interface for component props
 interface ILimitOrderPanel{
   pairPrice: number;
   symbol?: string;
@@ -14,7 +15,9 @@ interface ILimitOrderPanel{
   leverage: number;
 }
 
+// LimitOrderPanel component - renders the limit order panel for the futures page
 const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balance, fetchBalance, fetchPositions, leverage }) => {
+  // Initialising the state
   const [takeProfit, setTakeProfit] = useState("");
   const [stopLoss, setStopLoss] = useState("");
   const [orderQuantity, setOrderQuantity] = useState("");
@@ -23,39 +26,49 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
   const [quantityError, setQuantityError] = useState(false);
   const [takeProfitError, setTakeProfitError] = useState(false);
   const [stopLossError, setStopLossError] = useState(false);
+  const [quantityInputView, setQuantityInputView] = useState(false);
+  
+  // Refs
   const inputRefPrice = useRef<HTMLInputElement>(null);
   const inputRefQuantity = useRef<HTMLInputElement>(null);
-  const [quantityInputView, setQuantityInputView] = useState(false);
 
+  // UseEffect for focusing the quantity input when the quantityInputView state is true
   useEffect(() => {
     inputRefQuantity.current?.focus()
   }, [quantityInputView])
 
+  // Function for handling the order quantity input
   const handleChangeQuantity = (e: {target: {value: string}}) => {
     if((Number(e.target.value) || Number(e.target.value) == 0) && decimalPlaces(e.target.value) <= 1){
       setOrderQuantity(e.target.value)
     }
   }
 
+  // Function for hiding the quantity input
   const handleCloseInput = () => {
     setQuantityInputView(false)
   }
 
+  // Function for show the quantity input when the price input is filled in 
   const handleQuantityInput = () => {
     if(price){
       setQuantityInputView(true);
     }
   }
 
+  // Function for handling the price input 
   const handleChangePrice = (e: {target: {value: string}}) => {
+    // Checking if the input is a number and has less than 5 decimal places
     const decimalNumber = decimalPlaces(e.target.value);
     if(decimalNumber <= 5 && Number(e.target.value) || Number(e.target.value) == 0){
       setPrice(e.target.value)  
     }
   }
 
+  // Function for handling the quantity order input 
   const handleChangeOrder = (e : {target: {value: string}}) => {
     if(balance){
+      // Checking if the input is a number and has less than 1 decimal places
       const decimalNumber = decimalPlaces(e.target.value);
       
       if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1)) && decimalNumber <= 1){
@@ -63,44 +76,41 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
       }else if(Number(e.target.value) && decimalNumber <= 1){
         setOrderQuantity((Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1))
       }
-      console.log(e.target.value)
     }
   }
 
+  // Function for handling the take profit input
   const handleChangeTP = (e : any) => {
     if(Number(e.target.value) || Number(e.target.value) == 0){
       setTakeProfit(e.target.value);
     }
   }
 
+  // Function for handling the stop loss input
   const handleChangeSL = (e : any) => {
     if(Number(e.target.value) || Number(e.target.value) == 0){
       setStopLoss(e.target.value);    
     }
   }
 
+  // Function for submitting the limit order 
   const onSubmit = async(type : string) => {
+    // Resetting the errors
+    setPriceError(false);
+    setQuantityError(false);
+    setTakeProfitError(false);
+    setStopLossError(false);
     try {
-      setPriceError(false);
-      setQuantityError(false);
-      setTakeProfitError(false);
-      setStopLossError(false);
-      const response = await api.post('/api/derivatives/limit/open/' + symbol?.toUpperCase(), {
+      // Posting the order to the api 
+      await api.post('/api/derivatives/limit/open/' + symbol?.toUpperCase(), {
         'type': type,
         'price': Number(price),
         'quantity': Number(orderQuantity),
         'leverage': Number(leverage),
         'takeProfit': Number(takeProfit),
         'stopLoss': Number(stopLoss)
-      },{
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
       })
-      fetchBalance();
-      fetchPositions();
+      // Showing the success toast
       toast.success(`Successfully opened an ${symbol?.toUpperCase()} position of ${orderQuantity} quantity`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -110,7 +120,11 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
         draggable: true,
         theme: "dark",
       });
+      // Fetching the balance and positions
+      fetchBalance();
+      fetchPositions();
     } catch (error) {
+      // Setting the errors if there are any 
       if(type == 'LONG' && Number(price) >= pairPrice || Number(price) == 0){
         setPriceError(true);
       }else if(type == 'SHORT' && Number(price) <= pairPrice || Number(price) == 0){
@@ -131,6 +145,7 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
       ))){
         setStopLossError(true)
       }
+      // Showing the error toast and logging the error
       console.error(error)
       toast.error(`The order was not opened, an error occurred`, {
         position: "bottom-right",

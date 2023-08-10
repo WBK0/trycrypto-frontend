@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Flex, Price, Quantity, Time, TradeWrapper, Wrapper } from "./lastTrades.styles";
 import useWebSocket from "../../../../../hooks/useWebSocket";
 
+// Interface for websocket data
 interface IData {
   E: number;
   s: string;
@@ -9,13 +10,17 @@ interface IData {
   q: string;
 }
 
+// LastTrades interface
 interface ILastTrades {
   symbol: string | undefined;
 }
 
+// LastTrades component - renders the last trades table
 const LastTrades : React.FC<ILastTrades> = ({ symbol }) => {
+  // Initialising the state
   const [data, setData] = useState<IData[]>([])
   
+  // Function to handle the websocket message
   const onMessage = (event: MessageEvent) => {
     setData(prevData => {
       const newData = [JSON.parse(event.data), ...prevData,];
@@ -23,8 +28,10 @@ const LastTrades : React.FC<ILastTrades> = ({ symbol }) => {
     });
   }
 
+  // Websocket hook to get the data from the binance api
   useWebSocket({url: 'wss://fstream.binance.com/ws/' + symbol + '@aggTrade', onMessage})
 
+  // Use effect to clear the data on symbol change
   useEffect(() => {
     setData([])
   }, [symbol])

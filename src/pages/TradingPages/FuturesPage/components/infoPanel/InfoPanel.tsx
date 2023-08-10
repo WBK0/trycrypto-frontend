@@ -8,6 +8,7 @@ import LimitOrders from "./components/LimitOrders/LimitOrders";
 import IWallet from "../../../../../interfaces/Wallet.interface";
 import LimitHistory from "./components/LimitHistory/LimitHistory";
 
+// InfoPanel interface
 interface IInfoPanel{
   fetchBalance: () => void
   positions: IPositions[];
@@ -16,10 +17,14 @@ interface IInfoPanel{
   balance?: IWallet;
 }
 
+// InfoPanel component - renders the info panel
 const InfoPanel: React.FC<IInfoPanel> = ({ fetchBalance, positions, fetchPositions, symbol, balance }) => {
+  // Initialising the state
   const [view, setView] = useState(0);
+  // Get the isLoggedIn state from the AuthContext
   const { isLoggedIn } = useContext(AuthContext)
 
+  // Use effect hook for fetching the positions and set an interval for fetching the positions every 3 seconds
   useEffect(() => {
     fetchPositions()
     setInterval(() => {

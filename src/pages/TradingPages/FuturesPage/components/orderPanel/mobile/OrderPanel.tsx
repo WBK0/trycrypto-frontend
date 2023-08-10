@@ -3,6 +3,7 @@ import { Button, Wrapper } from "./orderPanel.styles";
 import Modal from "./Modal";
 import IWallet from "../../../../../../interfaces/Wallet.interface";
 
+// OrderPanelMobile interface
 interface IOrderPanelMobile{
   symbol?: string;
   balance?: IWallet;
@@ -11,14 +12,18 @@ interface IOrderPanelMobile{
   fetchPositions: () => void;
 }
 
+// OrderPanelMobile component - renders the order panel for mobile devices
 const OrderPanelMobile: React.FC<IOrderPanelMobile> = ({ symbol, balance, price, fetchBalance, fetchPositions }) => {
+  // Initialize state variables
   const [showModal, setShowModal] = useState(false) 
   const [type, setType] = useState<'buy' | 'sell'>("buy")
 
+  // Function to close the modal 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
+  // Function to show the modal
   const handleShowModal = (type: 'buy' | 'sell') => {
     setType(type)
     setShowModal(true);

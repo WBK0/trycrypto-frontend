@@ -1,25 +1,32 @@
 import { useEffect, useState } from "react";
 import { Change, CurrenciesWrapper, DataWrapper, Name, Price, SearchBar, Wrapper } from "./symbol.styles";
-import getData from "../../../../../components/Markets/services/getData";
 import { MarketData } from "../../../../MarketsPage/components/HighlitedTokens/interfaces/marketData";
+import useMarketData from "../../../../../hooks/useMarketData";
 
+// Symbol interface
 interface ISymbol{
   symbol?: string;
 }
 
+// Symbol component - renders the symbol
 const Symbol: React.FC<ISymbol> = ({ symbol }) => {
+  // Initialising the state
   const [data, setData] = useState<MarketData[] | []>([]);
   const [search, setSearch] = useState('');
 
+  const { getData } = useMarketData('futures')
+
+  // Handle search function
   const handleSearch = (e: {target: {value: string}}) => {
     setSearch(e.target.value);
   }
 
+  // Use effect hook for fetching the market data and set an interval for fetching the market data every 6 seconds
   useEffect(() => {
-    const fetchData = async (market : string) => {
-      const data = await getData(market);
+    const fetchData = async () => {
+      const data = await getData('futures');
       setData(prevData => {
-        const updatedData = data.map((item: {lastPrice: string}, index) => ({
+        const updatedData = data.map((item: {lastPrice: string}, index: number) => ({
           ...item,
           color: item.lastPrice > prevData[index]?.lastPrice ? 'rgb(7, 119, 3)' :  item.lastPrice < prevData[index]?.lastPrice ? 'rgb(119, 3, 3)' : prevData[index]?.color || 'rgb(200, 200, 200)',
         }));
@@ -27,9 +34,9 @@ const Symbol: React.FC<ISymbol> = ({ symbol }) => {
       });
     };
 
-    fetchData('futures');
+    fetchData();
     // Setting up an interval to fetch data
-    const interval = setInterval(() => fetchData('futures'), 6000);
+    const interval = setInterval(() => fetchData(), 6000);
 
     // Clearing the interval when the component unmounts
     return () => clearInterval(interval);

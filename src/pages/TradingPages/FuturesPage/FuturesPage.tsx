@@ -17,6 +17,7 @@ import ResponsiveSelect from "./components/responsiveSelect/ResponsiveSelect";
 import OrderPanelMobile from "./components/orderPanel/mobile/OrderPanel";
 import Loading from "../../../components/Loading/Loading";
 
+// Positions interface
 export interface IPositions{
   id: number;
   type: string;
@@ -29,7 +30,9 @@ export interface IPositions{
   liquidationPrice: number;
 }
 
+// FuturesPage component - the main component of the futures trading page
 const FuturesPage = () => {
+  // Initializing state variables
   const [data, setData] = useState({
     c: 0,
     p: 0,
@@ -40,11 +43,15 @@ const FuturesPage = () => {
     q: 0
   });
   const [positions, setPositions] = useState<IPositions[]>([])
-  const { symbol } = useParams()
-  const { balance, fetchBalance } = useWallet();
   const [showResponsive, setShowResponsive] = useState('chart');
   const [loading, setLoading] = useState(true);
+  // Getting the symbol from the url
+  const { symbol } = useParams()
+  // Use useWallet hook to get the balance and fetchBalance function
+  const { balance, fetchBalance } = useWallet();
 
+
+  // Fetching the positions from the api and setting the positions state variable 
   const fetchPositions = async () => {
     try {
       const response = await api.get('/api/positions/futures', {
@@ -60,22 +67,26 @@ const FuturesPage = () => {
     } 
   }
 
+  // Declaring the onMessage function
   const onMessage = (event: MessageEvent) => {
     setData(JSON.parse(event.data))
     setLoading(false)
   }
 
+  // Using useWebSocket hook to connect to the binance websocket
   useWebSocket({
     url: 'wss://fstream.binance.com/ws/' + symbol + '@ticker',
     onMessage,
   });
 
+  // Using useEffect hook to fetch the balance every 2 seconds
   useEffect(() => {
     setInterval(() => {
       fetchBalance()
     }, 2000)
   }, [])
 
+  // Using useEffect hook to set the loading state to true when the symbol changes
   useEffect(() => {
     setLoading(true)
   }, [symbol])

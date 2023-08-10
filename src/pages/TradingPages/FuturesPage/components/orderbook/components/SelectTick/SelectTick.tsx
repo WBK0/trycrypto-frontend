@@ -1,15 +1,18 @@
-import { Select, Option } from "../orderBook.styles";
+import { Select, Option } from "../../orderBook.styles";
 
+// SelectTick interface
 interface ISelectTick{
   price: number;
   setTickSize: (value: number) => void;
   tickSize: number;
 }
 
+// SelectTick component - renders the select tick component
 const SelectTick: React.FC<ISelectTick> = ({ price, setTickSize, tickSize }) => {
   return(
     <Select onChange={(e) => setTickSize(Number(e.target.value))} value={tickSize}>
-      {price <= 5 ?
+      {/* Genereting options for select tick based on price of pair */}
+      {price <= 5 ? 
         <Option value={0.0001}>
           0.0001
         </Option>

@@ -6,6 +6,7 @@ import { OrderButton } from "../orderPanel.styles";
 import { toast } from "react-toastify";
 import IWallet from "../../../../../../../interfaces/Wallet.interface";
 
+// LimitOrder interface
 interface ILimitOrder{
   onClose: () => void;
   balance?: IWallet;
@@ -25,45 +26,55 @@ interface ILimitOrder{
   setPrice: (price: string) => void;
 }
 
+// LimitOrder component - renders the limit order for mobile devices
 const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions, onClose, leverage, balance, pairPrice, type, orderQuantity, setOrderQuantity, takeProfit, setTakeProfit, stopLoss, setStopLoss, price, setPrice }) => {
+  // Initialising the state
   const [quantityView, setQuantityView] = useState(false);
   const [priceError, setPriceError] = useState(false)
   const [quantityError, setQuantityError] = useState(false);
   const [takeProfitError, setTakeProfitError] = useState(false);
   const [stopLossError, setStopLossError] = useState(false);
+  // Refs
   const inputRefQuantity = useRef<HTMLInputElement>(null);
   const inputRefPrice = useRef<HTMLInputElement>(null);
 
+  // Function to handle change quantity
   const handleChangeQuantity = (e: {target: {value: string}}) => {
     if((Number(e.target.value) || Number(e.target.value) == 0) && decimalPlaces(e.target.value) <= 1){
       setOrderQuantity(e.target.value)
     }
   }
 
+  // Function to handle change quantity view
   const handleChangeView = () => {
     if(price){
       setQuantityView(!quantityView);
     }
   }
 
+  // Function to handle change price
   const handleChangePrice = (e: {target: {value: string}}) => {
     setPrice(e.target.value)
   }
 
+  // Function to handle change take profit
   const handleChangeTP = (e : any) => {
     if(Number(e.target.value) || Number(e.target.value) == 0){
       setTakeProfit(e.target.value);
     }
   }
 
+  // Function to handle change stop loss
   const handleChangeSL = (e : any) => {
     if(Number(e.target.value) || Number(e.target.value) == 0){
       setStopLoss(e.target.value);    
     }
   }
 
+  // Function to handle change order quantity on range input
   const handleChangeOrder = (e : {target: {value: string}}) => {
     if(balance){
+      // Get the decimal number
       const decimalNumber = decimalPlaces(e.target.value);
       
       if(Number(e.target.value) <= Number((Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1)) && decimalNumber <= 1){
@@ -74,30 +85,24 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
     }
   }
 
+  // Function to handle submit order
   const onSubmit = async(type : string) => {
+    // Reset errors
     setPriceError(false);
     setQuantityError(false);
     setTakeProfitError(false);
     setStopLossError(false);
     try {
-      const response = await api.post('/api/derivatives/limit/open/' + symbol?.toUpperCase(), {
+      // Send request to the server to open a limit order
+      await api.post('/api/derivatives/limit/open/' + symbol?.toUpperCase(), {
         'type': type,
         'price': price,
         'quantity': Number(orderQuantity),
         'leverage': Number(leverage),
         'takeProfit': Number(takeProfit),
         'stopLoss': Number(stopLoss)
-      },{
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
       })
-      console.log(response)
-      fetchBalance();
-      fetchPositions();
-      onClose();
+      // Show success toast 
       toast.success(`Successfully opened an ${symbol?.toUpperCase()} position of ${orderQuantity} quantity`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -107,7 +112,12 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
         draggable: true,
         theme: "dark",
       });
+      // Fetch balance, positions and close the modal
+      fetchBalance();
+      fetchPositions();
+      onClose();
     } catch (error) {
+      // Setting the errors if there are any known
       if(type == 'LONG' && Number(price) >= pairPrice || Number(price) == 0){
         setPriceError(true);
       }else if(type == 'SHORT' && Number(price) <= pairPrice || Number(price) == 0){
@@ -128,6 +138,7 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
       ))){
         setStopLossError(true)
       }
+      // Show error toast and log the error
       console.error(error)      
       toast.error(`Position not opened, unknown error occurred`, {
         position: "bottom-right",
@@ -137,10 +148,11 @@ const LimitOrder: React.FC<ILimitOrder> = ({symbol, fetchBalance, fetchPositions
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
-        });
+      });
     }
   }
 
+  // Focus quantity input on quantity view change
   useEffect(() => {
     inputRefQuantity.current?.focus()
   }, [quantityView])

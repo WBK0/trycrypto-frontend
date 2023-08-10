@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import useWebSocket from "../../../../../hooks/useWebSocket";
 import { BookWrapper, Books, Option, PriceInfo, Select, SettingsBar, Wrapper } from "./orderBook.styles";
-import Asks from "./components/Asks";
-import Bids from "./components/Bids";
-import SelectTick from "./components/SelectTick";
+import Asks from "./components/Asks/Asks";
+import Bids from "./components/Bids/Bids";
+import SelectTick from "./components/SelectTick/SelectTick";
+import Settings from "./components/Settings/Settings";
 
+// OrderBook interface
 interface IOrderBook{
   price: number,
   symbol?: string,
   loading: boolean
 }
 
+// OrderBook component - renders the order book component 
 const OrderBook: React.FC<IOrderBook> = ({ price, symbol, loading }) => {
+  // Initialising the state
   const [asksView, setAsksView] = useState(10);
   const [bidsView, setBidsView] = useState(10);
   const [tickSize, setTickSize] = useState(0.0001);
@@ -20,16 +24,19 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol, loading }) => {
   const [asksMax, setAsksMax] = useState(0)
   const [bidsMax, setBidsMax] = useState(0)
 
+  // Use effect to clear the orderbook data on symbol change
   useEffect(() => {
     setAsks({});
     setBids({});
   }, [symbol])
 
+  // Function to handle the change orderbook view
   const handleChangeView = (asks: number, bids: number) => {
     setAsksView(asks)
     setBidsView(bids)
   }
 
+  // Use effect to set the tick size
   useEffect(() => {
     setTickSize(
       price <= 5 ? 0.0001
@@ -39,7 +46,9 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol, loading }) => {
     )
   }, [loading])
 
+  // Function to handle the websocket message 
   const onMessage = (event : any) => {
+    // Setting new asks data
     setAsks(prevState => {
       const newState = {...prevState};
       for (let key in newState) {
@@ -56,6 +65,7 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol, loading }) => {
       });
       return newState;
     });
+    // Setting new bids data
     setBids(prevState => {
       const newState = {...prevState};
       for (let key in newState) {
@@ -74,10 +84,13 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol, loading }) => {
     });
   };
 
+  // Use websocket hook to connect to the binance websocket
   useWebSocket({url: `wss://fstream.binance.com/ws/${symbol?.toLowerCase()}@depth@500ms`, onMessage})
 
+  // Getting the max amount of asks and bids
   let maxAmount = asksMax >= bidsMax ? asksMax : bidsMax;
 
+  // Function to get the background color of the orderbook
   function getBackgroundColor(amount: number, type: string ) {
     const percentage = amount / maxAmount;
     if(type == 'ask'){
@@ -85,72 +98,45 @@ const OrderBook: React.FC<IOrderBook> = ({ price, symbol, loading }) => {
     }else{
       return `linear-gradient(to left, #077703 ${Number(percentage * 100).toFixed(0) + "%"}, transparent ${Number(percentage * 100).toFixed(0) + "%"})`;
     }
-   
   }
 
-  let tick = {
-    fixed: 2,
-    floor: 100
-  }
-  if(tickSize == 0.0001){
-    tick.fixed = 4;
-    tick.floor = 10000;
-  }else if(tickSize == 0.001){
-    tick.fixed = 3;
-    tick.floor = 1000;
-  }else if(tickSize == 0.01){
-    tick.fixed = 2;
-    tick.floor = 100
-  }else if (tickSize == 0.1){
-    tick.fixed = 1;
-    tick.floor = 10;
-  }else if(tickSize == 1){
-    tick.fixed = 0;
-    tick.floor = 1;
-  }else if(tickSize == 10){
-    tick.fixed = 0;
-    tick.floor = 0.1;
-  }
-  else if(tickSize == 100){
-    tick.fixed = 1;
-    tick.floor = 0.01;
-  }
+  // Tick size settings
+  const tickSizeSettings: Record<number, { fixed: number; floor: number }> = {
+    0.0001: { fixed: 4, floor: 10000 },
+    0.001: { fixed: 3, floor: 1000 },
+    0.01: { fixed: 2, floor: 100 },
+    0.1: { fixed: 1, floor: 10 },
+    1: { fixed: 0, floor: 1 },
+    10: { fixed: 0, floor: 0.1 },
+    100: { fixed: 1, floor: 0.01 },
+  };
+
+  // Getting the tick size settings 
+  const tick = tickSizeSettings[tickSize] || { fixed: 2, floor: 100 };
 
   return(
     <Wrapper>
-      <SettingsBar>
-        <Books>
-          <BookWrapper color='white'>
-            <i className='bi bi-book' onClick={() => handleChangeView(10, 10)} />
-          </BookWrapper>
-          <BookWrapper color='#077703'>
-            <i className='bi bi-book-half' onClick={() => handleChangeView(0, 20)} />
-          </BookWrapper>
-          <BookWrapper color='#770303'>
-            <i className='bi bi-book-half' onClick={() => handleChangeView(20, 0)} />
-          </BookWrapper>
-        </Books>
-      <SelectTick
-        price={price}
-        setTickSize={setTickSize} 
+      <Settings 
         tickSize={tickSize}
+        setTickSize={setTickSize}
+        handleChangeView={handleChangeView}
+        price={price}
       />
-      </SettingsBar>
-        <Asks 
-          asks={asks} 
-          asksView={asksView} 
-          tick={tick} 
-          setAsksMax={setAsksMax} 
-          getBackgroundColor={getBackgroundColor} 
-        />
+      <Asks 
+        asks={asks} 
+        asksView={asksView} 
+        tick={tick} 
+        setAsksMax={setAsksMax} 
+        getBackgroundColor={getBackgroundColor} 
+      />
       <PriceInfo>{price}</PriceInfo>
-        <Bids 
-          bids={bids} 
-          bidsView={bidsView} 
-          tick={tick} 
-          setBidsMax={setBidsMax} 
-          getBackgroundColor={getBackgroundColor} 
-        />
+      <Bids 
+        bids={bids} 
+        bidsView={bidsView} 
+        tick={tick} 
+        setBidsMax={setBidsMax} 
+        getBackgroundColor={getBackgroundColor} 
+      />
     </Wrapper>
   )
 }
