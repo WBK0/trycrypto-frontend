@@ -5,6 +5,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import TableHead from "./components/TableHead";
 import TableBody from "./components/TableBody";
 
+// Data interface
 export interface IData{
   id: number;
   status: string;
@@ -14,24 +15,27 @@ export interface IData{
   price: number;
   startDate: string;
   endDate: string;
-
 }
 
+// TableSpotOrders component - renders the spot orders table
 const TableSpotOrders = () => {
+  // Initialising the state
   const [data, setData] = useState<IData[]>([])
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [isAll, setIsAll] = useState(false);
 
-  const elementRef = useRef<HTMLTableSectionElement>(null);
+  // Ref to the table body
+  const tableBodyRef = useRef<HTMLTableSectionElement>(null);
 
+  // Function to get the spot orders from the api on scrolling to the bottom of the table
   useEffect(() => {
     setLoading(false);
     function handleScroll() {
       if (
-        elementRef.current &&
+        tableBodyRef.current &&
         !isAll &&
-        Number((elementRef.current.scrollTop + elementRef.current.clientHeight).toFixed(0)) === elementRef.current.scrollHeight
+        Number((tableBodyRef.current.scrollTop + tableBodyRef.current.clientHeight).toFixed(0)) === tableBodyRef.current.scrollHeight
       ) {
         setLoading(true) 
         search == '' 
@@ -40,17 +44,20 @@ const TableSpotOrders = () => {
       }
     }
 
-    if (elementRef.current) {
-      elementRef.current.addEventListener('scroll', handleScroll);
+    // Adding the event listener to the table body
+    if (tableBodyRef.current) {
+      tableBodyRef.current.addEventListener('scroll', handleScroll);
     }
 
+    // Removing the event listener to the table body
     return () => {
-      if (elementRef.current) {
-        elementRef.current.removeEventListener('scroll', handleScroll);
+      if (tableBodyRef.current) {
+        tableBodyRef.current.removeEventListener('scroll', handleScroll);
       }
     };
   }, [data, search]);
 
+  // Function to fetch more data from the api
   const fetchMore = async (url : string) => {
     try {
       const response = await api.get(url);
@@ -63,6 +70,7 @@ const TableSpotOrders = () => {
     }
   }
 
+  // Function to get the spot orders from the api on component mount
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -82,6 +90,7 @@ const TableSpotOrders = () => {
     }
   }
  
+  // Fetching the data on mount
   useEffect(() => {
     fetchData();
   }, [])
@@ -92,7 +101,7 @@ const TableSpotOrders = () => {
       <TableWrapper>
         <Table>
           <TableHead />
-          <TableBody data={data} isAll={isAll} loading={loading} elementRef={elementRef}/>
+          <TableBody data={data} isAll={isAll} loading={loading} tableBodyRef={tableBodyRef}/>
         </Table>
       </TableWrapper>
     </>

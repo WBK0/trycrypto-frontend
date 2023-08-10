@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { Info, Leverage, LeverageTh, Loader, Loading, Pair, PairTh, Pnl, PnlText, TBody, THead, Table, TableWrapper, Td, Th, Tr, Type, TypeTh, DateTd, DateTh, StatusTh, StatusTd } from "../../table.styles";
+import { Table, TableWrapper } from "../../table.styles";
 import api from "../../../../../../services/api";
+import TableHead from "./components/TableHead/TableHead";
+import TableBody from "./components/TableBody/TableBody";
 
-interface IData{
+// Data interface
+export interface IData{
   id: number;
   status: string;
   type: string;
@@ -17,52 +20,58 @@ interface IData{
   endDate: string;
 }
 
+// TableFuturesOrders component - renders the futures orders table
 const TableFuturesOrders = () => {
+  // Initialising the state
   const [data, setData] = useState<IData[]>([])
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [isAll, setIsAll] = useState(false);
 
-  const elementRef = useRef<HTMLTableSectionElement>(null);
+  // Ref to the table body
+  const tableBodyRef = useRef<HTMLTableSectionElement>(null);
 
+  // Function to get the futures orders from the api on scrolling to the bottom of the table
   useEffect(() => {
     setLoading(false);
+    // Function to fetch more data on scrolling to the bottom of the table
     function handleScroll() {
-      
       if (
-        elementRef.current &&
+        tableBodyRef.current &&
         !isAll &&
         search == '' &&
-        Number((elementRef.current.scrollTop + elementRef.current.clientHeight).toFixed(0)) === elementRef.current.scrollHeight
+        Number((tableBodyRef.current.scrollTop + tableBodyRef.current.clientHeight).toFixed(0)) === tableBodyRef.current.scrollHeight
       ) {
         setLoading(true)
-        fetchMore();
+        fetchMore(`/api/derivatives/limit/history/from/${data[data.length - 1].id}`);
       } else if(
-        elementRef.current &&
+        tableBodyRef.current &&
         !isAll &&
         search !== '' &&
-        Number((elementRef.current.scrollTop + elementRef.current.clientHeight).toFixed(0)) === elementRef.current.scrollHeight
+        Number((tableBodyRef.current.scrollTop + tableBodyRef.current.clientHeight).toFixed(0)) === tableBodyRef.current.scrollHeight
       ){
         setLoading(true)
-        fetchMoreSearch();
+        fetchMore(`/api/derivatives/limit/history/pair/${search.toUpperCase()}/from/${data[data.length - 1].id}`);
       }
     }
 
-    if (elementRef.current) {
-      elementRef.current.addEventListener('scroll', handleScroll);
+    // Adding the event listener to the table body
+    if (tableBodyRef.current) {
+      tableBodyRef.current.addEventListener('scroll', handleScroll);
     }
 
+    // Removing the event listener on unmount
     return () => {
-      if (elementRef.current) {
-        elementRef.current.removeEventListener('scroll', handleScroll);
+      if (tableBodyRef.current) {
+        tableBodyRef.current.removeEventListener('scroll', handleScroll);
       }
     };
   }, [data, search]);
 
-  const fetchMore = async () => {
+  // Function to get the futures orders from the api on scrolling to the bottom of the table 
+  const fetchMore = async (url : string) => {
     try {
-      console.log('fetchmore')
-      const response = await api.get(`/api/derivatives/limit/history/from/${data[data.length - 1].id}`);
+      const response = await api.get(url);
       if(response.data.length < 20){
         setIsAll(true);
       }
@@ -72,19 +81,7 @@ const TableFuturesOrders = () => {
     }
   }
 
-  const fetchMoreSearch = async () => {
-    try {
-      console.log(search)
-      const response = await api.get(`/api/derivatives/limit/history/pair/${search.toUpperCase()}/from/${data[data.length - 1].id}`);
-      if(response.data.length < 20){
-        setIsAll(true);
-      }
-      setData(prev => prev.concat(response.data));
-    } catch (error) {
-      console.log(error)  
-    }
-  }
-
+  // Function to get the futures orders from the api on mount
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -105,6 +102,7 @@ const TableFuturesOrders = () => {
     }
   }
  
+  // Run the fetchData function on mount
   useEffect(() => {
     fetchData();
   }, [])
@@ -114,75 +112,13 @@ const TableFuturesOrders = () => {
     <SearchBar setSearch={setSearch} search={search} fetchData={fetchData}/>
       <TableWrapper>
         <Table>
-          <THead>
-            <Tr>
-              <StatusTh>Status</StatusTh>
-              <TypeTh>Type</TypeTh>
-              <PairTh>Pair</PairTh>
-              <Th>Quantity</Th>
-              <Th>Price</Th>
-              <LeverageTh>Leverage</LeverageTh>
-              <Th>Take profit</Th>
-              <Th>Stop loss</Th>
-              <DateTh>Open date</DateTh>
-              <DateTh>End date</DateTh>
-            </Tr>
-          </THead>
-          <TBody ref={elementRef}>
-            
-            {data && data.map((item) => {
-              const startDate = new Date(item.startDate).toLocaleString();
-              let endDate;
-              if(item.endDate){
-                endDate = new Date(item.endDate).toLocaleString();
-              }
-              
-              return(
-                <Tr key={item.id}>
-                  <StatusTd color={item.status}>
-                    {
-                      item.status == 'active' && <i className="bi bi-three-dots"></i> ||
-                      item.status == 'filled' && <i className="bi bi-check"></i> ||
-                      item.status == 'canceled' && <i className="bi bi-x"></i>
-                    }
-                  </StatusTd>
-                  <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type.toUpperCase()}</Type>
-                  <Pair>{item.pair}</Pair>
-                  <Td>{item.quantity}</Td>
-                  <Td>{item.price}</Td>
-                  <Leverage>{item.leverage}X</Leverage>
-                  <Td>{item.takeProfit || 0}</Td>
-                  <Td>{item.stopLoss || 0}</Td>
-                  <DateTd>{startDate}</DateTd>
-                  <DateTd>{endDate || 'Not closed yet'}</DateTd>
-                </Tr>
-              )
-            })} 
-            {loading && !isAll
-            ? 
-            <Tr>
-              <Loading>
-                <Loader />
-              </Loading>
-            </Tr>
-            : null
-            }
-            {
-              isAll && data.length > 0
-              ?
-              <Tr>
-                <Info>
-                  We dont find more history futures orders data
-                </Info>
-              </Tr>
-              : data.length == 0 &&
-              <Tr>
-                <Info>
-                  Nothing found in the futures orders history
-                </Info>
-              </Tr>
-            }
-          </TBody>
+          <TableHead /> 
+          <TableBody 
+            data={data}
+            loading={loading}
+            tableBodyRef={tableBodyRef}
+            isAll={isAll}
+          />
         </Table>
       </TableWrapper>
    </> 

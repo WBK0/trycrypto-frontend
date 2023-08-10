@@ -1,15 +1,17 @@
 import { SelectButton, Wrapper } from "./selectInstrument.styles";
 
+// SelectInstrument interface
 interface ISelectInstrument{
-  instrument: 0 | 1;
-  setInstrument: (value: 0 | 1) => void;
+  instrument?: string;
+  type?: string;
 }
 
-const SelectInstrument: React.FC<ISelectInstrument> = ({ instrument, setInstrument }) => {
+// The SelectInstrument component - renders the select instrument
+const SelectInstrument: React.FC<ISelectInstrument> = ({ instrument, type }) => {
   return(
     <Wrapper>
-      <SelectButton active={instrument == 0 ? true : false} onClick={() => setInstrument(0)}>SPOT</SelectButton>
-      <SelectButton active={instrument == 1 ? true : false} onClick={() => setInstrument(1)}>FUTURES</SelectButton>
+      <SelectButton to={`/history/spot/${type}`} active={instrument == 'spot' ? true : false}>SPOT</SelectButton>
+      <SelectButton to={`/history/futures/${type}`} active={instrument == 'futures' ? true : false}>FUTURES</SelectButton>
     </Wrapper>
   )
 }

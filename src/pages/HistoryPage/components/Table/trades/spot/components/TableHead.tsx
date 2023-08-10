@@ -1,5 +1,6 @@
 import { THead, Th, Tr, TypeTh } from "../../../table.styles";
 
+// TableHead component - renders the table head
 const TableHead = () => {
   return(
     <THead>

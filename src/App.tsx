@@ -55,7 +55,7 @@ function App() {
           <Route path="/market/spot/:symbol" element={<SpotPage />} />
           <Route path="/market/futures/:symbol" element={<FuturesPage />} />
           <Route path="/wallet" element={<WalletPage />} />
-          <Route path="/history/:type" element={<HistoryPage />} />
+          <Route path="/history/:instrument/:type" element={<HistoryPage />} />
           <Route path="/positions/*" element={<PositionsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/password/reset" element={<PasswordResetPage />} />

@@ -1,16 +1,17 @@
-import { Info, Loader, Loading, StatusTd, TBody, Td, Tr, Type } from "../../../table.styles";
-import { IData } from "../TableSpot";
+import { Ref } from "react";
+import { DateTd, Info, Leverage, Loader, Loading, Pair, StatusTd, TBody, Td, Tr, Type } from "../../../../table.styles";
+import { IData } from "../../TableFutures";
 
 // TableBody interface
-interface ITableBody{
-  tableBodyRef: React.RefObject<HTMLTableSectionElement>;
-  data: IData[],
+interface ITableBody {
+  tableBodyRef: Ref<HTMLTableSectionElement>;
+  data: IData[];
   loading: boolean;
   isAll: boolean;
 }
 
 // TableBody component - renders the table body
-const TableBody: React.FC<ITableBody> = ({ tableBodyRef, data, loading, isAll }) => {
+const TableBody : React.FC<ITableBody> = ({ tableBodyRef, data, loading, isAll }) => {
   return(
     <TBody ref={tableBodyRef}>
       {data && data.map((item) => {
@@ -19,7 +20,6 @@ const TableBody: React.FC<ITableBody> = ({ tableBodyRef, data, loading, isAll })
         if(item.endDate){
           endDate = new Date(item.endDate).toLocaleString();
         }
-        
         return(
           <Tr key={item.id}>
             <StatusTd color={item.status}>
@@ -29,13 +29,15 @@ const TableBody: React.FC<ITableBody> = ({ tableBodyRef, data, loading, isAll })
                 item.status == 'canceled' && <i className="bi bi-x"></i>
               }
             </StatusTd>
-            <Type color={item.type == 'buy' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type.toUpperCase()}</Type>
-            <Td>{item.pair}</Td>
-            <Td>{item.quantity} {item.pair.replace("USDT" , "")}</Td>
-            <Td>{Number(item.price).toFixed(item.price <= 20 ? 4 : 2)} USDT</Td>
-            <Td>{(item.quantity * item.price).toFixed(item.price <= 20 ? 4 : 2)} USDT</Td>
-            <Td>{startDate}</Td>
-            <Td>{endDate || 'Not closed yet'}</Td>
+            <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type.toUpperCase()}</Type>
+            <Pair>{item.pair}</Pair>
+            <Td>{item.quantity}</Td>
+            <Td>{item.price}</Td>
+            <Leverage>{item.leverage}X</Leverage>
+            <Td>{item.takeProfit || 0}</Td>
+            <Td>{item.stopLoss || 0}</Td>
+            <DateTd>{startDate}</DateTd>
+            <DateTd>{endDate || 'Not closed yet'}</DateTd>
           </Tr>
         )
       })} 
@@ -53,13 +55,13 @@ const TableBody: React.FC<ITableBody> = ({ tableBodyRef, data, loading, isAll })
         ?
         <Tr>
           <Info>
-            We dont find more history spot orders data
+            We dont find more history futures orders data
           </Info>
         </Tr>
         : data.length == 0 &&
         <Tr>
           <Info>
-            Nothing found in the spot orders history
+            Nothing found in the futures orders history
           </Info>
         </Tr>
       }

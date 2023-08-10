@@ -9,26 +9,27 @@ import { useParams } from "react-router-dom";
 import TableSpotOrders from "./components/Table/orders/spot/TableSpot";
 import TableFuturesOrders from "./components/Table/orders/futures/TableFutures";
 
+// History Page component - renders the history page
 const HistoryPage = () => {
-  const [instrument, setInstrument] = useState<0 | 1>(0)
-  
-  const { type } = useParams();
+
+  // Get the type and instrument from the url
+  const { type, instrument } = useParams();
 
   return(
     <Layout>
       <HeadingWrapper>
-        <Header />
+        <Header instrument={instrument}/>
       </HeadingWrapper>
-      <SelectInstrument instrument={instrument} setInstrument={setInstrument} />
+      <SelectInstrument instrument={instrument} type={type} />
       {
-        type == 'trades'
+        instrument == 'spot'
         ?
-          instrument == 0
+          type == 'trades'
           ? <TableSpot />
-          : <TableFutures />
-        :
-          instrument == 0
-          ? <TableSpotOrders />
+          : <TableSpotOrders />
+        : instrument == 'futures' &&
+          type == 'orders'
+          ? <TableFutures />
           : <TableFuturesOrders />
       }
       

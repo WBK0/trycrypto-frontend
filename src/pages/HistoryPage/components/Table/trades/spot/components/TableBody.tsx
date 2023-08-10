@@ -1,6 +1,7 @@
 import { Info, Loader, Loading, TBody, Td, Tr, Type } from "../../../table.styles";
 import { IData } from "../TableSpot";
 
+// Table Body interface
 interface ITableBody{
   elementRef: React.RefObject<HTMLTableSectionElement>;
   data: IData[],
@@ -8,6 +9,7 @@ interface ITableBody{
   isAll: boolean;
 }
 
+// TableBody component - renders the table body
 const TableBody: React.FC<ITableBody> = ({ elementRef, data, loading, isAll }) => {
   return(
     <TBody ref={elementRef}>
