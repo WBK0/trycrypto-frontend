@@ -23,6 +23,7 @@
     "react-router-dom": "^6.9.0",
     "react-toastify": "^9.1.2",
     "react-ts-tradingview-widgets": "^1.0.14",
+    "react-window": "^1.8.9",
     "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.9",
     "websocket": "^1.0.34",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/react-window": "^1.8.5",
     "@types/styled-components": "^5.1.26",
     "@types/websocket": "^1.0.5",
     "@vitejs/plugin-react": "^3.1.0",

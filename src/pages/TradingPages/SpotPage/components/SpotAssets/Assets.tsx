@@ -13,7 +13,7 @@ const Assets: React.FC<IAssets> = ({ wallet }) => {
       <Flex>
         <Header>SPOT Assets</Header>
         {wallet ? Object.entries(wallet.spotBalance || {}).map(([symbol, quantity]) => {
-          if(quantity !== 0){
+          if(quantity != 0){
             return (
               <AssetContainer key={symbol}>
                 <CryptoSymbol>{symbol.replace('USDT', '')}</CryptoSymbol>

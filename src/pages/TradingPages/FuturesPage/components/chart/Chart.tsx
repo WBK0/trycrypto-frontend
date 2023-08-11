@@ -33,7 +33,18 @@ const Chart: React.FC<IChart> = ({ symbol }) => {
     }
 
     // When the script is loaded, create the widget
-    tvScriptLoadingPromise.then(() => onLoadScriptRef.current && onLoadScriptRef.current());
+    tvScriptLoadingPromise.then(() => {
+       // Remove previous TradingView styles
+       const styleElements = document.querySelectorAll('style');
+       styleElements.forEach(styleElement => {
+       const styleContent = styleElement.innerHTML;
+       if (styleContent.includes('tradingview-widget')) {
+         styleElement.remove();
+       }
+      });
+      onLoadScriptRef.current && onLoadScriptRef.current()
+    });
+      
 
     // Cleanup function to remove the script when the component is unmounted
     return () => {

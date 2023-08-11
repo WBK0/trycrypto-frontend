@@ -32,14 +32,19 @@ export const InfoBar = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   height: 25px;
+  width: 100%;
 `
 
 export const AsksWrapper = styled.div`
-
+  display: flex;  
+  flex-direction: column-reverse;
 `
 
 export const BidsWrapper = styled.div`
-
+  /* height: 200px;
+  width: 100%; */
+  display: flex;
+  flex-direction: column;
 `
 
 export const PriceInfo = styled.div`
@@ -50,20 +55,26 @@ export const PriceInfo = styled.div`
   font-size: 24px;
   font-weight: 600;
   height: 40px;
+  width: 100%;
 `
 
 interface IItem {
-  background: string;
+  style: {
+    background: string;
+  };
 }
 
-export const Item = styled.div<IItem>`
+export const Item = styled.div.attrs(({color}) => ({
+  style: {
+    background: color
+  }
+}))`
   color: white; 
   display: flex;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   justify-content: space-between;
   height: 20px;
   font-size: 15px;
   line-height: 20px;
-  background: ${props => props.background};
 `
