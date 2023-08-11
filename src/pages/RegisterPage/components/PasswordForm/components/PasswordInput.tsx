@@ -24,7 +24,7 @@ const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         name="password" 
         type="password" 
         id="password"
-        error={errors.password && touched.password ? true : false}
+        error={errors.password && touched.password ? 'true' : 'false'}
         aria-describedby="validationPassword"
         innerRef={passwordRef}
       />
@@ -47,7 +47,7 @@ const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         name="repeatPassword" 
         type="password" 
         id="repeatPassword"
-        error={errors.repeatPassword && touched.repeatPassword ? true : false}
+        error={errors.repeatPassword && touched.repeatPassword ? 'true' : 'false'}
         aria-describedby="validationRepeatPassword"
       />
 

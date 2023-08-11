@@ -30,6 +30,10 @@ export const Input = styled.input`
   &:focus{
     background-color: rgb(50, 50, 50)
   }
+  @media screen and (max-width: 400px) {
+    height: 50px;
+    font-size: 27px;
+  }
 `
 
 export const Heading = styled.h1`

@@ -15,7 +15,6 @@ const Market = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getData('spot');
-      console.log(data)
       setDisplayData(prevData => {
         const updatedData = data.map((item: {lastPrice: string}, index : number) => ({
           ...item,

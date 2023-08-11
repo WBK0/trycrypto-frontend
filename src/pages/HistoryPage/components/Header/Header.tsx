@@ -16,10 +16,10 @@ const Header : React.FC<IHeader> = ({ instrument }) => {
     <Wrapper>
       <Heading>Last trades</Heading>
       <Link to={`/history/${instrument}/trades`}>
-        <Button active={historyType == 0 ? true : false} onClick={() => setHistoryType(0)} >Trades</Button>
+        <Button active={type == 'trades'} >Trades</Button>
       </Link>
       <Link to={`/history/${instrument}/orders`}>
-        <Button active={historyType == 1 ? true : false} onClick={() => setHistoryType(1)} >Orders</Button>
+        <Button active={type == 'orders'} >Orders</Button>
       </Link>
       <Hr></Hr>
     </Wrapper>

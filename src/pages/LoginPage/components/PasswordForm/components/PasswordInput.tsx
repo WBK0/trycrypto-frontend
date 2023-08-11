@@ -25,7 +25,7 @@ const PasswordInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         name="password" 
         type="password" 
         id="password"
-        error={errors.password && touched.password ? true : false}
+        error={errors.password && touched.password ? 'true' : 'false'}
         aria-describedby="validationPassword"
         innerRef={passwordRef}
       />

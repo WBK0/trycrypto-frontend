@@ -19,4 +19,4 @@ const getData = async (market : string): Promise<never[]> => {
   return data ?? [];
 };
 
-export default getData;
+// export default getData;

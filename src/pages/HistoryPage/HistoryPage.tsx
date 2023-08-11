@@ -22,15 +22,15 @@ const HistoryPage = () => {
       </HeadingWrapper>
       <SelectInstrument instrument={instrument} type={type} />
       {
-        instrument == 'spot'
+        type == 'trades'
         ?
-          type == 'trades'
+        instrument == 'spot'
           ? <TableSpot />
-          : <TableSpotOrders />
-        : instrument == 'futures' &&
-          type == 'orders'
-          ? <TableFutures />
-          : <TableFuturesOrders />
+          : instrument == 'futures' && <TableFutures />
+        : type == 'orders' &&
+          instrument == 'spot'
+          ? <TableSpotOrders />
+          : instrument == 'futures' && <TableFuturesOrders />
       }
       
     </Layout>

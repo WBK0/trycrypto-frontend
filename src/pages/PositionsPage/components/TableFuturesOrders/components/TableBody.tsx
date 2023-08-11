@@ -18,7 +18,7 @@ const TableBody : React.FC<ITableBody> = ({ futuresOrders, prices, closeOrder })
     <TBody>
       {futuresOrders.map((item) => {
         return(
-        <Tr>
+        <Tr key={item.id}>
           <Td width="60px" color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3)'}>{item.type.toUpperCase()}</Td>
           <Td width="100px">{item.pair}</Td>
           <Td width="140px">{item.quantity} {item.pair.replace("USDT", "")}</Td>

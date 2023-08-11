@@ -24,7 +24,7 @@ const NamesInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         name="username" 
         type="text" 
         id="username"
-        error={errors.username && touched.username ? true : false}
+        error={errors.username && touched.username ? 'true' : 'false'}
         aria-describedby="validationUsername"
         innerRef={usernameRef}
       />
@@ -47,7 +47,7 @@ const NamesInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         name="firstname" 
         type="text" 
         id="firstname"
-        error={errors.firstname && touched.firstname ? true : false}
+        error={errors.firstname && touched.firstname ? 'true' : 'false'}
         aria-describedby="validationFirstname"
       />
 
@@ -69,7 +69,7 @@ const NamesInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         name="lastname" 
         type="lastname" 
         id="lastname"
-        error={errors.lastname && touched.lastname ? true : false}
+        error={errors.lastname && touched.lastname ? 'true' : 'false'}
         aria-describedby="validationLastname"
       />
 

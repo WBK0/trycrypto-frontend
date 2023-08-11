@@ -11,7 +11,7 @@ interface IUser{
 const User: React.FC<IUser> = ({ user }) => {
   return(
     <UserWrapper>
-      <Avatar src={`https://api.trycrypto.pl/uploads/${user.profilePicture}`} alt="user avatar"/>
+      <Avatar src={`https://api.trycrypto.pl/uploads/${user.profilePicture || 'default.png'}`} alt="user avatar"/>
       <Nickname>Anonymous user</Nickname>
       <EditButton to={'/profile'}>Edit profile</EditButton>
     </UserWrapper>

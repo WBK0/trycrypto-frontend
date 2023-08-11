@@ -76,20 +76,19 @@ const TableFuturesPositions: React.FC<ITableFuturesPositions> = ({ prices }) => 
   return(
     <Wrapper>
       <TableWrapper>
-        <Table>
-          <TableHead />
-          <TableBody
-            prices={prices}
-            futuresPositions={futuresPositions}
-            openCloseModal={openCloseModal}
-            openUpdateModal={openUpdateModal}
-          />
-        </Table>
         {
           futuresPositions.length == 0
           ? <NoOpened>You don't have any open positions in the futures market</NoOpened>
-          : null
-        }
+          : <Table>
+              <TableHead />
+              <TableBody
+                prices={prices}
+                futuresPositions={futuresPositions}
+                openCloseModal={openCloseModal}
+                openUpdateModal={openUpdateModal}
+              />
+            </Table>
+          } 
       </TableWrapper>
       {showCloseModal && modalItem && (
         <CloseModal onClose={handleCloseModal} fetchPositions={getFuturesPositions} modalItem={modalItem} pairPrice={prices[modalItem.pair.toUpperCase()]?.lastPrice} />

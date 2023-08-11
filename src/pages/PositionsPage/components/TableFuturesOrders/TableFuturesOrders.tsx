@@ -81,19 +81,18 @@ const TableFuturesOrders: React.FC<ITableFuturesOrders> = ({prices}) => {
   return(
     <Wrapper>
       <TableWrapper>
-        <Table>
-          <TableHead />
-          <TableBody 
-            prices={prices}
-            futuresOrders={futuresOrders}
-            closeOrder={closeOrder}
-          />
-        </Table>
         {
           futuresOrders.length == 0
           ? <NoOpened>You don't have any open orders in the futures market</NoOpened>
-          : null
-        }
+          :  <Table>
+              <TableHead />
+              <TableBody 
+                prices={prices}
+                futuresOrders={futuresOrders}
+                closeOrder={closeOrder}
+              />
+            </Table>
+        }  
       </TableWrapper>
     </Wrapper>
   )

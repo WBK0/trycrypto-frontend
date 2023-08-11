@@ -21,7 +21,6 @@ const WalletPage = () => {
   useEffect(() => {
     if(balance){
       setLoading(false)
-      console.log(balance)
     }
   }, [balance])
 

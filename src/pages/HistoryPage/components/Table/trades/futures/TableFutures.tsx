@@ -68,7 +68,6 @@ const TableFutures = () => {
   // Function to fetch more data from the api on scrolling to the bottom of the table
   const fetchMore = async (url: string) => {
     try {
-      console.log('fetchmore')
       const response = await api.get(url);
       if(response.data.length < 20){
         setIsAll(true);

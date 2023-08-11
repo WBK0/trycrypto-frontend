@@ -10,7 +10,7 @@ import useMarketData from '../../hooks/useMarketData';
 // Home Page component
 const HomePage: React.FC = () => {
   // Get data from the useMarketData hook
-  const data = useMarketData('spot');
+  const { data } = useMarketData('spot');
 
   // Rendering Home Page
   return (

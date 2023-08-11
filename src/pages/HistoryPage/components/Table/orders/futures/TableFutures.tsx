@@ -92,7 +92,6 @@ const TableFuturesOrders = () => {
       ? url = 'api/derivatives/limit/history/'
       : url = `api/derivatives/limit/history/pair/${search.toUpperCase()}`
       const response = await api.get(url);
-      console.log(response.data)
       setData(response.data)
       if(response.data.length < 20){
         setIsAll(true)

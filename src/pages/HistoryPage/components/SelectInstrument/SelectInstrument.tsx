@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { SelectButton, Wrapper } from "./selectInstrument.styles";
 
 // SelectInstrument interface
@@ -10,8 +11,12 @@ interface ISelectInstrument{
 const SelectInstrument: React.FC<ISelectInstrument> = ({ instrument, type }) => {
   return(
     <Wrapper>
-      <SelectButton to={`/history/spot/${type}`} active={instrument == 'spot' ? true : false}>SPOT</SelectButton>
-      <SelectButton to={`/history/futures/${type}`} active={instrument == 'futures' ? true : false}>FUTURES</SelectButton>
+      <Link to={`/history/spot/${type}`}>
+        <SelectButton active={instrument == 'spot'}>SPOT</SelectButton>
+      </Link>
+      <Link to={`/history/futures/${type}`}>
+        <SelectButton active={instrument == 'futures'}>FUTURES</SelectButton>
+      </Link>
     </Wrapper>
   )
 }

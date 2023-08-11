@@ -78,18 +78,17 @@ const TableSpotOrders: React.FC<ITableSpotOrders> = ({prices}) => {
   return(
     <Wrapper>
       <TableWrapper>
-        <Table>
-          <TableHead />
-          <TableBody
-            spotOrders={spotOrders}
-            prices={prices}
-            closeOrder={closeOrder} 
-          />
-        </Table>
-        { // If there are no spot orders, display a message
+      { // If there are no spot orders, display a message
           spotOrders.length == 0
           ? <NoOpened>You don't have any open orders in the spot market</NoOpened>
-          : null
+          : <Table>
+              <TableHead />
+              <TableBody
+                spotOrders={spotOrders}
+                prices={prices}
+                closeOrder={closeOrder} 
+              />
+            </Table>
         }
       </TableWrapper>
     </Wrapper>

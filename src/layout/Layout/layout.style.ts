@@ -5,4 +5,5 @@ export const Wrapper = styled.div`
   background-color: var(--theme-primary);
   color: white;
   padding-top: 80px;
+  padding-bottom: 50px;
 `

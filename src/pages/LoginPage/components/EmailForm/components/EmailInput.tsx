@@ -12,7 +12,6 @@ const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
     if (emailRef.current) {
       emailRef.current.focus();
     }
-    console.log(emailRef)
   }, []);
 
   return(
@@ -25,7 +24,7 @@ const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         type="email"
         id="email"
         innerRef={emailRef}
-        error={errors.email && touched.email ? true : false}
+        error={errors.email && touched.email ? 'true' : 'false'}
         aria-describedby="validationEmail"
       />
 

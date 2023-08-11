@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -12,7 +11,7 @@ interface ISelectButton{
   active: boolean;
 }
 
-export const SelectButton = styled(Link)<ISelectButton>`
+export const SelectButton = styled.button<ISelectButton>`
   border: none;
   background-color: ${props => props.active ? 'var(--theme-dark)' : 'var(--theme-primary)'};
   color: ${props => props.active ? 'var(--font-yellow)' : 'rgb(122,122,122)'} !important;

@@ -22,7 +22,7 @@ const EmailInput: React.FC<any> = ({ errors, touched, isSubmitting }) => {
         type="email"
         id="email"
         innerRef={inputRef}
-        error={errors.email && touched.email ? true : false}
+        error={errors.email && touched.email ? 'true' : 'false'}
         aria-describedby="validationEmail"
       />
 
