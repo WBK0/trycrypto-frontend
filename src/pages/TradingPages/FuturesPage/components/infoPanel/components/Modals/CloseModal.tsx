@@ -19,7 +19,11 @@ interface ICloseModal{
 // CloseModal component - renders the close modal
 const CloseModal: React.FC<ICloseModal> = ({ onClose, fetchPositions, modalItem, pairPrice, fetchBalance }) => {
   // Initialising the state
-  const [toSold, setToSold] = useState(0)
+  const [toSold, setToSold] = useState(0);
+
+  const handleCloseModal = () => {
+    
+  }
 
   // Function to handle the change in the range input
   const handleChange = (e : {target: {value: string}}) => {
@@ -63,7 +67,7 @@ const CloseModal: React.FC<ICloseModal> = ({ onClose, fetchPositions, modalItem,
   };
 
   return(
-    <ModalWrapper onClick={onClose}>
+    <ModalWrapper>
       <ModalContent onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
         <Close onClick={onClose}>X</Close>
         <Header>Close position</Header>

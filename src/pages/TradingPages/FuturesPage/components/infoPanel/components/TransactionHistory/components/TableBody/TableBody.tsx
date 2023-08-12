@@ -19,7 +19,7 @@ const TableBody: React.FC<ITableBody> = ({ history }) => {
         const pnlPercent = item.type == 'LONG' ? ((item.sellingPrice / item.purchasePrice * 100 - 100) * item.leverage).toFixed(2) : -((item.sellingPrice / item.purchasePrice * 100 - 100) * item.leverage ).toFixed(2)
         
         return(
-        <Tr>
+        <Tr key={item.id}>
           <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3);'}>{item.type}</Type>
           <Td>{item.pair}</Td>
           <Td>{item.quantityPosition}</Td>

@@ -50,7 +50,7 @@ const Symbol: React.FC<ISymbol> = ({ symbol }) => {
           <SearchBar onChange={handleSearch}/>
           {data.filter(obj => obj.pair.includes(search.toUpperCase())).map((item) => {
             return(
-              <DataWrapper to={`/market/futures/${item.pair.toLowerCase()}`}>
+              <DataWrapper to={`/market/futures/${item.pair.toLowerCase()}`} key={item.pair}>
                 <Name>
                   {item.pair}
                 </Name>

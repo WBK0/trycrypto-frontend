@@ -46,7 +46,7 @@ const TableBody : React.FC<ITableBody> = ({ orders, fetchBalance }) => {
     <TBody>
       {orders.slice().reverse().map((item) => {
         return(
-        <Tr>
+        <Tr key={item.id}>
           <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3);'}>{item.type}</Type>
           <Td>{item.pair}</Td>
           <Td>{item.quantity}</Td>

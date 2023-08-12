@@ -48,7 +48,7 @@ const TableBody : React.FC<ITableBody> = ({ positions, pairPrice, fetchPositions
     <TBody>
       {symbol && positions.filter((item) => item.pair.includes(symbol?.toUpperCase())).sort((a, b) => a.id - b.id).slice().reverse().map((item) => {
         return(
-          <Tr>
+          <Tr key={item.id}>
             <Type color={item.type == 'LONG' ? 'rgb(7, 119, 3)' : 'rgb(119, 3, 3);'}>{item.type}</Type>
             <Td>{item.pair}</Td>
             <Td>{item.leverage}</Td>

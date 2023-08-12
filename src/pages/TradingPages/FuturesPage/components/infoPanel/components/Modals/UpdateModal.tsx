@@ -74,7 +74,7 @@ const UpdateModal: React.FC<IUpdateModal> = ({ onClose, modalItem, fetchPosition
   }
 
   return(
-    <ModalWrapper onClick={onClose}>
+    <ModalWrapper>
       <ModalContent onClick={(e: { stopPropagation: () => void; }) => e.stopPropagation()}>
         <Header>Update TP/SL</Header>
         <Close onClick={onClose}>X</Close>

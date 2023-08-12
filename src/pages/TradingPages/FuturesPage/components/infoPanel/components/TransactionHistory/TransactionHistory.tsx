@@ -6,6 +6,7 @@ import LoadingTable from "../../../../../../../components/Loading/LoadingTable";
 
 // Interface for the history
 export interface IHistory{
+  id: number;
   type: string;
   pair: string;
   date: string;

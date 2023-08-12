@@ -22,6 +22,7 @@
     "react-google-charts": "^4.0.0",
     "react-router-dom": "^6.9.0",
     "react-toastify": "^9.1.2",
+    "react-tooltip": "^5.20.0",
     "react-ts-tradingview-widgets": "^1.0.14",
     "react-window": "^1.8.9",
     "socket.io-client": "^4.6.1",

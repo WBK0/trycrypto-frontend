@@ -18,7 +18,7 @@ const TableBody : React.FC<ITableBody> = ({ history }) => {
           endDate = new Date(item.endDate).toLocaleString();
         }
         return(
-        <Tr>
+        <Tr key={item.id}>
           <Status color={item.status}>
             {
               item.status == 'active' && <i className="bi bi-three-dots"></i> ||
