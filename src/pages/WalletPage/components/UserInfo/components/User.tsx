@@ -3,7 +3,8 @@ import { Avatar, EditButton, Nickname, UserWrapper } from "../userInfo.styles";
 // User interface
 interface IUser{
   user: {
-    profilePicture: string;
+    profilePicture: string,
+    username: string
   }
 }
 
@@ -12,7 +13,7 @@ const User: React.FC<IUser> = ({ user }) => {
   return(
     <UserWrapper>
       <Avatar src={`https://api.trycrypto.pl/uploads/${user.profilePicture || 'default.png'}`} alt="user avatar"/>
-      <Nickname>Anonymous user</Nickname>
+      <Nickname>{user.username}</Nickname>
       <EditButton to={'/profile'}>Edit profile</EditButton>
     </UserWrapper>
   )
