@@ -5,11 +5,12 @@ import IWallet from "../../../../../interfaces/Wallet.interface";
 import AuthContext from "../../../../../contexts/AuthContext";
 import MarketOrderPanel from "./components/market/MarketOrderPanel";
 import LimitOrderPanel from "./components/limit/LimitOrderPanel";
+import useLocalStorage from "../../../../../hooks/useLocalStorage";
 
 // OrderPanel interface
 interface IOrderPanel{
   price: number;
-  symbol?: string;
+  symbol: string;
   balance?: IWallet;
   fetchBalance: () => void;
   fetchPositions: () => void;
@@ -19,8 +20,10 @@ interface IOrderPanel{
 const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol, balance, fetchBalance, fetchPositions }) => {
   // Initialising the state
   const [orderType, setOrderType] = useState(0);
-  const [leverage, setLeverage] = useState(10);
   const [showModal, setShowModal] = useState(false);
+
+  // Get the leverage from the local storage or set it to 10 if it doesn't exist
+  const [leverage, setLeverage] = useLocalStorage(symbol, 10);
 
   // Get the isLoggedIn state from the AuthContext
   const { isLoggedIn } = useContext(AuthContext)
@@ -46,14 +49,34 @@ const OrderPanel: React.FC<IOrderPanel> = ({ price, symbol, balance, fetchBalanc
       isLoggedIn ? 
       <> 
         <LeverageWrapper>
-          <LeverageButton onClick={handleShowModal}>{leverage}X</LeverageButton>
+          <LeverageButton 
+            onClick={handleShowModal}
+            data-tooltip-id="tooltip" 
+            data-tooltip-content="Set leverage for your order"
+          >
+            {leverage}X
+          </LeverageButton>
         </LeverageWrapper>
         {showModal && (
-          <Modal onClose={handleCloseModal} mainLeverage={leverage} onSave={handleSave}/>
+          <Modal onClose={handleCloseModal} symbol={symbol} onSave={handleSave}/>
         )}
         <OrderTypeWrapper>
-          <OrderTypeLink onClick={() => setOrderType(0)} active={orderType == 0 ? true : false}>Market</OrderTypeLink>
-          <OrderTypeLink onClick={() => setOrderType(1)} active={orderType == 1 ? true : false}>Limit</OrderTypeLink>
+          <OrderTypeLink 
+            onClick={() => setOrderType(0)} 
+            active={orderType == 0 ? true : false}
+            data-tooltip-id="tooltip" 
+            data-tooltip-content="Market transaction is executed at the current market price" 
+          >
+            Market
+          </OrderTypeLink>
+          <OrderTypeLink 
+            onClick={() => setOrderType(1)} 
+            active={orderType == 1 ? true : false}
+            data-tooltip-id="tooltip" 
+            data-tooltip-content="The transaction limit is executed at a price set by the client." 
+          >
+            Limit
+          </OrderTypeLink>
         </OrderTypeWrapper>
         {(() => { // Switch statement for rendering the order panel based on the order type
           switch (orderType) {

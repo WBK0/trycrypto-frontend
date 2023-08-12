@@ -10,7 +10,11 @@ interface ISelectTick{
 // SelectTick component - renders the select tick component
 const SelectTick: React.FC<ISelectTick> = ({ price, setTickSize, tickSize }) => {
   return(
-    <Select onChange={(e) => setTickSize(Number(e.target.value))} value={tickSize}>
+    <Select 
+      onChange={(e) => setTickSize(Number(e.target.value))} 
+      value={tickSize} 
+      data-tooltip-id="tooltip" 
+      data-tooltip-content="Select tick size">
       {/* Genereting options for select tick based on price of pair */}
       {price <= 5 ? 
         <Option value={0.0001}>

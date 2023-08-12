@@ -102,14 +102,14 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
   return(
     <Col xs={100} md={50} pr="0px" prMd="12px">
       <Balance>
-        Dostępne: {balance?.currentBalance.toFixed(2) || '0'} USDT
+        Available: {balance?.currentBalance.toFixed(2) || '0'} USDT
       </Balance>
       <InputWrapper>
         <InputText 
           isError={isSubmitted && isIncorrectPrice ? true : false}
           onClick={() => inputRefPrice.current?.focus()}
         >
-          Cena
+          Price
         </InputText>
         <Input 
           isError={isSubmitted && isIncorrectPrice ? true : false} 
@@ -129,7 +129,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
           isError={isSubmitted && Number(orderQuantity) <= 0 ? true : false}
           onClick={() => inputRefQuantity.current?.focus()}
         >
-          Ilość
+          Quantity
         </InputText>
         <Input 
           isError={isSubmitted && Number(orderQuantity) <= 0 ? true : false} 
@@ -147,7 +147,7 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
       </InputWrapper>
       <RangeInput type="range" min="0" step={0.1} max={balance && Number(price) > 0 ? (Math.floor(balance?.currentBalance / Number(price) * 10) / 10).toFixed(1) : 0} onChange={handleChange} value={Number(orderQuantity)}></RangeInput>
       <InputWrapper>
-        <InputText>Suma</InputText>
+        <InputText>Total</InputText>
         <Input value={(Number(orderQuantity) * Number(price)).toFixed(4)} readOnly/>
         <InputSymbol>USDT</InputSymbol>
       </InputWrapper>

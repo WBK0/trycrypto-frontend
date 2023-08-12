@@ -14,12 +14,16 @@ const MarketSelect : React.FC<IMarketSelect> = ({ market, setMarket }) => {
       <SelectButton
         active={market==='spot' ? true : false}
         onClick={() => setMarket('spot')}
+        data-tooltip-id="tooltip" 
+        data-tooltip-content="Click to select market instrument"
       >
         Spot Market
       </SelectButton>
       <SelectButton
         active={market==='futures' ? true : false}
         onClick={() => setMarket('futures')}
+        data-tooltip-id="tooltip" 
+        data-tooltip-content="Click to select market instrument"
       >
         Futures Market
       </SelectButton>

@@ -20,10 +20,12 @@ export const Heading = styled.h1`
   font-size: 35px;
   line-height: 32px;
   margin-right: 35px;
+  font-family: 'Gilroy-Medium';
 `
 
 export const Instrument = styled.h3`
   font-size: 16px;
   color: rgb(132, 142, 156);
   font-weight: 400;
+  font-family: 'Gilroy-Bold';
 `

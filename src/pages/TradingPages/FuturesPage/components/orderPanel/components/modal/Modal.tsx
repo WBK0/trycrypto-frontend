@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { LeverageLevel, RangeInput, SaveButton, Warning } from "../../orderPanel.styles";
 import { Close, ModalContent, ModalWrapper } from "../../../../../../../shared/modal.styles";
+import useLocalStorage from "../../../../../../../hooks/useLocalStorage";
 
 // Modal interface
 interface IModal{
   onClose: () => void;
-  mainLeverage: number;
+  symbol: string;
   onSave: (lever: number) => void;
 }
 
 // Modal component - renders the modal
-const Modal: React.FC<IModal> = ({ onClose, mainLeverage, onSave }) => {
-  // Initialising the state
-  const [leverage, setLeverage] = useState(mainLeverage)
+const Modal: React.FC<IModal> = ({ onClose, symbol, onSave }) => {
+  // Get the leverage from the local storage or set it to 10 if it doesn't exist
+  const [leverage, setLeverage] = useLocalStorage(symbol, 10);
 
   // Function for handling the change of the range input
   const handleChange = (e: any) => {

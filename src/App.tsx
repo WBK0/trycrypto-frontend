@@ -16,6 +16,8 @@ import PositionsPage from "./pages/PositionsPage/PositionsPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
+import { Tooltip } from "react-tooltip";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   const { loading, setLastLocation } = useContext(AuthContext);
@@ -31,6 +33,7 @@ function App() {
 
   return (
     <>
+      <Tooltip id="tooltip" style={{zIndex: '1000'}}/>
       <ToastContainer />
       {!loading ? (
         <Routes>
@@ -54,10 +57,38 @@ function App() {
           <Route path="/markets" element={<MarketsPage />} />
           <Route path="/market/spot/:symbol" element={<SpotPage />} />
           <Route path="/market/futures/:symbol" element={<FuturesPage />} />
-          <Route path="/wallet" element={<WalletPage />} />
-          <Route path="/history/:instrument/:type" element={<HistoryPage />} />
-          <Route path="/positions/*" element={<PositionsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route 
+            path="/wallet" 
+            element={
+            <ProtectedRoute>
+              <WalletPage />
+            </ProtectedRoute>
+            }  
+          />
+          <Route 
+            path="/history/:instrument/:type" 
+            element={
+            <ProtectedRoute>
+              <HistoryPage />
+            </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/positions/*" 
+            element={
+            <ProtectedRoute>
+              <PositionsPage />  
+            </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profile" 
+            element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+            } 
+          />
           <Route path="/password/reset" element={<PasswordResetPage />} />
         </Routes>
       ) : (

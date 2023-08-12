@@ -36,4 +36,5 @@ export const Text = styled.span`
   -webkit-text-stroke: 0px;
   color: white;
   font-weight: 400;
+  font-family: 'Gilroy-Medium'
 `

@@ -33,7 +33,14 @@ const SearchBar: React.FC<ISearchBar> = ({ search, setSearch, fetchData }) => {
         <Loupe onClick={handleClickLoupe}>
           <i className="bi bi-search"></i>
         </Loupe>
-        <Input ref={inputRef} placeholder="Search for pairs" onChange={handleChange} value={search}/>
+        <Input 
+          ref={inputRef} 
+          placeholder="Search for pairs" 
+          onChange={handleChange} 
+          value={search}
+          data-tooltip-id="tooltip" 
+          data-tooltip-content="Enter pair name to search and click on the search button"    
+        />
       </InputWrapper>
       <Button onClick={fetchData}>Search</Button>
     </Form>

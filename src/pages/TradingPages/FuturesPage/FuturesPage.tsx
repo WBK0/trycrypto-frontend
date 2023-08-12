@@ -124,7 +124,7 @@ const FuturesPage = () => {
               </Col>
             </Col>
             <Col lg={55} pr="0px" pb="0px" dXs="none" dLg="block">
-              <OrderPanel price={data.c} symbol={symbol} balance={balance} fetchBalance={fetchBalance} fetchPositions={fetchPositions}/>
+              <OrderPanel price={data.c} symbol={symbol!} balance={balance} fetchBalance={fetchBalance} fetchPositions={fetchPositions}/>
             </Col>
           </Row>
         </Col>

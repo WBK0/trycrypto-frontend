@@ -12,10 +12,18 @@ const SelectInstrument: React.FC<ISelectInstrument> = ({ instrument, type }) => 
   return(
     <Wrapper>
       <Link to={`/history/spot/${type}`}>
-        <SelectButton active={instrument == 'spot'}>SPOT</SelectButton>
+        <SelectButton 
+          active={instrument == 'spot'}
+          data-tooltip-id="tooltip" 
+          data-tooltip-content="Click to select instrument type"
+        >SPOT</SelectButton>
       </Link>
       <Link to={`/history/futures/${type}`}>
-        <SelectButton active={instrument == 'futures'}>FUTURES</SelectButton>
+        <SelectButton 
+          active={instrument == 'futures'}
+          data-tooltip-id="tooltip" 
+          data-tooltip-content="Click to select instrument type"
+        >FUTURES</SelectButton>
       </Link>
     </Wrapper>
   )

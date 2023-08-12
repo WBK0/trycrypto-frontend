@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import IWallet from "../../../../../../interfaces/Wallet.interface";
 import { Wrapper, TableWrapper, THead, Tr, Th, Table, TBody, Td, MoreHistory, EmptyHistoryHeader, HistoryHeader, HistoryLink } from "../transactionHistory/transactionHistory.styles";
 import api from "../../../../../../services/api";
-import TableHead from "../limitOrders/components/TableHead/TableHead";
+import TableHead from "./components/TableHead/TableHead";
 import TableBody from "./components/TableBody/TableBody";
 
 // Interface for the history

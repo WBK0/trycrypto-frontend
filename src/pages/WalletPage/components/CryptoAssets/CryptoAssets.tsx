@@ -10,6 +10,7 @@ interface ICryptoAssets{
 
 // The CryptoAssets component - renders the user's crypto assets
 const CryptoAssets : React.FC<ICryptoAssets> = ({ instrument, type, balance }) => {
+  console.log(balance)
   return(
     <Wrapper>
       <HeaderWrapper>

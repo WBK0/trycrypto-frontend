@@ -60,7 +60,7 @@ const BalanceChart = () => {
   // Fetching the predicted balance on component mount
   useEffect(() => {
     getPredictedBalance()
-  }, [])
+  }, [interval])
   
   // Setting the options of the chart
   const options = {

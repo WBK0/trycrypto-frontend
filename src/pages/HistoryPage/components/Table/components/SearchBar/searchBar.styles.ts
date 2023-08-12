@@ -59,8 +59,8 @@ export const Button = styled.button`
   border-radius: 6px;
   outline: none;
   &:hover{
-    background-color: var(--theme-dark);
-    border: 2px solid var(--font-grey);
+    /* background-color: var(--theme-primary); */
+    border: 2px solid var(--theme-dark);
   }
 `
 

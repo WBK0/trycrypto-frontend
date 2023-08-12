@@ -147,9 +147,15 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
             <InputSymbol>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
           </InputWrapper>
         :
-          <InputWrapper onClick={handleChangeView}>
-            <InputText error={quantityError}>Total</InputText>
-            <Input error={quantityError} value={(Number(orderQuantity) * leverage).toFixed(1)} disabled/>
+          <InputWrapper 
+            onClick={handleChangeView} 
+          >
+            <InputText error={quantityError} >Total</InputText>
+            <Input 
+              error={quantityError} 
+              value={(Number(orderQuantity) * leverage).toFixed(1)} 
+              disabled
+            />
             <InputSymbol error={quantityError}>{symbol?.toUpperCase().replace('USDT', '')}</InputSymbol>
           </InputWrapper>
         }

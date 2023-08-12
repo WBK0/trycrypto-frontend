@@ -26,8 +26,22 @@ const OrderPanel: React.FC<IOrderPanel> = ({ symbol, balance, pairPrice, fetchBa
   return(
     <OrderWrapper>
       <SwitchOrderType>
-        <SwitchButton selected={orderType == 0} onClick={() => setOrderType(0)}>Market</SwitchButton>
-        <SwitchButton selected={orderType == 1} onClick={() => setOrderType(1)}>Limit</SwitchButton>
+        <SwitchButton 
+          selected={orderType == 0} 
+          onClick={() => setOrderType(0)}
+          data-tooltip-id="tooltip" 
+          data-tooltip-content="Market transaction is executed at the current market price"  
+        >
+          Market
+        </SwitchButton>
+        <SwitchButton 
+          selected={orderType == 1} 
+          onClick={() => setOrderType(1)}
+          data-tooltip-id="tooltip" 
+          data-tooltip-content="The transaction limit is executed at a price set by the client"
+        >
+          Limit
+        </SwitchButton>
       </SwitchOrderType>
       { // If the order type is 0, render the market order panel, else render the limit order panel
         orderType == 0
@@ -39,7 +53,7 @@ const OrderPanel: React.FC<IOrderPanel> = ({ symbol, balance, pairPrice, fetchBa
         :
         <Row>
           <BuyPanelLimit balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance}/>
-          <SellPanelLimit balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance}/>
+          <SellPanelLimit balance={balance} isLoggedIn={isLoggedIn} symbol={symbol} pairPrice={pairPrice} fetchBalance={fetchBalance} />
         </Row>
       }
       
