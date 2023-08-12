@@ -14,7 +14,7 @@ const OurSelection : React.FC<IOurSelection> = ({ data }) => {
         {/* Map 10 most volume tokens from the data array and render them */}
         {data.sort((a, b) => Number(b.volume) - Number(a.volume)).slice(0, 10).map((item) => { 
           return(
-          <ItemWrapper key={item.pair}>
+          <ItemWrapper to={`/market/spot/${item.pair.toLowerCase()}`} key={item.pair}>
             {/* Render the icon */}
             <Icon src={`https://api.trycrypto.pl/icon/${item.pair.toLowerCase().replace('usdt', '')}`}></Icon> 
             <CryptoName>{item.pair.toUpperCase().replace('USDT', '')}</CryptoName>

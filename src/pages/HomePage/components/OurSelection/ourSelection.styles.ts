@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -20,7 +21,8 @@ export const Content = styled.div`
   margin-top: 40px;
 `
 
-export const ItemWrapper = styled.div`
+export const ItemWrapper = styled(Link)`
+  text-decoration: none;
   width: 100%;
   justify-content: center;
   min-height: 180px;
@@ -29,6 +31,9 @@ export const ItemWrapper = styled.div`
   padding: 22px;
   display: flex;
   flex-wrap: wrap;
+  &:hover{
+    background-color: rgb(20, 20, 20);
+  }
   @media screen and (min-width: 600px){
     width: calc(50% - 10px);
   }
@@ -77,6 +82,7 @@ export const Change = styled.div<IChange>`
   justify-content: center;
   margin: 0 auto;
   margin-top: 15px;
+  color: white;
 `
 
 export const ChangeText = styled.p`
