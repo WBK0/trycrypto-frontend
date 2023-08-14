@@ -18,6 +18,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
 import { Tooltip } from "react-tooltip";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   const { loading, setLastLocation } = useContext(AuthContext);
@@ -90,6 +91,7 @@ function App() {
             } 
           />
           <Route path="/password/reset" element={<PasswordResetPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       ) : (
         <Loading />
