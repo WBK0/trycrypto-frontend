@@ -10,6 +10,7 @@ import AuthProvider from './AuthProvider';
 import { GlobalStyle } from './shared/globalStyles';
 import { BrowserRouter } from 'react-router-dom';
 
+// Rendering the app
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <GlobalStyle />

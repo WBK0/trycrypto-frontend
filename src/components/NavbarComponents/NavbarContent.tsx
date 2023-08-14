@@ -2,6 +2,7 @@ import { useState } from 'react';
 import NavbarUserActions from './NavbarUserActions';
 import { LinksContainer, NavbarExtendedContainer, NavbarLink, NavbarLinkExtended, ResponsiveButton, ResponsiveContainer } from './styles/navbarContent.style';
 
+// NavbarContent component - renders the navbar links and user actions
 const NavbarContent = () => {
   const [extendNavbar, setExtendedNavbar] = useState(false)
   return(

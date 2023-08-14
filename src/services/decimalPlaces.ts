@@ -1,3 +1,4 @@
+// DecimalPlaces function - returns the number of decimal places in a number
 const decimalPlaces = (value: string | number) => {
   const quantity = value.toString();
   const decimalIndex = quantity.indexOf('.');

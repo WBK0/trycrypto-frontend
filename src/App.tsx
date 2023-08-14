@@ -20,11 +20,16 @@ import { Tooltip } from "react-tooltip";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
+// App component - renders the app and its routes
 function App() {
+  // Getting the loading and setLastLocation functions from the AuthContext
   const { loading, setLastLocation } = useContext(AuthContext);
+  // Getting the current location
   const location = useLocation();
+  // Initialising states
   const [lastLocation, setAppLastLocation] = useState('/');
 
+  // useEffect hook to set the last location when the location changes and the last location is not the same as the current location 
   useEffect(() => {
     if (location.pathname !== '/login' && lastLocation !== location.pathname && location.pathname !== '/password/reset') {
       setAppLastLocation(location.pathname);
@@ -32,6 +37,7 @@ function App() {
     }
   }, [location, lastLocation, setLastLocation]);
 
+  // If the loading state is true, render the loading component otherwise render the routes 
   return (
     <>
       <Tooltip id="tooltip" style={{zIndex: '1000'}}/>

@@ -4,6 +4,7 @@ import { Row } from "../../shared/row";
 import { Copyright, Icon, IconsWrapper, Logo, LogoWrapper, Wrapper } from "./footer.styles";
 import logo from '../../assets/logo.png';
 
+// Footer component - renders the footer
 const Footer = () => {
   return(
     <Wrapper>

@@ -1,17 +1,19 @@
-import { To } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "./api";
 
+// HandleLogout interface
 interface IHandleLogout {
-  navigate: (to: To) => void;
   setLoggedIn: (value: boolean) => void;
 }
 
-const handleLogout = ({navigate, setLoggedIn} : IHandleLogout) => {
+// handleLogout function - logout user
+const handleLogout = ({ setLoggedIn } : IHandleLogout) => {
+  // Make a request to logout endpoint
   api.get('/api/user/logout', {
     withCredentials: true
   })
   .then(() => {
+    // If request is successful, set logged in to false
     toast.success('Successfully logout', {
       position: "bottom-right",
       autoClose: 5000,
@@ -22,7 +24,6 @@ const handleLogout = ({navigate, setLoggedIn} : IHandleLogout) => {
       theme: "dark",
       });
     setLoggedIn(false);
-    // navigate('/');
   })
 }
 

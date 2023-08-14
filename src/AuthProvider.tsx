@@ -3,20 +3,24 @@ import AuthContext from './contexts/AuthContext';
 import AuthApi from './services/AuthApi';
 import api from './services/api';
 
+// AuthProvider interface
 interface IAuthProvider {
   children: React.ReactNode;
 }
 
+// AuthProvider component - provides the AuthContext to the app
 const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
+  // Initialising states
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [lastLocation, setLastLocation] = useState<string>('/'); // Dodano lastLocation i setLastLocation
+  const [lastLocation, setLastLocation] = useState<string>('/');
 
+  // setLoggedIn function - sets the isLoggedIn state
   const setLoggedIn = (value: boolean) => {
     setIsLoggedIn(value);
   };
 
-  // Sprawdzenie, czy użytkownik jest zalogowany
+  // useEffect hook to check if the user is logged in
   useEffect(() => {
     api.get('/api/wallet/balance')
       .then((response) => {

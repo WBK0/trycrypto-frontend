@@ -1,5 +1,6 @@
 import axios from "axios";
   
+// Create axios instance for API calls
 const api = axios.create({
   baseURL: 'https://api.trycrypto.pl/',
   withCredentials: true,

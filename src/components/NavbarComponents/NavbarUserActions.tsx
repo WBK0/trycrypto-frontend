@@ -1,16 +1,18 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../../contexts/AuthContext';
 import handleLogout from '../../services/handleLogout';
 import { ActionsContainer, LoginButton, LoginLink, LogoutButton, ProfileButton } from './styles/navbarActions.style';
 
+// INavbarUserActions interface
 interface INavbarUserActions{
   extended: boolean
 }
 
+// NavbarUserActions component - displays the user actions in the navbar
 const NavbarUserActions: React.FC<INavbarUserActions> = ({ extended }) => {
+  // Getting the isLoggedIn and setLoggedIn functions from the AuthContext
   const { isLoggedIn, setLoggedIn } = useContext(AuthContext)
-  const navigate = useNavigate()
 
   return(
     <ActionsContainer extended={extended}>
@@ -22,7 +24,7 @@ const NavbarUserActions: React.FC<INavbarUserActions> = ({ extended }) => {
           </ProfileButton>
         </Link>
         <LogoutButton 
-          onClick={() => handleLogout({navigate, setLoggedIn})}
+          onClick={() => handleLogout({setLoggedIn})}
         >
           <i className='bi bi-box-arrow-right'></i>
         </LogoutButton>
