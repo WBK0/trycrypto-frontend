@@ -12,7 +12,7 @@ const AuthApi = () => {
   // refreshAuthLogicFn function - refreshes the token
   const refreshAuthLogicFn = () => 
     axios
-      .get("https://api.trycrypto.pl/user/refresh/token",
+      .get("https://trycrypto.codebybartlomiej.pl/v1/user/refresh/token",
       {
         withCredentials: true
       })

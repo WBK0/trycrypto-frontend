@@ -24,7 +24,6 @@ const RegisterPage = () => {
 
   // If the user is logged in, redirect to the home pages
   useEffect(() => {
-    console.log(isLoggedIn)
     if(isLoggedIn == true){
       navigate("/")
     }

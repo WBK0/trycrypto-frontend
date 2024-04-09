@@ -59,6 +59,18 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
 
   // Handle submit function - handles the submit of the order
   const handleSubmit = () => {
+    if(Number(orderQuantity) === 0 ){
+      toast.error("Quantity must be greater than 0", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       // Post the order to the API
       api.post('/api/spot/limit/buy/' + symbol?.toUpperCase(), {

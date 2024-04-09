@@ -11,7 +11,7 @@ const HighlitedItem : React.FC<IHighlightedToken> = ({ item }) => {
   return(
     <Wrapper>
       <IconWrapper>
-        <Icon src={"https://api.trycrypto.pl/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" /> 
+        <Icon src={"https://trycrypto.codebybartlomiej.pl/v1/icon/" + item.pair.replace(/usdt/gi, "").toLowerCase()} alt="Crypto icon" /> 
           {item.pair.replace(/usdt/gi, "")}
       </IconWrapper>
       <PriceWrapper>

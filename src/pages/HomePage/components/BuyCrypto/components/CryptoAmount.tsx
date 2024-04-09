@@ -44,7 +44,7 @@ const CryptoAmount : React.FC<ICryptoAmount> = ({ cryptoAmount, handleChangeCryp
       <Input type="text" value={cryptoAmount} onChange={handleChangeCrypto}/>
       <SelectContainer onClick={handleSelect} ref={selectRef}>
         <Select>
-          <Icon src={`https://api.trycrypto.pl/icon/${selected.toLowerCase()}`} />
+          <Icon src={`https://trycrypto.codebybartlomiej.pl/v1/icon/${selected.toLowerCase()}`} />
           {selected}<I className="bi bi-arrow-down-short"></I>
         </Select>
         {showOptions ? (
@@ -52,7 +52,7 @@ const CryptoAmount : React.FC<ICryptoAmount> = ({ cryptoAmount, handleChangeCryp
             {Object.entries(data).map(([key, item]) => { 
               return(
               <OptionsItem key={key} onClick={() => setSelected(key.toUpperCase().replace("USDT", ""))}>
-                <Icon src={`https://api.trycrypto.pl/icon/${key.toLowerCase().replace("usdt", "")}`} />
+                <Icon src={`https://trycrypto.codebybartlomiej.pl/v1/icon/${key.toLowerCase().replace("usdt", "")}`} />
                 {key.toUpperCase().replace("USDT", "")}
               </OptionsItem>
             )})}

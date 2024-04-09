@@ -102,25 +102,29 @@ const MarketOrderPanel: React.FC<IMarketOrderPanel> = ({ price, symbol, balance,
       fetchBalance();
       fetchPositions();
     } catch (error) {
+      let message;
       // Setting the errors if the request fails
       if(Number(orderQuantity) == 0 || (balance?.currentBalance && Number(orderQuantity) >= balance?.currentBalance / price)){
+        message = 'Quantity must be greater than 0 and less than available balance'
         setQuantityError(true);
       }
       if(Number(takeProfit) != 0 && (
         (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
         (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
       )){
+        message = type === 'LONG' ? 'Take profit must be greater than the current price' : 'Take profit must be less than the current price'
         setTakeProfitError(true);
       }
       if(Number(stopLoss) != 0 && 
         (type == 'LONG' && (Number(stopLoss) >= price || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
         (type == 'SHORT') && (Number(stopLoss) <= price || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
       ))){
+        message = type === 'LONG' ? 'Stop loss must be less than the current price and greater than the liquidation price' : 'Stop loss must be greater than the current price and less than the liquidation price'
         setStopLossError(true)
       }
       // Toast message for failing to open a market order and logging the error
       console.error(error)      
-      toast.error(`Position not opened, unknown error occurred`, {
+      toast.error(message || `Position not opened, unknown error occurred`, {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,

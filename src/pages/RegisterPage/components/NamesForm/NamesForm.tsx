@@ -16,17 +16,17 @@ const namesSchema = Yup.object().shape({
   username: Yup.string()
     .required('First name is required')
     .min(2, 'First name must be at least 2 characters')
-    .max(50, 'First name must not exceed 50 characters'),
+    .max(20, 'First name must not exceed 20 characters'),
   firstname: Yup.string()
     .required('First name is required')
     .matches(/^[A-Za-z\s]+$/, 'First name must contain only letters')
     .min(3, 'First name must be at least 2 characters')
-    .max(50, 'First name must not exceed 50 characters'),
+    .max(20, 'First name must not exceed 20 characters'),
   lastname: Yup.string()
     .required('Last name is required')
     .matches(/^[A-Za-z\s]+$/, 'Last name must contain only letters')
     .min(3, 'Last name must be at least 2 characters')
-    .max(50, 'Last name must not exceed 50 characters'),
+    .max(20, 'Last name must not exceed 20 characters'),
 });
 
 // NamesForm component - renders the names form on the register page

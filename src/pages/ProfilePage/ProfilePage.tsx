@@ -44,6 +44,37 @@ const ProfilePage = () => {
   // Function that updates the user's profile
   const updateUser = async () => {
     try {
+      console.log(/^[a-zA-Z]+$/.test(firstname))
+      if(firstname.length > 20){
+        throw new Error('Maximum length of firstname is 20 characters');
+      }else if(!/^[a-zA-Z]+$/.test(firstname)){
+        throw new Error('Firstname can only contain letters');
+      }else if(lastname.length > 20){
+        throw new Error('Maximum length of lastname is 20 characters');
+      }else if(!/^[a-zA-Z]+$/.test(lastname)){
+        throw new Error('Lastname can only contain letters');
+      }else if(username.length > 20){
+        throw new Error('Maximum length of username is 20 characters');
+      }else if(!/^[a-zA-Z0-9]+$/.test(username)){
+        throw new Error('Username can only contain letters and numbers');
+      }
+    } catch (error : unknown) {
+      if(error instanceof Error){
+        toast.error(error.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+        return;
+      }
+      return;
+    }
+    
+    try {
       // Sending the request to the server
       await api.patch('/api/user/profile/update', {
         firstname: firstname,

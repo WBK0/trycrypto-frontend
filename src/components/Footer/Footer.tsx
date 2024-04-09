@@ -20,9 +20,18 @@ const Footer = () => {
           </Col>
           <Col xs={100} md={33.33} pb="0px">
             <IconsWrapper>
-              <Icon className="bi bi-facebook"></Icon>
-              <Icon className="bi bi-instagram"></Icon>
-              <Icon className="bi bi-twitter"></Icon>
+              <a 
+                href="https://github.com/WBK0" 
+                target="_blank"
+              >
+                <Icon className="bi bi-github"></Icon>
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/bart%C5%82omiej-ostojski-625b83246/" 
+                target="_blank"
+              >
+                <Icon className="bi bi-linkedin"></Icon>
+              </a>
             </IconsWrapper>
           </Col>
         </Row>

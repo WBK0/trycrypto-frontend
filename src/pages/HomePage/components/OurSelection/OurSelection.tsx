@@ -16,7 +16,7 @@ const OurSelection : React.FC<IOurSelection> = ({ data }) => {
           return(
           <ItemWrapper to={`/market/spot/${item.pair.toLowerCase()}`} key={item.pair}>
             {/* Render the icon */}
-            <Icon src={`https://api.trycrypto.pl/icon/${item.pair.toLowerCase().replace('usdt', '')}`}></Icon> 
+            <Icon src={`https://trycrypto.codebybartlomiej.pl/v1/icon/${item.pair.toLowerCase().replace('usdt', '')}`}></Icon> 
             <CryptoName>{item.pair.toUpperCase().replace('USDT', '')}</CryptoName>
             {/* Render the price with 2 or 4 decimal places depending on the price */}
             <Price>

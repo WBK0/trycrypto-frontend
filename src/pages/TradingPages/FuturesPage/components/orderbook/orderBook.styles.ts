@@ -42,6 +42,7 @@ export const BookWrapper = styled.div`
   font-size: 24px;
   line-height: 34px;
   padding-right: 10px;
+  cursor: pointer;
   color: ${props => props.color};
 `
 

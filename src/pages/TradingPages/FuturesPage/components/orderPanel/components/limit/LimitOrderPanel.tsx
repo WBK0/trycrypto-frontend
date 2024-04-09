@@ -124,30 +124,35 @@ const LimitOrderPanel: React.FC<ILimitOrderPanel> = ({ pairPrice, symbol, balanc
       fetchBalance();
       fetchPositions();
     } catch (error) {
+      let message;
       // Setting the errors if there are any 
       if(type == 'LONG' && Number(price) >= pairPrice || Number(price) == 0){
         setPriceError(true);
+        message = 'Price must be lower than the current price'
       }else if(type == 'SHORT' && Number(price) <= pairPrice || Number(price) == 0){
         setPriceError(true);
+        message = 'Price must be higher than the current price'
       }
       if(Number(orderQuantity) == 0 || balance?.currentBalance && Number(price) * Number(orderQuantity) > balance?.currentBalance){
         setQuantityError(true);
+        message = 'Quantity must be greater than 0 and less than available balance'
       }
       if(Number(takeProfit) != 0 && (
         (type == 'LONG' && (Number(takeProfit) <= Number(price))) || 
         (type == 'SHORT' && (Number(takeProfit) >= Number(price)))
       )){
+        message = type === 'LONG' ? 'Take profit must be greater than the current price' : 'Take profit must be less than the current price'
         setTakeProfitError(true);
       }
       if(Number(stopLoss) != 0 && 
         (type == 'LONG' && (Number(stopLoss) >= Number(price) || Number(stopLoss) <= (Number(price) - (Number(price) / leverage))) || 
         (type == 'SHORT') && (Number(stopLoss) <= Number(price) || Number(stopLoss) >= (Number(price) + (Number(price) / leverage))
       ))){
+        message = type === 'LONG' ? 'Stop loss must be less than the current price and greater than the entry price' : 'Stop loss must be greater than the current price and less than the entry price'
         setStopLossError(true)
       }
       // Showing the error toast and logging the error
-      console.error(error)
-      toast.error(`The order was not opened, an error occurred`, {
+      toast.error(message || `The order was not opened, an error occurred`, {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,

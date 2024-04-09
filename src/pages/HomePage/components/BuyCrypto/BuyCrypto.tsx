@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   Header,
   Input,
@@ -18,6 +18,7 @@ import decimalPlaces from "../../../../services/decimalPlaces";
 import { toast } from "react-toastify";
 import CryptoAmount from "./components/CryptoAmount";
 import UsdtAmount from "./components/UsdtAmount";
+import AuthContext from "../../../../contexts/AuthContext";
 
 export interface IData {
   [key: string]: {
@@ -32,7 +33,8 @@ const BuyCrypto: React.FC = () => {
   const [selected, setSelected] = useState('BTC');
   const [cryptoAmount, setCryptoAmount] = useState("");
   const [usdtAmount, setUsdtAmount] = useState("0");
-  
+  const {isLoggedIn} = useContext(AuthContext)
+
   // Fetching data from the API
   const fetchData = async () => {
     const result = await api.get('/data');
@@ -62,6 +64,31 @@ const BuyCrypto: React.FC = () => {
   // handling the buying of the crypto
   const handleBuy = async () => {
     try {
+      if(!isLoggedIn){
+        toast.error('You need to be logged in to buy cryptocurrencies', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+        return;
+      }else if(Number(cryptoAmount) == 0){
+        toast.error('You cannot buy 0 cryptocurrencies', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+        return;
+      }
+      
+
       // Sending the request to the API
       await api.post('/api/spot/market/buy/' + selected + "USDT", {
         quantity: Number(cryptoAmount)

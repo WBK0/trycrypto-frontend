@@ -86,7 +86,7 @@ const ProfilePicture : React.FC<IProfilePicture> = ({ user, fetchUser}) => {
       onMouseLeave={() => setShowOverlay(false)}
       onClick={handlePictureClick}
     >
-      <Avatar src={user.profilePicture ? 'https://api.trycrypto.pl/uploads/' + user.profilePicture : 'https://api.trycrypto.pl/uploads/default.png'} alt="user avatar"/>
+      <Avatar src={user.profilePicture ? 'https://trycrypto.codebybartlomiej.pl/v1/uploads/' + user.profilePicture : 'https://trycrypto.codebybartlomiej.pl/v1/uploads/default.png'} alt="user avatar"/>
       <ProfilePictureOverlay show={showOverlay} />
       <HiddenInput
         type="file"

@@ -36,6 +36,18 @@ const BuyPanel: React.FC<IBuyPanel> = ({ balance, isLoggedIn, symbol, pairPrice,
 
   // Handle submit function - handles the submit of the order
   const handleSubmit = () => {
+    if(Number(orderQuantity) === 0 ){
+      toast.error("Quantity must be greater than 0", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       // Sending the request to the API to buy the cryptocurrency
       api.post('/api/spot/market/buy/' + symbol?.toUpperCase(),{
