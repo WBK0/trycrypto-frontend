@@ -18,7 +18,7 @@
 
 ## About The Project
 
-![Screen Shot](https://raw.githubusercontent.com/WBK0/quizyme/main/public/quizyme-macbook.png)
+![Screen Shot](https://raw.githubusercontent.com/WBK0/trycrypto-frontend/main/src/assets/trycrypto-macbook.png)
 
 Trycrypto is an innovative educational application that allows users to learn trading on the cryptocurrency market. With Trycrypto, each user receives 10,000 virtual USDT to their account, enabling them to experiment with various investment strategies without risking their own funds. The project was built using React and styled components, ensuring smooth operation and an appealing appearance of the application.
 
